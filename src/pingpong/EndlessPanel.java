@@ -1,4 +1,3 @@
-
 package pingpong;
 
 import java.awt.Color;
@@ -45,7 +44,7 @@ public class EndlessPanel extends GraphicsPanel {
         super.paint(g);
         if (showFinalScore) {
             drawFinalScore(g);
-        }else{
+        } else {
             drawSomebodyWon(g);
         }
         g.dispose();
@@ -116,10 +115,10 @@ public class EndlessPanel extends GraphicsPanel {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case KeyEvent.VK_ENTER:
-                if(showFinalScore || gamePaused){
+                if (showFinalScore || gamePaused) {
                     closePanel = true;
                 }
-                if(!showFinalScore && hasSomebodyWon()){
+                if (!showFinalScore && hasSomebodyWon()) {
                     showFinalScore = true;
                 }
                 break;
@@ -130,10 +129,10 @@ public class EndlessPanel extends GraphicsPanel {
                 break;
         }
     }
-    
+
     @Override
     protected boolean hasSomebodyWon() {
-        if(player1.getLives() <= player2.score){
+        if (player1.getLives() <= player2.score) {
             return true;
         }
         return false;
@@ -141,7 +140,7 @@ public class EndlessPanel extends GraphicsPanel {
 
     @Override
     protected void drawSomebodyWon(Graphics g) {
-        g.setColor(color);
+        g.setColor(gameOverColor);
         if (hasSomebodyWon()) {
             somebodyWon();
             g.drawString("Press enter to see your score", 400, 250);
@@ -209,10 +208,14 @@ public class EndlessPanel extends GraphicsPanel {
     }
 
     private void drawFinalScore(Graphics g) {
+        //Clean screen behind final score
+        g.setColor(Color.BLACK);
+        g.fillRect(0, 0, this.getSize().width, this.getSize().height);
+        //Draw final score
+        g.setColor(Color.WHITE);
         g.setFont(new Font("Tahoma", Font.BOLD, 20));
         g.drawString("FINAL SCORE", 350, 100);
         g.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        g.setColor(Color.WHITE);
         g.drawString("+", 350, 150);
         g.drawString("-", 350, 190);
         g.drawString("T", 350, 230);
@@ -233,15 +236,13 @@ public class EndlessPanel extends GraphicsPanel {
         g.drawString(sb.toString(), 500, 350);
         g.drawString("Press enter to go back to menu.", 350, 400);
         if (newHighScore) {
-            g.setColor(color);
+            g.setColor(gameOverColor);
             g.drawString("NEW HIGHSCORE", 500, 310);
         }
-        //endGame = 2;
-
     }
 
     @Override
-    public void reset() {
+    protected void reset() {
         showFinalScore = false;
         super.reset();
     }

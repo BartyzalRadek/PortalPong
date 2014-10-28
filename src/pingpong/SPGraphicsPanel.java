@@ -28,6 +28,7 @@ public class SPGraphicsPanel extends GraphicsPanel {
     public void mainTimer() {
         super.mainTimer();
         
+        //Cannot be in GrahicsPanel because of EndlessPanel
         for (PowerUp powerUp1 : powerUpList) {
             powerUp1.score(paddle2, player2);
         }

@@ -28,8 +28,8 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     public Player player2 = new Player();
     protected List<Drawable> drawableList = new ArrayList<Drawable>();
     protected List<PowerUp> powerUpList = new ArrayList<PowerUp>();
-    protected Color color = Color.WHITE; //kvuli endGame()
-    protected boolean colorChanged = false; //kvuli endGame()
+    protected Color gameOverColor = Color.WHITE; //because of drawSomebodyWon() - switching colors
+    protected boolean colorChanged = false; //because of drawSomebodyWon()
     protected boolean gamePaused = false;
     protected boolean fixedSpeed = false;   /*speed of ball is not increasing in time*/
     protected boolean closePanel = false; //True = this panel should be closed or made invisible
@@ -121,10 +121,10 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         }
 
         if (colorChanged == true) {
-            color = Color.BLUE;
+            gameOverColor = Color.BLUE;
             colorChanged = false;
         } else {
-            color = Color.RED;
+            gameOverColor = Color.RED;
             colorChanged = true;
         }
     }
@@ -133,9 +133,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     public void paint(Graphics g) {
         super.paint(g);
         this.setBackground(Color.BLACK);
-        g.setColor(color);
-
-        //drawSomebodyWon(g);
+        g.setColor(gameOverColor);
 
         drawLists(g);
         drawTeleport(g);
@@ -240,7 +238,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     }
 
     protected void drawSomebodyWon(Graphics g) {
-        g.setColor(color);
+        g.setColor(gameOverColor);
         if (player1.win()) {
             somebodyWon();
             g.drawString("Press enter to go back to menu.", 400, 250);
@@ -323,7 +321,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         }
     }
 
-    public void reset() {
+    protected void reset() {
 
         player1.reset();
         player2.reset();

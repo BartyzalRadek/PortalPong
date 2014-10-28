@@ -34,7 +34,6 @@ public class EndlessPanel extends JPanel implements KeyListener {
     public PowerUp t = new PowerUp(0, 3);
     public Ball ball = new Ball();
     public Teleport teleport = new Teleport();
-    public int paddleV = 10;
     public Paddle paddle1 = new Paddle(10, 1, 10); //skutecna rychlost palky rizene clovekem je nastavena u KeyPressed
     public Player player1 = new Player();
     public Player player2 = new Player();   //computer

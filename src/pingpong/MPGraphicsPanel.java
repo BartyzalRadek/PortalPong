@@ -19,13 +19,24 @@ public class MPGraphicsPanel extends GraphicsPanel {
         drawableList.add(paddle1);
         drawableList.add(paddle2);
         powerUpList.add(t);
-        timer3.start();
-        timer4.start();
-        
+        endGameTimer.start();
+
+    }
+
+    @Override
+    public void mainTimer() {
+        super.mainTimer();
+
+        for (int i = 0; i < powerUpList.size(); i++) {
+            powerUpList.get(i).score(paddle2, player2);
+        }
+        ball.bounceOffPaddle(paddle2, player2);
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
+        super.keyPressed(e);
+        
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case KeyEvent.VK_UP:
@@ -40,38 +51,11 @@ public class MPGraphicsPanel extends GraphicsPanel {
                 }
 
                 break;
-            case KeyEvent.VK_W:
-                if (paddle1.y > 0) {
-                    paddle1.y -= 20;
-                }
-
-                break;
-            case KeyEvent.VK_S:
-                if ((paddle1.y + paddle1.length) < this.getHeight()) {
-                    paddle1.y += 20;
-                }
-
-                break;
-            case KeyEvent.VK_E:
-                if (t.numberA > 0) {
-                    createTeleport();
-                    t.numberA -= 1;
-                }
-
-                break;
             case KeyEvent.VK_P:
                 if (t.numberB > 0) {
                     createTeleport();
                     t.numberB -= 1;
                 }
-                break;
-            case KeyEvent.VK_Q:
-                ball.vx += 1;
-                ball.vy += 1;
-                break;
-            case KeyEvent.VK_A:
-                ball.vx -= 1;
-                ball.vy -= 1;
                 break;
             case KeyEvent.VK_ENTER:
                 if (endGame == 1) {
@@ -80,12 +64,6 @@ public class MPGraphicsPanel extends GraphicsPanel {
                 if (gamePaused) {
                     endGame = 2;
                 }
-            case KeyEvent.VK_ESCAPE:
-                pauseGame();
-                break;
-            case KeyEvent.VK_SPACE:
-                startGame = 1;
-                break;
         }
     }
 }

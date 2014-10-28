@@ -50,7 +50,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         
      }*/
     //Hlavni timer
-    Timer timer1 = new Timer(20, new ActionListener() {
+    protected Timer mainTimer = new Timer(20, new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -58,7 +58,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         }
     });
     //Creating new power ups + increasing ball speed
-    protected Timer timer2 = new Timer(8000, new ActionListener() {
+    protected Timer powerUpTimer = new Timer(8000, new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -66,27 +66,17 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         }
     });
     //endGame() blikajici napis + startGame
-    protected Timer timer3 = new Timer(400, new ActionListener() {
+    protected Timer endGameTimer = new Timer(400, new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
             endGameTimer();
         }
     });
-    //Hotfix pro zaseknuty micek v X/Y ose
-    protected Timer timer4 = new Timer(1000, new ActionListener() {
 
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (ball.getChangeVx() > 5 || ball.getChangeVy() > 5) {
-                ball.toCenter();
-            }
-            ball.setChangeVx(0);
-            ball.setChangeVy(0);
-        }
-    });
-
-    public void mainTimer() {
+    protected void mainTimer() {
+        if(hasSomebodyWon()) somebodyWon();
+        
         for (int i = 0; i < powerUpList.size(); i++) {
             if (powerUpList.get(i).isDeleted) {
                 powerUpList.remove(i);
@@ -97,18 +87,18 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             powerUpList.get(i).move();
             powerUpList.get(i).bounceOffWalls();
             powerUpList.get(i).score(paddle1, player1);
-            powerUpList.get(i).score(paddle2, player2);
+            //powerUpList.get(i).score(paddle2, player2);
         }
 
         ball.move();
         ball.bounceOffWalls(true);
         ball.scorePoint(player1, player2, true);
         ball.bounceOffPaddle(paddle1, player1);
-        ball.bounceOffPaddle(paddle2, player2);
+        //ball.bounceOffPaddle(paddle2, player2);
         ball.teleport(isTeleport, teleport);
     }
 
-    public void powerUpTimer() {
+    protected void powerUpTimer() {
         int type = (int) (Math.round(Math.random() + 1));
         powerUpList.add(new PowerUp(type, 0));
         if (fixedSpeed == false) {
@@ -126,10 +116,10 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         }
     }
 
-    public void endGameTimer() {
+    protected void endGameTimer() {
         if (startGame == 1) {
-            if (!timer1.isRunning()) {
-                timer1.start();
+            if (!mainTimer.isRunning()) {
+                mainTimer.start();
                 startGame = 2;
             }
         }
@@ -186,18 +176,6 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
-            case KeyEvent.VK_UP:
-                if (paddle2.y > 0) {
-                    paddle2.y -= 20;
-                }
-
-                break;
-            case KeyEvent.VK_DOWN:
-                if ((paddle2.y + paddle2.length) < this.getHeight()) {
-                    paddle2.y += 20;
-                }
-
-                break;
             case KeyEvent.VK_W:
                 if (paddle1.y > 0) {
                     paddle1.y -= 20;
@@ -217,12 +195,6 @@ public class GraphicsPanel extends JPanel implements KeyListener {
                 }
 
                 break;
-            case KeyEvent.VK_P:
-                if (t.numberB > 0) {
-                    createTeleport();
-                    t.numberB -= 1;
-                }
-                break;
             case KeyEvent.VK_Q:
                 ball.vx += 1;
                 ball.vy += 1;
@@ -231,13 +203,6 @@ public class GraphicsPanel extends JPanel implements KeyListener {
                 ball.vx -= 1;
                 ball.vy -= 1;
                 break;
-            case KeyEvent.VK_ENTER:
-                if (endGame == 1) {
-                    endGame = 2;
-                }
-                if (gamePaused) {
-                    endGame = 2;
-                }
             case KeyEvent.VK_ESCAPE:
                 pauseGame();
                 break;
@@ -252,17 +217,31 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     }
 
     protected void pauseGame() {
+        if(hasSomebodyWon()) return;
         if (gamePaused == false) {
-            timer1.stop();
-            timer2.stop();
+            mainTimer.stop();
+            powerUpTimer.stop();
             gamePaused = true;
 
         } else {
-            timer1.start();
-            timer2.start();
+            mainTimer.start();
+            powerUpTimer.start();
             gamePaused = false;
         }
 
+    }
+
+    protected boolean hasSomebodyWon() {
+        if (player1.win() || player2.win()) {
+            return true;
+        }
+        return false;
+    }
+
+    protected void somebodyWon() {
+        endGame = 1;
+        mainTimer.stop();
+        powerUpTimer.stop();
     }
 
     protected void endGame(Graphics g) {
@@ -272,8 +251,8 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             g.drawString("Press enter to go back to menu.", 400, 250);
             g.setFont(new Font("Tahoma", Font.BOLD, 50));
             g.drawString("PLAYER 1 WON !!!", 250, 230);
-            timer1.stop();
-            timer2.stop();
+            mainTimer.stop();
+            powerUpTimer.stop();
             g.setFont(new Font("Tahoma", Font.BOLD, 20));
         }
         if (player2.win()) {
@@ -281,8 +260,8 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             g.drawString("Press enter to go back to menu.", 400, 250);
             g.setFont(new Font("Tahoma", Font.BOLD, 50));
             g.drawString("PLAYER 2 WON !!!", 250, 230);
-            timer1.stop();
-            timer2.stop();
+            mainTimer.stop();
+            powerUpTimer.stop();
             g.setFont(new Font("Tahoma", Font.BOLD, 20));
         }
         g.setColor(Color.WHITE);
@@ -364,7 +343,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         startGame = 0;
         gamePaused = false;
 
-        timer2.start();
+        powerUpTimer.start();
         ball.reset();
     }
 }

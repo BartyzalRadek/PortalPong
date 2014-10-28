@@ -33,17 +33,17 @@ public class GameFrame extends JFrame {
 
         if (s.equals("sp")) {
             this.add(spgp);
-            this.spgp.timer2.start();
+            this.spgp.powerUpTimer.start();
             this.addKeyListener(spgp);
         }
         if (s.equals("mp")) {
             this.add(mpgp);
-            this.mpgp.timer2.start();
+            this.mpgp.powerUpTimer.start();
             this.addKeyListener(mpgp);
         }
         if (s.equals("endless")) {
             this.add(endlessgp);
-            this.endlessgp.timer2.start();
+            this.endlessgp.powerUpTimer.start();
             this.addKeyListener(endlessgp);
         }
 

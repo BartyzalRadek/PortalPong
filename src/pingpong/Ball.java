@@ -30,7 +30,6 @@ public class Ball implements Drawable {
         vx = (int) Math.floor(Math.random() * 2 + 3);
         vy = (int) Math.floor(Math.random() * 2 + 3);
 
-
     }
 
     public void scorePoint(Player player1, Player player2, boolean isClassic) {
@@ -117,10 +116,10 @@ public class Ball implements Drawable {
         int numberOfBlocks = (int) (paddle.length / sizeOfBlock);
 
         /*Rozdelim 90 stupnu na pocet casti korespondujici s poctem bloku, na ktere jsem rozdelil
-        paddle.
-        Vysledny uhel je pocet bloku ve vzdalenosti micku od stredu palky krat cast 90 stupnu 
-        korespundujici s jednim blokem.
-        Cim vetsi rozdil, tim vic bloku, tim vetsi uhel.*/
+         paddle.
+         Vysledny uhel je pocet bloku ve vzdalenosti micku od stredu palky krat cast 90 stupnu 
+         korespundujici s jednim blokem.
+         Cim vetsi rozdil, tim vic bloku, tim vetsi uhel.*/
         if (y > centerOfPaddleY) {
             angle += (difference / sizeOfBlock) * (90 / (numberOfBlocks / 2));
             vy = Math.sin(angle) * v;
@@ -141,7 +140,6 @@ public class Ball implements Drawable {
             vx = vx * (-1);
             changeVx++;
         }
-
 
     }
 
@@ -182,15 +180,12 @@ public class Ball implements Drawable {
     }
 
     public void toCenter() {
-        x = 450;
-        y = 250;
-        vx = (int) Math.floor(Math.random() * 2 + 3);
-        vy = (int) Math.floor(Math.random() * 2 + 3);
+        reset();
         vx = vx * randomSwitchDirection();
         vy = vy * randomSwitchDirection();
 
     }
-    
+
     public void reset() {
         x = 450;
         y = 250;
@@ -204,19 +199,19 @@ public class Ball implements Drawable {
         vy = -vy;
         changeVy++;
     }
-    
+
     public int getChangeVy() {
         return changeVy;
     }
-    
+
     public int getChangeVx() {
         return changeVx;
     }
-    
+
     public void setChangeVx(int changeVx) {
         this.changeVx = changeVx;
     }
-    
+
     public void setChangeVy(int changeVy) {
         this.changeVy = changeVy;
     }

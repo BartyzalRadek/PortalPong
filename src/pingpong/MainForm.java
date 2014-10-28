@@ -141,8 +141,9 @@ public class MainForm extends JFrame {
         sp.spgp.fixedSpeed = options.fixedSpeed;
         mp.mpgp.fixedSpeed = options.fixedSpeed;
 
-        endless.endlessgp.player1.lives = options.lives;
-        endless.endlessgp.player2.lives = options.lives;
+        endless.endlessgp.player1.setLives(options.lives);
+        /**WHAT????
+        //WHAT???? endless.endlessgp.player2.lives = options.lives;*/
         endless.endlessgp.fixedSpeed = options.fixedSpeed;
         
         endless.endlessgp.leaderboardsArray = leaderboards.leaderboardsPanel.getLeaderboard();

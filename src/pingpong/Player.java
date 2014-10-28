@@ -12,11 +12,19 @@ public class Player {
     
     public int score;
     public int winningScore = 10;
-    public int lives = 1;
+    private  int lives = 1;
     public int plusCount;
     public int minusCount;
     public int tCount;
     public int ballReturned;
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
     
 
     public Player() {
@@ -30,12 +38,10 @@ public class Player {
         else{return false;}
     }
     
+    /*
     public boolean endlessWin() {
-        if(score >= lives) {
-            return true;
-        }
-        else{return false;}
-    }
+        return score >= lives;
+    }*/
     
     public int endlessScore() {
         score = (plusCount*3) - (minusCount*3) + (tCount*3) + ballReturned;

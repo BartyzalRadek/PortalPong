@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pingpong;
 
 import java.awt.Color;
@@ -18,7 +14,7 @@ import javax.swing.Timer;
 
 /**
  *
- * @author Darmy
+ * @author Radek Bartyzal
  */
 public class GraphicsPanel extends JPanel implements KeyListener {
 
@@ -34,9 +30,9 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     protected List<PowerUp> powerUpList = new ArrayList<PowerUp>();
     protected Color color = Color.WHITE; //kvuli endGame()
     protected boolean colorChanged = false; //kvuli endGame()
-    public int endGame = 0;    //kvuli endGame()
     protected boolean gamePaused = false;
-    public boolean fixedSpeed = false;   /*speed of ball is not increasing in time*/
+    protected boolean fixedSpeed = false;   /*speed of ball is not increasing in time*/
+    protected boolean closePanel = false; //True = this panel should be closed or made invisible
 
     protected int startGame = 0;
 
@@ -139,7 +135,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         this.setBackground(Color.BLACK);
         g.setColor(color);
 
-        endGame(g);
+        //drawSomebodyWon(g);
 
         drawLists(g);
         drawTeleport(g);
@@ -148,7 +144,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
 
         paddleSizeReturn();
 
-        g.dispose();
+        //g.dispose();
     }
 
     protected void paddleSizeReturn() {
@@ -239,29 +235,24 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     }
 
     protected void somebodyWon() {
-        endGame = 1;
         mainTimer.stop();
         powerUpTimer.stop();
     }
 
-    protected void endGame(Graphics g) {
+    protected void drawSomebodyWon(Graphics g) {
         g.setColor(color);
         if (player1.win()) {
-            endGame = 1;
+            somebodyWon();
             g.drawString("Press enter to go back to menu.", 400, 250);
             g.setFont(new Font("Tahoma", Font.BOLD, 50));
             g.drawString("PLAYER 1 WON !!!", 250, 230);
-            mainTimer.stop();
-            powerUpTimer.stop();
             g.setFont(new Font("Tahoma", Font.BOLD, 20));
         }
         if (player2.win()) {
-            endGame = 1;
+            somebodyWon();
             g.drawString("Press enter to go back to menu.", 400, 250);
             g.setFont(new Font("Tahoma", Font.BOLD, 50));
             g.drawString("PLAYER 2 WON !!!", 250, 230);
-            mainTimer.stop();
-            powerUpTimer.stop();
             g.setFont(new Font("Tahoma", Font.BOLD, 20));
         }
         g.setColor(Color.WHITE);
@@ -339,11 +330,17 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         powerUpList.clear();
         powerUpList.add(t);
         colorChanged = false;
-        endGame = 0;
+        closePanel = false;
         startGame = 0;
         gamePaused = false;
 
         powerUpTimer.start();
         ball.reset();
     }
+
+    public boolean isClosePanel() {
+        return closePanel;
+    }
+    
+    
 }

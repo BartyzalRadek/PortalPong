@@ -1,18 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pingpong;
 
 /**
  *
- * @author Darmy
+ * @author Radek Bartyzal
  */
 public class Player {
     
     public int score;
     public int winningScore = 10;
-    private  int lives = 1;
+    private int lives = 1; //A starting number of lives, its not changed after starting the game
     public int plusCount;
     public int minusCount;
     public int tCount;
@@ -38,10 +34,13 @@ public class Player {
         else{return false;}
     }
     
-    /*
+    /**
+     * Both players, AI and real player have set the number of lives => when AI 
+     * scores more times than how many lives the player has, the AI wins.
+     */
     public boolean endlessWin() {
         return score >= lives;
-    }*/
+    }
     
     public int endlessScore() {
         score = (plusCount*3) - (minusCount*3) + (tCount*3) + ballReturned;

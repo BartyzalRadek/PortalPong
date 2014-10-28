@@ -1,20 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/*
- * About.java
- *
- * Created on 11.8.2013, 17:05:47
- */
 package pingpong;
 
 import java.awt.Font;
 
 /**
  *
- * @author Darmy
+ * @author Radek Bartyzal
  */
 public class About extends javax.swing.JFrame {
 

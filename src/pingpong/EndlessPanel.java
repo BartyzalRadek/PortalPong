@@ -1,23 +1,17 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pingpong;
 
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.Timer;
 
 /**
  *
- * @author Darmy
+ * @author Radek Bartyzal
  */
 public class EndlessPanel extends GraphicsPanel {
 
@@ -51,6 +45,8 @@ public class EndlessPanel extends GraphicsPanel {
         super.paint(g);
         if (showFinalScore) {
             drawFinalScore(g);
+        }else{
+            drawSomebodyWon(g);
         }
         g.dispose();
     }
@@ -120,17 +116,11 @@ public class EndlessPanel extends GraphicsPanel {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case KeyEvent.VK_ENTER:
-                switch (endGame) {
-                    case 1:
-                        showFinalScore = true;
-                        break;
-                    case 2:
-                        endGame = 3;
-                        break;
+                if(showFinalScore || gamePaused){
+                    closePanel = true;
                 }
-
-                if (gamePaused) {
-                    endGame = 3;
+                if(!showFinalScore && hasSomebodyWon()){
+                    showFinalScore = true;
                 }
                 break;
             case KeyEvent.VK_BACK_SPACE:
@@ -150,17 +140,15 @@ public class EndlessPanel extends GraphicsPanel {
     }
 
     @Override
-    protected void endGame(Graphics g) {
+    protected void drawSomebodyWon(Graphics g) {
         g.setColor(color);
-        if (player2.win() && showFinalScore == false) {
-            endGame = 1;
+        if (hasSomebodyWon()) {
+            somebodyWon();
             g.drawString("Press enter to see your score", 400, 250);
             g.setFont(new Font("Tahoma", Font.BOLD, 50));
             g.drawString("GAME OVER !!!", 320, 230);
-            mainTimer.stop();
-            powerUpTimer.stop();
             g.setFont(new Font("Tahoma", Font.BOLD, 20));
-            sortLeaderboards();
+            //sortLeaderboards();
         }
         g.setColor(Color.WHITE);
     }
@@ -248,7 +236,7 @@ public class EndlessPanel extends GraphicsPanel {
             g.setColor(color);
             g.drawString("NEW HIGHSCORE", 500, 310);
         }
-        endGame = 2;
+        //endGame = 2;
 
     }
 

@@ -1,16 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pingpong;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 /**
  *
- * @author Darmy
+ * @author Radek Bartyzal
  */
 public class MPGraphicsPanel extends GraphicsPanel {
 
@@ -21,6 +16,13 @@ public class MPGraphicsPanel extends GraphicsPanel {
         powerUpList.add(t);
         endGameTimer.start();
 
+    }
+    
+    @Override
+    public void paint(Graphics g){
+        super.paint(g);
+        drawSomebodyWon(g);
+        g.dispose();
     }
 
     @Override
@@ -58,11 +60,8 @@ public class MPGraphicsPanel extends GraphicsPanel {
                 }
                 break;
             case KeyEvent.VK_ENTER:
-                if (endGame == 1) {
-                    endGame = 2;
-                }
-                if (gamePaused) {
-                    endGame = 2;
+                if (hasSomebodyWon() || gamePaused) {
+                    closePanel = true;
                 }
         }
     }

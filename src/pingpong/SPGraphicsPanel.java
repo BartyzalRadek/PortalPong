@@ -1,14 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pingpong;
 
+import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 /**
  *
- * @author Darmy
+ * @author Radek Bartyzal
  */
 public class SPGraphicsPanel extends GraphicsPanel {
 
@@ -18,6 +15,13 @@ public class SPGraphicsPanel extends GraphicsPanel {
         drawableList.add(paddle2);
         powerUpList.add(t);
         endGameTimer.start();
+    }
+    
+    @Override
+    public void paint(Graphics g){
+        super.paint(g);
+        drawSomebodyWon(g); //Cannot be in GraphicsPanel because of EndlessPanel - drawing over final score
+        g.dispose();
     }
 
     @Override
@@ -40,11 +44,8 @@ public class SPGraphicsPanel extends GraphicsPanel {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case KeyEvent.VK_ENTER:
-                if (endGame == 1) {
-                    endGame = 2;
-                }
-                if (gamePaused) {
-                    endGame = 2;
+                if(hasSomebodyWon() || gamePaused){
+                    closePanel = true;
                 }
         }
     }

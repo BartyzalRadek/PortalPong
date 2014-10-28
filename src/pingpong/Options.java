@@ -1,13 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * Options.java
- *
- * Created on 11.8.2013, 16:04:20
- */
 package pingpong;
 
 import java.awt.Color;
@@ -16,7 +6,7 @@ import javax.swing.JLabel;
 
 /**
  *
- * @author Darmy
+ * @author Radek Bartyzal
  */
 public class Options extends javax.swing.JFrame {
 

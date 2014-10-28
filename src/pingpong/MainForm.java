@@ -1,25 +1,14 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * Menu.java
- *
- * Created on 8.8.2013, 19:10:20
- */
 package pingpong;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.Timer;
 
 /**
  *
- * @author Darmy
+ * @author Radek Bartyzal
  */
 public class MainForm extends JFrame {
 
@@ -141,14 +130,14 @@ public class MainForm extends JFrame {
         sp.spgp.fixedSpeed = options.fixedSpeed;
         mp.mpgp.fixedSpeed = options.fixedSpeed;
 
+        /*Because of Player.endlessWin()*/
         endless.endlessgp.player1.setLives(options.lives);
-        /**WHAT????
-        //WHAT???? endless.endlessgp.player2.lives = options.lives;*/
+        endless.endlessgp.player2.setLives(options.lives);
         endless.endlessgp.fixedSpeed = options.fixedSpeed;
         
         endless.endlessgp.leaderboardsArray = leaderboards.leaderboardsPanel.getLeaderboard();
         
-        if (endless.endlessgp.endGame > 0) {
+        if (endless.endlessgp.hasSomebodyWon()) {
             
             leaderboards.leaderboardsPanel.setLeaderboard(endless.endlessgp.finalArray);
         }

@@ -1,20 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/*
- * Leaderboards.java
- *
- * Created on 11.8.2013, 16:56:58
- */
 package pingpong;
 
 import java.awt.Font;
 
 /**
- *
- * @author Darmy
+ * Leaderboards.java
+ * @author Radek Bartyzal
  */
 public class Leaderboards extends javax.swing.JFrame {
     

@@ -1,21 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package pingpong;
 
-import java.awt.Color;
-import java.awt.Component;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  *
- * @author Darmy
+ * @author Radek Bartyzal
  */
 public class GameFrame extends JFrame {
 
@@ -50,7 +40,7 @@ public class GameFrame extends JFrame {
     }
 
     public void checkVisible() {
-        if ((mpgp.endGame == 2) || (spgp.endGame == 2) || (endlessgp.endGame == 3)) {
+        if ((mpgp.isClosePanel()) || (spgp.isClosePanel()) || (endlessgp.isClosePanel())) {
             visible = false;
             mpgp.reset();
             spgp.reset();

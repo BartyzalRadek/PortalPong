@@ -1,7 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package pingpong;
 
 import java.awt.Color;
@@ -9,7 +6,7 @@ import java.awt.Graphics;
 
 /**
  *
- * @author Darmy
+ * @author Radek Bartyzal
  */
 public class Ball implements Drawable {
 

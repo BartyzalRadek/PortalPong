@@ -132,10 +132,7 @@ public class EndlessPanel extends GraphicsPanel {
 
     @Override
     protected boolean hasSomebodyWon() {
-        if (player1.getLives() <= player2.score) {
-            return true;
-        }
-        return false;
+        return player2.endlessWin();
     }
 
     @Override

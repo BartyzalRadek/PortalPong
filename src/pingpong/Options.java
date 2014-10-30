@@ -3,6 +3,8 @@ package pingpong;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JLabel;
+import static pingpong.GameFrame.FRAME_HEIGHT;
+import static pingpong.GameFrame.FRAME_WIDTH;
 
 /**
  *
@@ -13,14 +15,15 @@ public class Options extends javax.swing.JFrame {
     /** Creates new form Options */
     public Options() {
         initComponents();
+        this.setBounds(100, 100, FRAME_WIDTH, FRAME_HEIGHT);
     }
-    public boolean visible = false;
     public boolean matrixOn = true;
     public int type = 0;
     public int winningScore = 10;
     public boolean fixedSpeed = true;
     public boolean endlessFixedSpeed = true;
     public int lives = 1;
+    public boolean toClose = false;
     
     //Greying out other labelsin settings
     private void matrixTypeLabels(JLabel label) {
@@ -101,7 +104,7 @@ public class Options extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(240, 240, 240));
         jLabel3.setText("Back");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -117,7 +120,7 @@ public class Options extends javax.swing.JFrame {
         });
 
         jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
         jLabel1.setText("Options");
 
@@ -129,15 +132,15 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(240, 240, 240));
         jLabel2.setText("Turned:");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(240, 240, 240));
         jLabel4.setText("Type:");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(240, 240, 240));
         jLabel5.setText("Chinese");
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -146,7 +149,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(153, 153, 153));
         jLabel6.setText("Latin");
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,7 +158,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(153, 153, 153));
         jLabel7.setText("Numbers");
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -164,7 +167,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(153, 153, 153));
         jLabel8.setText("Signs");
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -173,7 +176,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(240, 240, 240));
         jLabel9.setText("On");
         jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -182,7 +185,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(153, 153, 153));
         jLabel10.setText("Off");
         jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -214,7 +217,7 @@ public class Options extends javax.swing.JFrame {
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel8)))
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,11 +244,11 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(240, 240, 240));
         jLabel11.setText("Winning score:");
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(240, 240, 240));
         jLabel12.setText("10");
         jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -254,7 +257,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(153, 153, 153));
         jLabel13.setText("20");
         jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -263,7 +266,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(153, 153, 153));
         jLabel14.setText("30");
         jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -272,7 +275,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(153, 153, 153));
         jLabel15.setText("40");
         jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -281,7 +284,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(153, 153, 153));
         jLabel16.setText("50");
         jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -290,7 +293,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel17.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(153, 153, 153));
         jLabel17.setText("Over 9000");
         jLabel17.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -299,11 +302,11 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel18.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(240, 240, 240));
         jLabel18.setText("Speed of ball:");
 
-        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel19.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(240, 240, 240));
         jLabel19.setText("Fixed");
         jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -312,7 +315,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(153, 153, 153));
         jLabel20.setText("Increasing");
         jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -348,7 +351,7 @@ public class Options extends javax.swing.JFrame {
                         .addComponent(jLabel19)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel20)))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,15 +380,15 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel21.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(240, 240, 240));
         jLabel21.setText("Number of lives:");
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel22.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(240, 240, 240));
         jLabel22.setText("Speed of ball:");
 
-        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel23.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(240, 240, 240));
         jLabel23.setText("1");
         jLabel23.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -394,7 +397,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel24.setForeground(new java.awt.Color(153, 153, 153));
         jLabel24.setText("10");
         jLabel24.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -403,7 +406,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(153, 153, 153));
         jLabel25.setText("20");
         jLabel25.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -412,7 +415,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel26.setForeground(new java.awt.Color(153, 153, 153));
         jLabel26.setText("30");
         jLabel26.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -421,7 +424,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(153, 153, 153));
         jLabel27.setText("40");
         jLabel27.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -430,7 +433,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(153, 153, 153));
         jLabel28.setText("50");
         jLabel28.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -439,7 +442,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(240, 240, 240));
         jLabel29.setText("Fixed");
         jLabel29.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -448,7 +451,7 @@ public class Options extends javax.swing.JFrame {
             }
         });
 
-        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel30.setForeground(new java.awt.Color(153, 153, 153));
         jLabel30.setText("Increasing");
         jLabel30.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -527,9 +530,9 @@ public class Options extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 363, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(93, 93, 93))
+                .addGap(43, 43, 43))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(71, 71, 71)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -537,7 +540,7 @@ public class Options extends javax.swing.JFrame {
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(169, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -563,7 +566,8 @@ public class Options extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel3MouseExited
     //Back
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        visible = false;
+        toClose = true;
+        setVisible(false);
     }//GEN-LAST:event_jLabel3MouseClicked
     //Off
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked

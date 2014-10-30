@@ -33,10 +33,9 @@ public class MatrixPanel extends JPanel {
                 }
             }
 
-            for (int i = 0; i < powerUpList.size(); i++) {
-                powerUpList.get(i).move();
-                powerUpList.get(i).expire();
-
+            for (PowerUp p : powerUpList) {
+                p.move();
+                p.expire();
             }
             repaint();
         }

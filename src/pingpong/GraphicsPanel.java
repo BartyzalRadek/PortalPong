@@ -19,12 +19,12 @@ import javax.swing.Timer;
 public class GraphicsPanel extends JPanel implements KeyListener {
 
     protected boolean isEndless = false; //Whether the game mode is endless - for ball bouncing etc
-
     private boolean isTeleport = false;
-    public Ball ball = new Ball();
-    public Teleport teleport = new Teleport();
-    public Paddle paddle1 = new Paddle(10, 1, 10); //True speed of paddle is set at KeyPressed
-    public Paddle paddle2 = new Paddle(950, 2, 10); //True speed of paddle is set at KeyPressed
+
+    protected Ball ball = new Ball();
+    protected Teleport teleport = new Teleport();
+    protected Paddle paddle1 = new Paddle(10, 1, 10); //True speed of paddle is set at KeyPressed
+    protected Paddle paddle2 = new Paddle(950, 2, 10); //True speed of paddle is set at KeyPressed
     protected Player player1 = new Player();
     protected Player player2 = new Player();
     protected List<Drawable> drawableList = new ArrayList<Drawable>();
@@ -37,6 +37,9 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     protected boolean fixedSpeed = false;  //speed of ball is not increasing in time
     protected boolean closePanel = false; //True = this panel should be closed or made invisible
     protected boolean hasStarted = false; //True if the game has already started
+
+    public GraphicsPanel() {
+    }
 
     //Main timer
     protected Timer mainTimer = new Timer(20, new ActionListener() {
@@ -94,6 +97,8 @@ public class GraphicsPanel extends JPanel implements KeyListener {
 
         paddleSizeReturn(paddle1);
         paddleSizeReturn(paddle2);
+
+        repaint();
     }
 
     protected void powerUpTimer() {
@@ -135,7 +140,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         if (isTeleport) {
             drawTeleport(g);
         }
-        if(!isEndless){
+        if (!isEndless) {
             drawSomebodyWon(g);
             g.dispose(); //If paint() is overriden, g must be disposed in overriding method
         }
@@ -187,10 +192,14 @@ public class GraphicsPanel extends JPanel implements KeyListener {
                 ball.vy -= 1;
                 break;
             case KeyEvent.VK_ESCAPE:
-                pauseGame();
+                if (!hasSomebodyWon() && hasStarted) {
+                    pauseGame();
+                }
                 break;
             case KeyEvent.VK_SPACE:
-                startGame();
+                if (!gamePaused) {
+                    startGame();
+                }
                 break;
         }
     }
@@ -200,13 +209,12 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     }
 
     protected void pauseGame() {
-        if (hasSomebodyWon()) {
-            return;
-        }
+
         if (gamePaused == false) {
             mainTimer.stop();
             powerUpTimer.stop();
             gamePaused = true;
+            repaint();
 
         } else {
             startGame();

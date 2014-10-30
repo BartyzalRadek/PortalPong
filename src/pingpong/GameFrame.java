@@ -8,43 +8,47 @@ import javax.swing.JFrame;
  * @author Radek Bartyzal
  */
 public class GameFrame extends JFrame {
+    
+    public static final int FRAME_WIDTH = 1000;
+    public static final int FRAME_HEIGHT = 500;
 
-    public MPGraphicsPanel mpgp = new MPGraphicsPanel();
-    public SPGraphicsPanel spgp = new SPGraphicsPanel();
-    public EndlessPanel endlessgp = new EndlessPanel();
+    /*public MPGraphicsPanel mpgp;
+    public SPGraphicsPanel spgp;
+    public EndlessPanel endlessgp;*/
+    public GraphicsPanel gp;
     public boolean visible;
 
     public GameFrame(String s) {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.setBounds(100, 100, 1000, 500);
+        this.setBounds(100, 100, FRAME_WIDTH, FRAME_HEIGHT);
         this.setLayout(new GridLayout());
         this.visible = false;
         this.setTitle("Portal Pong");
 
         if (s.equals("sp")) {
-            this.add(spgp);
-            this.spgp.powerUpTimer.start();
-            this.addKeyListener(spgp);
+            gp = new SPGraphicsPanel();
+
         }
         if (s.equals("mp")) {
-            this.add(mpgp);
-            this.mpgp.powerUpTimer.start();
-            this.addKeyListener(mpgp);
+            gp = new MPGraphicsPanel();
+
         }
         if (s.equals("endless")) {
-            this.add(endlessgp);
-            this.endlessgp.powerUpTimer.start();
-            this.addKeyListener(endlessgp);
+            gp = new EndlessPanel();
+
         }
+
+        this.add(gp);
+        this.gp.powerUpTimer.start();
+        this.addKeyListener(gp);
 
     }
 
     public void checkVisible() {
-        if ((mpgp.isClosePanel()) || (spgp.isClosePanel()) || (endlessgp.isClosePanel())) {
+        if (gp.isClosePanel()) {
             visible = false;
-            mpgp.reset();
-            spgp.reset();
-            endlessgp.reset();
+            gp.reset();
         }
+
     }
 }

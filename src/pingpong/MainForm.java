@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
+import static pingpong.GameFrame.FRAME_HEIGHT;
+import static pingpong.GameFrame.FRAME_WIDTH;
 
 /**
  *
@@ -20,157 +22,72 @@ public class MainForm extends JFrame {
     private javax.swing.JLabel jLabel6;
     private static javax.swing.JLabel jLabel7;
     private static javax.swing.JLabel jLabel8;
-    private static MatrixPanel matrixPanel = new MatrixPanel();
 
-    /** Creates new form Menu */
+    /**
+     * Creates new form Menu
+     */
     public MainForm() {
         initComponents();
-
-    }
-    private static boolean visible = true;
-    private static GameFrame sp = new GameFrame("sp");
-    private static GameFrame mp = new GameFrame("mp");
-    private static GameFrame endless = new GameFrame("endless");
-    private static Options options = new Options();
-    private static Leaderboards leaderboards = new Leaderboards();
-    private static About about = new About();
-    private static boolean oTempVisible = false;   //options temporary visible settings
-    private static boolean lTempVisible = false;   //leaderboards temporary visible settings
-    private static boolean aTempVisible = false;   //about temporary visible settings
-    private static boolean spTempVisible = false;    //singleplayer gameFrame
-    private static boolean mpTempVisible = false;   //multiplayer gameFrame
-    private static boolean endTempVisible = false;  //endless gameFrame
-
-    private static void backO() {
-        if (options != null) {
-            if (options.visible == true) {
-                oTempVisible = true;
-            }
-            if (options.visible == false && oTempVisible == true) {
-                oTempVisible = false;
-                visible = true;
-            }
-        }
+        this.setBounds(100, 100, FRAME_WIDTH, FRAME_HEIGHT);
+        
     }
 
-    private static void backL() {
-        if (leaderboards != null) {
-            if (leaderboards.visible == true) {
-                lTempVisible = true;
-            }
-            if (leaderboards.visible == false && lTempVisible == true) {
-                lTempVisible = false;
-                visible = true;
-            }
-        }
-    }
-
-    private static void backA() {
-        if (about != null) {
-            if (about.visible == true) {
-                aTempVisible = true;
-            }
-            if (about.visible == false && aTempVisible == true) {
-                aTempVisible = false;
-                visible = true;
-            }
-        }
-    }
-
-    private static void backG() {
-
-        if (sp.visible == true) {
-            spTempVisible = true;
-        }
-        if (sp.visible == false && spTempVisible == true) {
-            spTempVisible = false;
-            visible = true;
-            jLabel7.setVisible(false);
-            jLabel8.setVisible(false);
-        }
-        if (mp.visible == true) {
-            mpTempVisible = true;
-        }
-        if (mp.visible == false && mpTempVisible == true) {
-            mpTempVisible = false;
-            jLabel7.setVisible(false);
-            jLabel8.setVisible(false);
-            visible = true;
-        }
-        if (endless.visible == true) {
-            endTempVisible = true;
-        }
-        if (endless.visible == false && endTempVisible == true) {
-            endTempVisible = false;
-            jLabel7.setVisible(false);
-            jLabel8.setVisible(false);
-            visible = true;
-        }
-
-    }
+    private static MatrixPanel matrixPanel = new MatrixPanel();
+    private static MainForm mainForm = new MainForm();
+    private static GameFrame gFrame;
+    private static Options options;
+    private static Leaderboards leaderboards;
+    private static About about;
 
     private static void backToMenu() {
-        backO();
-        backL();
-        backA();
-        backG();
+        if (gFrame != null && gFrame.gp.closePanel) {
+            gFrame.setVisible(false);
+            mainForm.setVisible(true);
+            gFrame.dispose();
+        }
+        if (about != null && about.toClose) {
+            about.toClose = false;
+            about.dispose();
+            mainForm.setVisible(true);
+        }
+        if (options != null && options.toClose) {
+            options.toClose = false;
+            options.dispose();
+            //optionSettings();
+            mainForm.setVisible(true);
+        }
+        if (leaderboards != null && leaderboards.toClose) {
+            leaderboards.toClose = false;
+            leaderboards.dispose();
+            mainForm.setVisible(true);
+        }
+
         
-        optionSettings();
 
     }
-    
+
     private static void optionSettings() {
         matrixPanel.setMatrixOn(options.matrixOn);
         matrixPanel.setType(options.type);
-        sp.spgp.player1.winningScore = options.winningScore;
-        sp.spgp.player2.winningScore = options.winningScore;
-        mp.mpgp.player1.winningScore = options.winningScore;
-        mp.mpgp.player2.winningScore = options.winningScore;
-        
-        sp.spgp.fixedSpeed = options.fixedSpeed;
-        mp.mpgp.fixedSpeed = options.fixedSpeed;
+        gFrame.gp.player1.winningScore = options.winningScore;
+        gFrame.gp.player2.winningScore = options.winningScore;
+
+        gFrame.gp.fixedSpeed = options.fixedSpeed;
 
         /*Because of Player.endlessWin()*/
-        endless.endlessgp.player1.setLives(options.lives);
-        endless.endlessgp.player2.setLives(options.lives);
-        endless.endlessgp.fixedSpeed = options.fixedSpeed;
-        
-        endless.endlessgp.leaderboardsArray = leaderboards.leaderboardsPanel.getLeaderboard();
-        
-        if (endless.endlessgp.hasSomebodyWon()) {
-            
-            leaderboards.leaderboardsPanel.setLeaderboard(endless.endlessgp.finalArray);
+        gFrame.gp.player1.setLives(options.lives);
+        gFrame.gp.player2.setLives(options.lives);
+
+        //gFrame.gp.leaderboardsArray = leaderboards.leaderboardsPanel.getLeaderboard();
+        if (gFrame.gp.hasSomebodyWon()) {
+
+            //leaderboards.leaderboardsPanel.setLeaderboard(endless.endlessgp.finalArray);
         }
-    }
-
-    private static void menuItems() {
-        options.setVisible(options.visible);
-        leaderboards.setVisible(leaderboards.visible);
-        about.setVisible(about.visible);
-        sp.setVisible(sp.visible);
-        mp.setVisible(mp.visible);
-        endless.setVisible(endless.visible);
-    }
-
-    private static void gameFrameUpdate() {
-        mp.mpgp.repaint();
-        sp.spgp.repaint();
-        endless.endlessgp.repaint();
-
-        sp.checkVisible();
-        mp.checkVisible();
-        endless.checkVisible();
-
-        sp.setVisible(sp.visible);
-        mp.setVisible(mp.visible);
-        endless.setVisible(endless.visible);
-
     }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
 
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -381,7 +298,8 @@ public class MainForm extends JFrame {
 
     //Exit
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-
+        setVisible(false);
+        dispose();
         System.exit(0);
     }//GEN-LAST:event_jLabel6MouseClicked
 
@@ -397,9 +315,11 @@ public class MainForm extends JFrame {
 
     //About
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-
-        visible = false;
-        about.visible = true;
+        jLabel5.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        setVisible(false);
+        about = new About();
+        dispose();
+        about.setVisible(true);
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
@@ -414,9 +334,11 @@ public class MainForm extends JFrame {
 
     //Leaderboards
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-
-        visible = false;
-        leaderboards.visible = true;
+        jLabel4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        setVisible(false);
+        leaderboards = new Leaderboards();
+        dispose();
+        leaderboards.setVisible(true);
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseExited
@@ -431,8 +353,11 @@ public class MainForm extends JFrame {
 
     //Options
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        visible = false;
-        options.visible = true;
+        jLabel3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        setVisible(false);
+        options = new Options();
+        dispose();
+        options.setVisible(true);
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
@@ -447,7 +372,7 @@ public class MainForm extends JFrame {
 
     //Singleplayer
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-
+        jLabel2.setFont(new Font("Tahoma", Font.PLAIN, 20));
         if (jLabel7.isVisible()) {
             jLabel7.setVisible(false);
             jLabel8.setVisible(false);
@@ -469,8 +394,11 @@ public class MainForm extends JFrame {
 
     //Multiplayer
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        visible = false;
-        mp.visible = true;
+        jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        setVisible(false);
+        gFrame = new GameFrame("mp");
+        dispose();
+        gFrame.setVisible(true);
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
@@ -481,9 +409,13 @@ public class MainForm extends JFrame {
         jLabel7.setFont(new Font("Tahoma", Font.BOLD, 22));
     }//GEN-LAST:event_jLabel7MouseEntered
 
+    //Singleplayer
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        visible = false;
-        sp.visible = true;
+        jLabel7.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        setVisible(false);
+        gFrame = new GameFrame("sp");
+        gFrame.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jLabel7MouseClicked
 
     private void jLabel8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseExited
@@ -494,9 +426,13 @@ public class MainForm extends JFrame {
         jLabel8.setFont(new Font("Tahoma", Font.BOLD, 22));
     }//GEN-LAST:event_jLabel8MouseEntered
 
+    //Endless
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        visible = false;
-        endless.visible = true;
+        jLabel8.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        setVisible(false);
+        gFrame = new GameFrame("endless");
+        dispose();
+        gFrame.setVisible(true);
     }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
@@ -526,22 +462,16 @@ public class MainForm extends JFrame {
         }
         //</editor-fold>
 
-        final MainForm mainForm = new MainForm();
         Timer timer = new Timer(10, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-
-                gameFrameUpdate();
-                menuItems();
                 backToMenu();
-
-                mainForm.setVisible(visible);
             }
         });
 
+        mainForm.setVisible(true);
         timer.start();
-
 
     }
 }

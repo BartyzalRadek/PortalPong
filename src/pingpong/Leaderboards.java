@@ -1,6 +1,8 @@
 package pingpong;
 
 import java.awt.Font;
+import static pingpong.GameFrame.FRAME_HEIGHT;
+import static pingpong.GameFrame.FRAME_WIDTH;
 
 /**
  * Leaderboards.java
@@ -12,14 +14,15 @@ public class Leaderboards extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     public LeaderboardsPanel leaderboardsPanel;
+    public boolean toClose = false;
 
     /** Creates new form Leaderboards */
     public Leaderboards() {
         initComponents();
+        this.setBounds(100, 100, FRAME_WIDTH, FRAME_HEIGHT);
         leaderboardsPanel.repaint();
     }
     
-    public boolean visible = false;
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -127,7 +130,8 @@ public class Leaderboards extends javax.swing.JFrame {
     }                                   
     //Back
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {                                     
-        visible = false;
+        toClose = true;
+        setVisible(false);
     }                                    
 
     /**

@@ -2,6 +2,8 @@
 package pingpong;
 
 import java.awt.Font;
+import static pingpong.GameFrame.FRAME_HEIGHT;
+import static pingpong.GameFrame.FRAME_WIDTH;
 
 /**
  *
@@ -12,10 +14,11 @@ public class About extends javax.swing.JFrame {
     /** Creates new form About */
     public About() {
         initComponents();
+        this.setBounds(100, 100, FRAME_WIDTH, FRAME_HEIGHT);
     }
     
-    public boolean visible = false;
-
+    public boolean toClose = false;
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -35,6 +38,8 @@ public class About extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Portal Pong");
+        setMaximumSize(new java.awt.Dimension(1000, 500));
+        setMinimumSize(new java.awt.Dimension(1000, 500));
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(0, 0, 0));
@@ -54,24 +59,24 @@ public class About extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(240, 240, 240));
         jLabel2.setText("Autor: Radek Bartyzal");
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(240, 240, 240));
         jLabel3.setText("Created: August 2013");
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(240, 240, 240));
         jLabel4.setText("Email: rbartyzal@gmail.com");
 
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(240, 240, 240));
         jLabel5.setText("Known bug: If ball gets stuck in Y/X axis, mash A/Q to fix it.");
 
         jLabel6.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 20));
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(240, 240, 240));
         jLabel6.setText("About");
 
@@ -136,7 +141,8 @@ public class About extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel1MouseExited
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        visible = false;
+        toClose = true;
+        setVisible(false);
     }//GEN-LAST:event_jLabel1MouseClicked
 
     /**

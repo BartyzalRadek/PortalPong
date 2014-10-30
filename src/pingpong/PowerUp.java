@@ -16,16 +16,16 @@ public class PowerUp implements Drawable {
     public double vy;
     public int v;
     public int type; //0 = T, 1 = +, 2 = -
-    public int numberA;
-    public int numberB;
+    //public int numberA;
+    //public int numberB;
     public boolean isDeleted;
     private int expire = 0;
     public int random;
 
-    public PowerUp(int type, int number) {
+    public PowerUp(int type) {
         this.type = type;
-        this.numberA = number;
-        this.numberB = number;
+        //this.numberA = number;
+        //this.numberB = number;
         vx = (int) (Math.round(Math.random() * 6) + 2);
         vy = (int) (Math.round(Math.random() * 7) + 1);
         x = 450;
@@ -36,7 +36,7 @@ public class PowerUp implements Drawable {
     }
     
     /*MATRIX BLOCK START*/
-    public PowerUp(int random) {
+    public PowerUp(int random, boolean tmp) { //matrix just for allowing to have 2 constructors
         x = (int) (Math.round(Math.random() * 1000));
         y = (int) (Math.round(Math.random() * 500) - 50);
         vx = 0;
@@ -90,11 +90,11 @@ public class PowerUp implements Drawable {
             switch (type) {
                 case 0:
                     if (paddle.player == 1) {
-                        numberA += 1;
+                        player.teleports += 1;
                         toCenter();
                         player.tCount++;
                     } else {
-                        numberB += 1;
+                        player.teleports += 1;
                         toCenter();
                         player.tCount++;
                     }

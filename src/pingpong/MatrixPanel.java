@@ -47,22 +47,20 @@ public class MatrixPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < 10; i++) {
-                
                 switch (type) {
                     case 0:
-                        powerUpList.add(new PowerUp((int) (Math.random() * chinese.length()-1)));
+                        powerUpList.add(new PowerUp((int) (Math.random() * chinese.length()-1), true));
                         break;
                     case 1:
-                        powerUpList.add(new PowerUp((int) (Math.random() * latin.length()-1)));
+                        powerUpList.add(new PowerUp((int) (Math.random() * latin.length()-1), true));
                         break;
                     case 2:
-                        powerUpList.add(new PowerUp((int) (Math.random() * numbers.length()-1)));
+                        powerUpList.add(new PowerUp((int) (Math.random() * numbers.length()-1), true));
                         break;
                     case 3:
-                        powerUpList.add(new PowerUp((int) (Math.random() * signs.length()-1)));
+                        powerUpList.add(new PowerUp((int) (Math.random() * signs.length()-1), true));
                         break;
                 }
-
             }
         }
     });
@@ -79,19 +77,19 @@ public class MatrixPanel extends JPanel {
         this.setBackground(Color.BLACK);
 
         if (matrixOn) {
-            for (int i = 0; i < powerUpList.size(); i++) {
+            for (PowerUp p : powerUpList) {
                 switch (type) {
                     case 0:
-                        powerUpList.get(i).drawMatrix(g, chinese);
+                        p.drawMatrix(g, chinese);
                         break;
                     case 1:
-                        powerUpList.get(i).drawMatrix(g, latin);
+                        p.drawMatrix(g, latin);
                         break;
                     case 2:
-                        powerUpList.get(i).drawMatrix(g, numbers);
+                        p.drawMatrix(g, numbers);
                         break;
                     case 3:
-                        powerUpList.get(i).drawMatrix(g, signs);
+                        p.drawMatrix(g, signs);
                         break;
                 }
             }

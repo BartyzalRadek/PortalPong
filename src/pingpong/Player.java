@@ -9,10 +9,14 @@ public class Player {
     public int score;
     public int winningScore = 10;
     private int lives = 1; //A starting number of lives, its not changed after starting the game
+    public int teleports;
+    
+    //--Endless score variables start
     public int plusCount;
     public int minusCount;
     public int tCount;
     public int ballReturned;
+    //--Endless score variables end
 
     public int getLives() {
         return lives;
@@ -25,13 +29,11 @@ public class Player {
 
     public Player() {
         score = 0;
+        teleports = 3;
     }
     
     public boolean win() {
-        if(score >= winningScore) {
-            return true;
-        }
-        else{return false;}
+        return score >= winningScore;
     }
     
     /**
@@ -53,6 +55,7 @@ public class Player {
         minusCount = 0;
         tCount = 0;
         ballReturned = 0;
+        teleports = 3;
     }
     
     

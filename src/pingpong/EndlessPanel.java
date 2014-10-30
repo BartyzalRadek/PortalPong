@@ -24,12 +24,11 @@ public class EndlessPanel extends GraphicsPanel {
     private StringBuilder sb = new StringBuilder();
     private String name = "Player";
     /*leaderboards variables end*/
-    private int tempBallReturned = 0;   //kvuli AITeleport()
+    private int tempBallReturned = 0;   //because of AITeleport()
 
     public EndlessPanel() {
         drawableList.add(ball);
         drawableList.add(paddle1);
-        powerUpList.add(t);
         endGameTimer.start();
     }
 
@@ -50,7 +49,7 @@ public class EndlessPanel extends GraphicsPanel {
         g.dispose();
     }
 
-    public void sortLeaderboards() {
+    /*public void sortLeaderboards() {
         while (!leaderboardSorted) {
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
@@ -100,7 +99,7 @@ public class EndlessPanel extends GraphicsPanel {
             leaderboardSorted = true;
         }
     }
-
+*/
     @Override
     public void keyTyped(KeyEvent e) {
         if (sb.length() < 10) {
@@ -155,9 +154,9 @@ public class EndlessPanel extends GraphicsPanel {
     private void AIteleport() {
         if (ball.x < 100 && ball.vx > 0) {
             if (tempBallReturned + 1 == player1.ballReturned && tempBallReturned != 0) {
-                if (t.numberB > 0) {
+                if (player2.teleports > 0) {
                     createTeleport();
-                    t.numberB -= 1;
+                    player2.teleports -= 1;
                     tempBallReturned = 0;
                 }
             }
@@ -184,8 +183,8 @@ public class EndlessPanel extends GraphicsPanel {
         g.drawString("Esc - Pause", 200, 15);
         g.drawString("W, S - Move paddles", 600, 15);
         g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString("T:" + String.valueOf(t.numberA), 10, 440);
-        g.drawString("T:" + String.valueOf(t.numberB), 940, 440);
+        g.drawString("T:" + String.valueOf(player1.teleports), 10, 440);
+        g.drawString("T:" + String.valueOf(player2.teleports), 940, 440);
 
         if (gamePaused) {
             g.setColor(Color.GRAY);

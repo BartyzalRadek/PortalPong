@@ -19,11 +19,10 @@ import javax.swing.Timer;
 public class GraphicsPanel extends JPanel implements KeyListener {
 
     public boolean isTeleport = false;
-    public PowerUp t = new PowerUp(0, 3);
     public Ball ball = new Ball();
     public Teleport teleport = new Teleport();
-    public Paddle paddle1 = new Paddle(10, 1, 10); //skutecna rychlost palky rizene clovekem je nastavena u KeyPressed
-    public Paddle paddle2 = new Paddle(950, 2, 10); //skutecna rychlost palky rizene clovekem je nastavena u KeyPressed
+    public Paddle paddle1 = new Paddle(10, 1, 10); //True speed of paddle is set at KeyPressed
+    public Paddle paddle2 = new Paddle(950, 2, 10); //True speed of paddle is set at KeyPressed
     public Player player1 = new Player();
     public Player player2 = new Player();
     protected List<Drawable> drawableList = new ArrayList<Drawable>();
@@ -45,7 +44,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
      timer4.start();
         
      }*/
-    //Hlavni timer
+    //Main timer
     protected Timer mainTimer = new Timer(20, new ActionListener() {
 
         @Override
@@ -61,7 +60,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             powerUpTimer();
         }
     });
-    //endGame() blikajici napis + startGame
+    //endGame() blinking lights + startGame
     protected Timer endGameTimer = new Timer(400, new ActionListener() {
 
         @Override
@@ -79,11 +78,11 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             }
         }
 
-        for (int i = 0; i < powerUpList.size(); i++) {
-            powerUpList.get(i).move();
-            powerUpList.get(i).bounceOffWalls();
-            powerUpList.get(i).score(paddle1, player1);
-            //powerUpList.get(i).score(paddle2, player2);
+        for (PowerUp p : powerUpList) {
+            p.move();
+            p.bounceOffWalls();
+            p.score(paddle1, player1);
+            //p.score(paddle2, player2);
         }
 
         ball.move();
@@ -96,7 +95,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
 
     protected void powerUpTimer() {
         int type = (int) (Math.round(Math.random() + 1));
-        powerUpList.add(new PowerUp(type, 0));
+        powerUpList.add(new PowerUp(type));
         if (fixedSpeed == false) {
             if (ball.vx > 0) {
                 ball.vx++;
@@ -142,7 +141,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
 
         paddleSizeReturn();
 
-        //g.dispose();
+        //g.dispose(); Handled in children
     }
 
     protected void paddleSizeReturn() {
@@ -183,9 +182,9 @@ public class GraphicsPanel extends JPanel implements KeyListener {
 
                 break;
             case KeyEvent.VK_E:
-                if (t.numberA > 0) {
+                if (player1.teleports > 0) {
                     createTeleport();
-                    t.numberA -= 1;
+                    player1.teleports -= 1;
                 }
 
                 break;
@@ -302,8 +301,8 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         //g.drawString("Q, A - Modify speed", 200, 15);
         g.drawString("W, S, Up, Down - Move paddles", 600, 15);
         g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString("T:" + String.valueOf(t.numberA), 10, 440);
-        g.drawString("T:" + String.valueOf(t.numberB), 940, 440);
+        g.drawString("T:" + String.valueOf(player1.teleports), 10, 440);
+        g.drawString("T:" + String.valueOf(player2.teleports), 940, 440);
 
         if (gamePaused) {
             g.setColor(Color.GRAY);
@@ -326,7 +325,6 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         player1.reset();
         player2.reset();
         powerUpList.clear();
-        powerUpList.add(t);
         colorChanged = false;
         closePanel = false;
         startGame = 0;
@@ -339,6 +337,5 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     public boolean isClosePanel() {
         return closePanel;
     }
-    
     
 }

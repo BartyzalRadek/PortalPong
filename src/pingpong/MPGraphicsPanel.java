@@ -13,7 +13,6 @@ public class MPGraphicsPanel extends GraphicsPanel {
         drawableList.add(ball);
         drawableList.add(paddle1);
         drawableList.add(paddle2);
-        powerUpList.add(t);
         endGameTimer.start();
 
     }
@@ -29,8 +28,8 @@ public class MPGraphicsPanel extends GraphicsPanel {
     public void mainTimer() {
         super.mainTimer();
 
-        for (int i = 0; i < powerUpList.size(); i++) {
-            powerUpList.get(i).score(paddle2, player2);
+        for (PowerUp p : powerUpList) {
+            p.score(paddle2, player2);
         }
         ball.bounceOffPaddle(paddle2, player2);
     }
@@ -54,9 +53,9 @@ public class MPGraphicsPanel extends GraphicsPanel {
 
                 break;
             case KeyEvent.VK_P:
-                if (t.numberB > 0) {
+                if (player2.teleports > 0) {
                     createTeleport();
-                    t.numberB -= 1;
+                    player2.teleports -= 1;
                 }
                 break;
             case KeyEvent.VK_ENTER:

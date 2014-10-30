@@ -13,7 +13,6 @@ public class SPGraphicsPanel extends GraphicsPanel {
         drawableList.add(ball);
         drawableList.add(paddle1);
         drawableList.add(paddle2);
-        powerUpList.add(t);
         endGameTimer.start();
     }
     
@@ -51,12 +50,15 @@ public class SPGraphicsPanel extends GraphicsPanel {
         }
     }
 
+    /**
+     * Different AI than the one in Endless Panel
+     */
     private void AIteleport() {
         int difference = (ball.y > paddle2.y ? ball.y - paddle2.y : paddle2.y - ball.y);
         if (ball.x > 900 && difference > 200) {
-            if (t.numberB > 0) {
+            if (player2.teleports > 0) {
                 createTeleport();
-                t.numberB -= 1;
+                player2.teleports -= 1;
             }
         }
     }

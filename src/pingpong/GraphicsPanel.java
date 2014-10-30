@@ -27,13 +27,14 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     protected Player player2 = new Player();
     protected List<Drawable> drawableList = new ArrayList<Drawable>();
     protected List<PowerUp> powerUpList = new ArrayList<PowerUp>();
+
     protected Color gameOverColor = Color.WHITE; //because of drawSomebodyWon() - switching colors
     protected boolean colorChanged = false; //because of drawSomebodyWon()
-    protected boolean gamePaused = false;
-    protected boolean fixedSpeed = false;   /*speed of ball is not increasing in time*/
-    protected boolean closePanel = false; //True = this panel should be closed or made invisible
 
-    protected int startGame = 0;
+    protected boolean gamePaused = false;
+    protected boolean fixedSpeed = false;  //speed of ball is not increasing in time
+    protected boolean closePanel = false; //True = this panel should be closed or made invisible
+    protected boolean hasStarted = false; //True if the game has already started
 
     /*public GraphicsPanel() {
      drawableList.add(ball);
@@ -60,7 +61,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             powerUpTimer();
         }
     });
-    //endGame() blinking lights + startGame
+    //endGame() blinking lights
     protected Timer endGameTimer = new Timer(400, new ActionListener() {
 
         @Override
@@ -70,8 +71,10 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     });
 
     protected void mainTimer() {
-        if(hasSomebodyWon()) somebodyWon();
-        
+        if (hasSomebodyWon()) {
+            somebodyWon();
+        }
+
         for (int i = 0; i < powerUpList.size(); i++) {
             if (powerUpList.get(i).isDeleted) {
                 powerUpList.remove(i);
@@ -82,15 +85,18 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             p.move();
             p.bounceOffWalls();
             p.score(paddle1, player1);
-            //p.score(paddle2, player2);
+            //p.score(paddle2, player2); Handled in children because of Endless
         }
 
         ball.move();
         ball.bounceOffWalls(true);
         ball.scorePoint(player1, player2, true);
         ball.bounceOffPaddle(paddle1, player1);
-        //ball.bounceOffPaddle(paddle2, player2);
+        //ball.bounceOffPaddle(paddle2, player2); Handled in children because of Endless
         ball.teleport(isTeleport, teleport);
+        
+        paddleSizeReturn(paddle1);
+        paddleSizeReturn(paddle2);
     }
 
     protected void powerUpTimer() {
@@ -107,18 +113,10 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             } else {
                 ball.vy--;
             }
-
         }
     }
 
     protected void endGameTimer() {
-        if (startGame == 1) {
-            if (!mainTimer.isRunning()) {
-                mainTimer.start();
-                startGame = 2;
-            }
-        }
-
         if (colorChanged == true) {
             gameOverColor = Color.BLUE;
             colorChanged = false;
@@ -139,24 +137,15 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         drawHints(g);
         drawScore(g);
 
-        paddleSizeReturn();
-
         //g.dispose(); Handled in children
     }
 
-    protected void paddleSizeReturn() {
-        if (paddle1.length != 100) {
-            paddle1.duration++;
-            if (paddle1.duration == 1000) {
-                paddle1.length = 100;
-                paddle1.duration = 0;
-            }
-        }
-        if (paddle2.length != 100) {
-            paddle2.duration++;
-            if (paddle2.duration == 1000) {
-                paddle2.length = 100;
-                paddle2.duration = 0;
+    protected void paddleSizeReturn(Paddle paddle) {
+        if (paddle.length != 100) {
+            paddle.duration++;
+            if (paddle.duration == 1000) {
+                paddle.length = 100;
+                paddle.duration = 0;
             }
         }
     }
@@ -200,7 +189,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
                 pauseGame();
                 break;
             case KeyEvent.VK_SPACE:
-                startGame = 1;
+                startGame();
                 break;
         }
     }
@@ -210,25 +199,28 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     }
 
     protected void pauseGame() {
-        if(hasSomebodyWon()) return;
+        if (hasSomebodyWon()) {
+            return;
+        }
         if (gamePaused == false) {
             mainTimer.stop();
             powerUpTimer.stop();
             gamePaused = true;
 
         } else {
-            mainTimer.start();
-            powerUpTimer.start();
-            gamePaused = false;
+            startGame();
         }
+    }
 
+    protected void startGame() {
+        mainTimer.start();
+        powerUpTimer.start();
+        gamePaused = false;
+        hasStarted = true;
     }
 
     protected boolean hasSomebodyWon() {
-        if (player1.win() || player2.win()) {
-            return true;
-        }
-        return false;
+        return player1.win() || player2.win();
     }
 
     protected void somebodyWon() {
@@ -274,12 +266,11 @@ public class GraphicsPanel extends JPanel implements KeyListener {
 
     protected void drawLists(Graphics g) {
 
-        for (int i = 0; i < drawableList.size(); i++) {
-            drawableList.get(i).draw(g);
-
+        for (Drawable d : drawableList) {
+            d.draw(g);
         }
-        for (int i = 0; i < powerUpList.size(); i++) {
-            powerUpList.get(i).draw(g);
+        for (PowerUp p : powerUpList) {
+            p.draw(g);
         }
 
     }
@@ -313,7 +304,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             g.drawString("Press escape to continue playing.", 355, 280);
         }
 
-        if (startGame == 0) {
+        if (!hasStarted) {
             g.setColor(Color.GRAY);
             g.setFont(new Font("Tahoma", Font.BOLD, 40));
             g.drawString("PRESS SPACE TO START", 250, 150);
@@ -327,7 +318,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         powerUpList.clear();
         colorChanged = false;
         closePanel = false;
-        startGame = 0;
+        hasStarted = false;
         gamePaused = false;
 
         powerUpTimer.start();

@@ -196,7 +196,7 @@ public class EndlessPanel extends GraphicsPanel {
 
         }
 
-        if (startGame == 0) {
+        if (!hasStarted) {
             g.setColor(Color.GRAY);
             g.setFont(new Font("Tahoma", Font.BOLD, 40));
             g.drawString("PRESS SPACE TO START", 250, 150);

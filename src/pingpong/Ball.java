@@ -3,6 +3,7 @@ package pingpong;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import static pingpong.GameFrame.FRAME_HEIGHT;
 
 /**
  *
@@ -15,7 +16,6 @@ public class Ball implements Drawable {
     public int r;
     public double vx;
     public double vy;
-    private int gpHeight;
     private int changeVy = 0;
     private int changeVx = 0;
 
@@ -23,7 +23,6 @@ public class Ball implements Drawable {
         x = 450;
         y = 250;
         r = 5;
-        gpHeight = 500;
         vx = (int) Math.floor(Math.random() * 2 + 3);
         vy = (int) Math.floor(Math.random() * 2 + 3);
 
@@ -73,7 +72,7 @@ public class Ball implements Drawable {
 
     public void bounceOffWalls(boolean isEndless) {
         if (isEndless) {
-            if (y > (gpHeight - r - 50) || y < 0) {
+            if (y > (FRAME_HEIGHT - r - 50) || y < 0) {
                 vy = -vy;
                 changeVy++;
             }
@@ -82,7 +81,7 @@ public class Ball implements Drawable {
                 changeVx++;
             }
         } else {
-            if (y > (gpHeight - r - 50) || y < 0) {
+            if (y > (FRAME_HEIGHT - r - 50) || y < 0) {
                 vy = -vy;
                 changeVy++;
             }

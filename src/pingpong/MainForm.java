@@ -27,12 +27,12 @@ public class MainForm extends JFrame {
         initComponents();
 
     }
-    public static boolean visible = true;
-    public static GameFrame sp = new GameFrame("sp");
-    public static GameFrame mp = new GameFrame("mp");
-    public static GameFrame endless = new GameFrame("endless");
-    public static Options options = new Options();
-    public static Leaderboards leaderboards = new Leaderboards();
+    private static boolean visible = true;
+    private static GameFrame sp = new GameFrame("sp");
+    private static GameFrame mp = new GameFrame("mp");
+    private static GameFrame endless = new GameFrame("endless");
+    private static Options options = new Options();
+    private static Leaderboards leaderboards = new Leaderboards();
     private static About about = new About();
     private static boolean oTempVisible = false;   //options temporary visible settings
     private static boolean lTempVisible = false;   //leaderboards temporary visible settings

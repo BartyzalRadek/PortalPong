@@ -29,13 +29,14 @@ public class Ball implements Drawable {
 
     }
 
-    public void scorePoint(Player player1, Player player2, boolean isClassic) {
-        if (isClassic) {
+    public void scorePoint(Player player1, Player player2, boolean isEndless) {
+        if (!isEndless) {
             if (x > 970) {
                 player1.score += 1;
                 toCenter();
             }
         }
+        
         if (x < 0) {
             player2.score += 1;
             toCenter();
@@ -70,13 +71,8 @@ public class Ball implements Drawable {
 
     }
 
-    public void bounceOffWalls(boolean isClassic) {
-        if (isClassic) {
-            if (y > (gpHeight - r - 50) || y < 0) {
-                vy = -vy;
-                changeVy++;
-            }
-        } else {
+    public void bounceOffWalls(boolean isEndless) {
+        if (isEndless) {
             if (y > (gpHeight - r - 50) || y < 0) {
                 vy = -vy;
                 changeVy++;
@@ -84,6 +80,11 @@ public class Ball implements Drawable {
             if (x > 970) {
                 vx = -vx;
                 changeVx++;
+            }
+        } else {
+            if (y > (gpHeight - r - 50) || y < 0) {
+                vy = -vy;
+                changeVy++;
             }
         }
     }

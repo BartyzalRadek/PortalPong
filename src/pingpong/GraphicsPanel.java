@@ -18,6 +18,8 @@ import javax.swing.Timer;
  */
 public class GraphicsPanel extends JPanel implements KeyListener {
 
+    protected boolean isEndless = false; //Whether the game mode is endless - for ball bouncing etc
+
     private boolean isTeleport = false;
     public Ball ball = new Ball();
     public Teleport teleport = new Teleport();
@@ -36,15 +38,6 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     protected boolean closePanel = false; //True = this panel should be closed or made invisible
     protected boolean hasStarted = false; //True if the game has already started
 
-    /*public GraphicsPanel() {
-     drawableList.add(ball);
-     drawableList.add(paddle1);
-     drawableList.add(paddle2);
-     powerUpList.add(t);
-     timer3.start();
-     timer4.start();
-        
-     }*/
     //Main timer
     protected Timer mainTimer = new Timer(20, new ActionListener() {
 
@@ -85,14 +78,18 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             p.move();
             p.bounceOffWalls();
             p.score(paddle1, player1);
-            //p.score(paddle2, player2); Handled in children because of Endless
+            if (!isEndless) {
+                p.score(paddle2, player2);
+            }
         }
 
         ball.move();
-        ball.bounceOffWalls(true);
-        ball.scorePoint(player1, player2, true);
+        ball.bounceOffWalls(isEndless);
+        ball.scorePoint(player1, player2, isEndless);
         ball.bounceOffPaddle(paddle1, player1);
-        //ball.bounceOffPaddle(paddle2, player2); Handled in children because of Endless
+        if (!isEndless) {
+            ball.bounceOffPaddle(paddle2, player2);
+        }
         ball.teleport(isTeleport, teleport);
 
         paddleSizeReturn(paddle1);
@@ -138,8 +135,10 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         if (isTeleport) {
             drawTeleport(g);
         }
-
-        //g.dispose(); Handled in children
+        if(!isEndless){
+            drawSomebodyWon(g);
+            g.dispose(); //If paint() is overriden, g must be disposed in overriding method
+        }
     }
 
     protected void paddleSizeReturn(Paddle paddle) {

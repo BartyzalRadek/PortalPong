@@ -1,6 +1,5 @@
 package pingpong;
 
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 /**
@@ -15,24 +14,11 @@ public class SPGraphicsPanel extends GraphicsPanel {
         drawableList.add(paddle2);
         endGameTimer.start();
     }
-    
-    @Override
-    public void paint(Graphics g){
-        super.paint(g);
-        drawSomebodyWon(g); //Cannot be in GraphicsPanel because of EndlessPanel - drawing over final score
-        g.dispose();
-    }
 
     @Override
     public void mainTimer() {
         super.mainTimer();
-        
-        //Cannot be in GrahicsPanel because of EndlessPanel
-        for (PowerUp p : powerUpList) {
-            p.score(paddle2, player2);
-        }
-        ball.bounceOffPaddle(paddle2, player2);
-        
+
         paddle2.move(ball, 500);
         AIteleport();
     }

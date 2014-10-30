@@ -1,6 +1,5 @@
 package pingpong;
 
-import java.awt.Graphics;
 import java.awt.event.KeyEvent;
 
 /**
@@ -14,24 +13,6 @@ public class MPGraphicsPanel extends GraphicsPanel {
         drawableList.add(paddle1);
         drawableList.add(paddle2);
         endGameTimer.start();
-
-    }
-    
-    @Override
-    public void paint(Graphics g){
-        super.paint(g);
-        drawSomebodyWon(g);
-        g.dispose();
-    }
-
-    @Override
-    public void mainTimer() {
-        super.mainTimer();
-
-        for (PowerUp p : powerUpList) {
-            p.score(paddle2, player2);
-        }
-        ball.bounceOffPaddle(paddle2, player2);
     }
 
     @Override

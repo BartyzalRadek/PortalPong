@@ -45,16 +45,16 @@ public class Ball implements Drawable {
     public void teleport(boolean isTeleport, Teleport teleport) {
         if (isTeleport == true) {
             if (vx > 0) {
-                if (x > teleport.x1) {
-                    x = teleport.x2;
-                    y = teleport.y2 + 10;
+                if (x > teleport.getX1()) {
+                    x = teleport.getX2();
+                    y = teleport.getY2() + 10;
                     changeDirection();
                 }
             }
             if (vx < 0) {
-                if (x < teleport.x1) {
-                    x = teleport.x2;
-                    y = teleport.y2 + 10;
+                if (x < teleport.getX1()) {
+                    x = teleport.getX2();
+                    y = teleport.getY2() + 10;
                     changeDirection();
                 }
             }

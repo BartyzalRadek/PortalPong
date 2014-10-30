@@ -28,8 +28,8 @@ public class SPGraphicsPanel extends GraphicsPanel {
         super.mainTimer();
         
         //Cannot be in GrahicsPanel because of EndlessPanel
-        for (PowerUp powerUp1 : powerUpList) {
-            powerUp1.score(paddle2, player2);
+        for (PowerUp p : powerUpList) {
+            p.score(paddle2, player2);
         }
         ball.bounceOffPaddle(paddle2, player2);
         

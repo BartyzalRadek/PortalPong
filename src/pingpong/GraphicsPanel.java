@@ -18,7 +18,7 @@ import javax.swing.Timer;
  */
 public class GraphicsPanel extends JPanel implements KeyListener {
 
-    public boolean isTeleport = false;
+    private boolean isTeleport = false;
     public Ball ball = new Ball();
     public Teleport teleport = new Teleport();
     public Paddle paddle1 = new Paddle(10, 1, 10); //True speed of paddle is set at KeyPressed
@@ -94,7 +94,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         ball.bounceOffPaddle(paddle1, player1);
         //ball.bounceOffPaddle(paddle2, player2); Handled in children because of Endless
         ball.teleport(isTeleport, teleport);
-        
+
         paddleSizeReturn(paddle1);
         paddleSizeReturn(paddle2);
     }
@@ -133,9 +133,11 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         g.setColor(gameOverColor);
 
         drawLists(g);
-        drawTeleport(g);
         drawHints(g);
         drawScore(g);
+        if (isTeleport) {
+            drawTeleport(g);
+        }
 
         //g.dispose(); Handled in children
     }
@@ -249,18 +251,16 @@ public class GraphicsPanel extends JPanel implements KeyListener {
 
     protected void createTeleport() {
         isTeleport = true;
-        teleport.setVariables(ball);
+        teleport.setLocations(ball);
     }
 
     protected void drawTeleport(Graphics g) {
-        if (isTeleport == true) {
-            teleport.draw(g);
+        teleport.draw(g);
 
-            teleport.duration++;
-            if (teleport.duration == 40) {
-                isTeleport = false;
-                teleport.duration = 0;
-            }
+        teleport.extendDuration(1);
+        if (teleport.isExpired()) {
+            isTeleport = false;
+            teleport.resetDuration();
         }
     }
 

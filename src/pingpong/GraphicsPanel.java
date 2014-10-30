@@ -23,8 +23,8 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     public Teleport teleport = new Teleport();
     public Paddle paddle1 = new Paddle(10, 1, 10); //True speed of paddle is set at KeyPressed
     public Paddle paddle2 = new Paddle(950, 2, 10); //True speed of paddle is set at KeyPressed
-    public Player player1 = new Player();
-    public Player player2 = new Player();
+    protected Player player1 = new Player();
+    protected Player player2 = new Player();
     protected List<Drawable> drawableList = new ArrayList<Drawable>();
     protected List<PowerUp> powerUpList = new ArrayList<PowerUp>();
     protected Color gameOverColor = Color.WHITE; //because of drawSomebodyWon() - switching colors
@@ -337,5 +337,5 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     public boolean isClosePanel() {
         return closePanel;
     }
-    
+
 }

@@ -69,8 +69,8 @@ public class MainForm extends JFrame {
     private static void optionSettings() {
         matrixPanel.setMatrixOn(options.matrixOn);
         matrixPanel.setType(options.type);
-        gFrame.gp.player1.winningScore = options.winningScore;
-        gFrame.gp.player2.winningScore = options.winningScore;
+        //gFrame.gp.player1.winningScore = options.winningScore;
+        //gFrame.gp.player2.winningScore = options.winningScore;
 
         gFrame.gp.fixedSpeed = options.fixedSpeed;
 

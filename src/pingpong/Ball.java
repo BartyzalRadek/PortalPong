@@ -90,12 +90,12 @@ public class Ball implements Drawable {
 
     public void bounceOffPaddle(Paddle paddle, Player player) {
         if (vx < 0) {
-            if (x < (paddle.x + 20) && x > paddle.x && y < (paddle.y + paddle.length) && y > paddle.y) {
+            if (x < (paddle.getX() + 20) && x > paddle.getX() && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY()) {
                 changeAngle(paddle);
                 player.ballReturned += 1;
             }
         } else {
-            if (x > (paddle.x - 10) && x < (paddle.x + 10) && y < (paddle.y + paddle.length) && y > paddle.y) {
+            if (x > (paddle.getX() - 10) && x < (paddle.getX() + 10) && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY()) {
                 changeAngle(paddle);
                 player.ballReturned += 1;
             }
@@ -107,10 +107,10 @@ public class Ball implements Drawable {
         double v = Math.sqrt(vx * vx + vy * vy);    //vysledna rychlost, prepona trojuhelniku
         double tempVx = vx;
         double tempVy = vy;
-        int centerOfPaddleY = (int) (paddle.y + (paddle.length / 2));
-        int difference = (y + 5) - (paddle.y + (paddle.length / 2));
+        int centerOfPaddleY = (int) (paddle.getY() + (paddle.getLength() / 2));
+        int difference = (y + 5) - (paddle.getY() + (paddle.getLength() / 2));
         int sizeOfBlock = 5;
-        int numberOfBlocks = (int) (paddle.length / sizeOfBlock);
+        int numberOfBlocks = (int) (paddle.getLength() / sizeOfBlock);
 
         /*Rozdelim 90 stupnu na pocet casti korespondujici s poctem bloku, na ktere jsem rozdelil
          paddle.
@@ -141,7 +141,7 @@ public class Ball implements Drawable {
     }
 
     private void repairVy(double tempVy, Paddle paddle) {
-        int centerOfPaddleY = (int) (paddle.y + (paddle.length / 2));
+        int centerOfPaddleY = (int) (paddle.getY() + (paddle.getLength() / 2));
 
         if (y < centerOfPaddleY) {
             if (tempVy > 0 && vy > 0) {

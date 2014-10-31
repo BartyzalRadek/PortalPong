@@ -220,9 +220,9 @@ public class EndlessPanel extends GraphicsPanel {
 
         g.drawString("T = +3 points", 500, 230);
         g.drawString("1 ping = +1 point", 500, 270);
-        g.drawString(String.valueOf(player1.plusCount), 410, 150);
-        g.drawString(String.valueOf(player1.minusCount), 410, 190);
-        g.drawString(String.valueOf(player1.tCount), 410, 230);
+        g.drawString(String.valueOf(player1.getPlusCount()), 410, 150);
+        g.drawString(String.valueOf(player1.getMinusCount()), 410, 190);
+        g.drawString(String.valueOf(player1.gettCount()), 410, 230);
         g.drawString(String.valueOf(player1.ballReturned), 410, 270);
         g.drawString(String.valueOf(player1.endlessScore()), 410, 310);
         g.drawString("Enter your name:", 350, 350);

@@ -30,7 +30,7 @@ public class PowerUp implements Drawable {
         v = 1;
 
     }
-    
+
     /*MATRIX BLOCK START*/
     public PowerUp(int random, boolean tmp) { //tmp just for allowing to have 2 constructors
         x = (int) (Math.round(Math.random() * 1000));
@@ -40,14 +40,12 @@ public class PowerUp implements Drawable {
         isDeleted = false;
         this.random = random;
     }
-    
 
     public void drawMatrix(Graphics g, String s) {
         g.setColor(Color.green);
         g.drawString(s.substring(random, random + 1), x, y);
         g.setColor(Color.WHITE);
     }
-    
 
     public void expire() {
         expire++;
@@ -82,29 +80,14 @@ public class PowerUp implements Drawable {
 
     public void score(Paddle paddle, Player player) {
         if (collision(paddle)) {
+            paddle.catchPowerUp(type);
+            player.catchPowerUp(type);
 
             switch (type) {
                 case 0:
-                    if (paddle.player == 1) {
-                        player.teleports += 1;
-                        toCenter();
-                        player.tCount++;
-                    } else {
-                        player.teleports += 1;
-                        toCenter();
-                        player.tCount++;
-                    }
+                    toCenter();
                     break;
-                case 1:
-                    paddle.length += 50;
-                    player.plusCount++;
-                    isDeleted = true;
-                    break;
-                case 2:
-                    if (paddle.length > 50) {
-                        paddle.length -= 50;
-                    }
-                    player.minusCount++;
+                default: 
                     isDeleted = true;
                     break;
             }
@@ -132,7 +115,7 @@ public class PowerUp implements Drawable {
     }
 
     public boolean collision(Paddle paddle) {
-        return (x < (paddle.x + 20) && x > paddle.x && y < (paddle.y + paddle.length) && y > paddle.y);
+        return (x < (paddle.getX() + 20) && x > paddle.getX() && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY());
     }
 
     private int randomSwitchDirection() {

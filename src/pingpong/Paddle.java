@@ -2,7 +2,7 @@ package pingpong;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import javax.swing.JPanel;
+import static pingpong.GameFrame.FRAME_HEIGHT;
 
 /**
  *
@@ -10,37 +10,42 @@ import javax.swing.JPanel;
  */
 public class Paddle implements Drawable {
 
-    public int x;
-    public int y;
-    public int v = 10;
-    public int length;
-    public int width;
-    public int player; //kvuli PowerUp.score()
-    public int center;
-    public int duration; //kvuli GraphicsPanel.paddleSizeReturn()
+    private int length;
+    private int x;
+    private int y;
+    private int duration; ///< Power up effect duration
+    private static final int V = 20; ///< Speed of movement
+    private static final int WIDTH = 20;
+    private int center;
 
-    public Paddle(int x, int player, int v) {
+    public Paddle(int x) {
         this.x = x;
-        this.player = player;
-        this.v = v;
         y = 10;
         length = 100;
-        width = 20;
-        
-
     }
 
-    public void move(Ball ball,int height) {
-        center = (y + (length/2));
-        
+    public void moveUp() {
+        if (y > 0) {
+            y -= V;
+        }
+    }
+
+    public void moveDown() {
+        if ((y + length) < FRAME_HEIGHT) {
+            y += V;
+        }
+    }
+
+    public void AImove(Ball ball, int height) {
+        center = (y + (length / 2));
+
         if (center < ball.y) {
             if ((y + length) < height) {
-                y += v;
+                y += V;
             }
-        }
-        else{
+        } else {
             if (y > 0) {
-                y -= v;
+                y -= V;
             }
         }
     }
@@ -48,10 +53,45 @@ public class Paddle implements Drawable {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
-        g.fillOval(x, y, width, length);
+        g.fillOval(x, y, WIDTH, length);
+    }
+
+    public void lengthReturn() {
+        if (length != 100) {
+            duration++;
+            if (duration == 1000) {
+                length = 100;
+                duration = 0;
+            }
+        }
     }
     
-    public void lengthChange(){
-        
+    public void catchPowerUp(int type){
+        switch (type) {
+                case 1:
+                    length += 50;
+                    break;
+                case 2:
+                    if (length > 50) {
+                        length -= 50;
+                    }
+                    break;
+            }
     }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getLength() {
+        return length;
+    }
+    
+    
+    
+    
 }

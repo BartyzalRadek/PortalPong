@@ -18,20 +18,14 @@ public class MPGraphicsPanel extends GraphicsPanel {
     @Override
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
-        
+
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case KeyEvent.VK_UP:
-                if (paddle2.y > 0) {
-                    paddle2.y -= 20;
-                }
-
+                paddle2.moveUp();
                 break;
             case KeyEvent.VK_DOWN:
-                if ((paddle2.y + paddle2.length) < this.getHeight()) {
-                    paddle2.y += 20;
-                }
-
+                paddle2.moveDown();
                 break;
             case KeyEvent.VK_P:
                 if (player2.teleports > 0) {

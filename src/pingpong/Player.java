@@ -7,14 +7,14 @@ package pingpong;
 public class Player {
     
     public int score;
-    public int winningScore = 10;
-    private int lives = 1; //A starting number of lives, its not changed after starting the game
     public int teleports;
+    private int winningScore = 10;
+    private int lives = 1; //A starting number of lives, its not changed after starting the game
     
     //--Endless score variables start
-    public int plusCount;
-    public int minusCount;
-    public int tCount;
+    private int plusCount;
+    private int minusCount;
+    private int tCount;
     public int ballReturned;
     //--Endless score variables end
 
@@ -57,6 +57,35 @@ public class Player {
         ballReturned = 0;
         teleports = 3;
     }
+    
+    public void catchPowerUp(int type){
+        switch (type) {
+                case 0:
+                    teleports += 1;
+                    tCount++;
+                    break;
+                case 1:
+                    plusCount++;
+                    break;
+                case 2:
+                    minusCount++;
+                    break;
+            }
+    }
+
+    public int getPlusCount() {
+        return plusCount;
+    }
+
+    public int getMinusCount() {
+        return minusCount;
+    }
+
+    public int gettCount() {
+        return tCount;
+    }
+    
+    
     
     
     

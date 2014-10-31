@@ -19,7 +19,7 @@ public class SPGraphicsPanel extends GraphicsPanel {
     public void mainTimer() {
         super.mainTimer();
 
-        paddle2.move(ball, 500);
+        paddle2.AImove(ball, 500);
         AIteleport();
     }
 
@@ -40,7 +40,7 @@ public class SPGraphicsPanel extends GraphicsPanel {
      * Different AI than the one in Endless Panel
      */
     private void AIteleport() {
-        int difference = (ball.y > paddle2.y ? ball.y - paddle2.y : paddle2.y - ball.y);
+        int difference = (ball.y > paddle2.getY() ? ball.y - paddle2.getY() : paddle2.getY() - ball.y);
         if (ball.x > 900 && difference > 200) {
             if (player2.teleports > 0) {
                 createTeleport();

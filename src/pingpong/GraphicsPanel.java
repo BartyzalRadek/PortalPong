@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import static pingpong.GameFrame.FRAME_WIDTH;
 
 /**
  *
@@ -23,8 +24,8 @@ public class GraphicsPanel extends JPanel implements KeyListener {
 
     protected Ball ball = new Ball();
     protected Teleport teleport = new Teleport();
-    protected Paddle paddle1 = new Paddle(10, 1, 10); //True speed of paddle is set at KeyPressed
-    protected Paddle paddle2 = new Paddle(950, 2, 10); //True speed of paddle is set at KeyPressed
+    protected Paddle paddle1 = new Paddle(10); //True speed of paddle is set at KeyPressed
+    protected Paddle paddle2 = new Paddle(FRAME_WIDTH - 50); //True speed of paddle is set at KeyPressed
     protected Player player1 = new Player();
     protected Player player2 = new Player();
     protected List<Drawable> drawableList = new ArrayList<Drawable>();
@@ -95,8 +96,8 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         }
         ball.teleport(isTeleport, teleport);
 
-        paddleSizeReturn(paddle1);
-        paddleSizeReturn(paddle2);
+        paddle1.lengthReturn();
+        paddle2.lengthReturn();
 
         repaint();
     }
@@ -146,7 +147,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         }
     }
 
-    protected void paddleSizeReturn(Paddle paddle) {
+    /*protected void paddleSizeReturn(Paddle paddle) {
         if (paddle.length != 100) {
             paddle.duration++;
             if (paddle.duration == 1000) {
@@ -154,7 +155,7 @@ public class GraphicsPanel extends JPanel implements KeyListener {
                 paddle.duration = 0;
             }
         }
-    }
+    }*/
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -165,15 +166,11 @@ public class GraphicsPanel extends JPanel implements KeyListener {
         int keyCode = e.getKeyCode();
         switch (keyCode) {
             case KeyEvent.VK_W:
-                if (paddle1.y > 0) {
-                    paddle1.y -= 20;
-                }
+                paddle1.moveUp();
 
                 break;
             case KeyEvent.VK_S:
-                if ((paddle1.y + paddle1.length) < this.getHeight()) {
-                    paddle1.y += 20;
-                }
+                paddle1.moveDown();
 
                 break;
             case KeyEvent.VK_E:

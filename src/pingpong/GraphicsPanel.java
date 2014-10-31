@@ -24,8 +24,8 @@ public class GraphicsPanel extends JPanel implements KeyListener {
 
     protected Ball ball = new Ball();
     protected Teleport teleport = new Teleport();
-    protected Paddle paddle1 = new Paddle(10); //True speed of paddle is set at KeyPressed
-    protected Paddle paddle2 = new Paddle(FRAME_WIDTH - 50); //True speed of paddle is set at KeyPressed
+    protected Paddle paddle1 = new Paddle(10); 
+    protected Paddle paddle2 = new Paddle(FRAME_WIDTH - 50); 
     protected Player player1 = new Player();
     protected Player player2 = new Player();
     protected List<Drawable> drawableList = new ArrayList<Drawable>();
@@ -39,8 +39,6 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     protected boolean closePanel = false; //True = this panel should be closed or made invisible
     protected boolean hasStarted = false; //True if the game has already started
 
-    public GraphicsPanel() {
-    }
 
     //Main timer
     protected Timer mainTimer = new Timer(20, new ActionListener() {
@@ -146,16 +144,6 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             g.dispose(); //If paint() is overriden, g must be disposed in overriding method
         }
     }
-
-    /*protected void paddleSizeReturn(Paddle paddle) {
-        if (paddle.length != 100) {
-            paddle.duration++;
-            if (paddle.duration == 1000) {
-                paddle.length = 100;
-                paddle.duration = 0;
-            }
-        }
-    }*/
 
     @Override
     public void keyTyped(KeyEvent e) {

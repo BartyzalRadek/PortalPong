@@ -2,6 +2,7 @@ package pingpong;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import static pingpong.MainForm.FRAME_WIDTH;
 import static pingpong.MainForm.MENU_PANEL;
+import static pingpong.MainForm.OPTIONS_PANEL;
 
 /**
  *
@@ -183,7 +185,12 @@ public class GraphicsPanel extends JPanel {
     }
     
     protected void getOptions() {
-        System.out.println(getParent().getComponent(6).getName());
+        for(Component p : getParent().getComponents()){
+            if(p.getName().equalsIgnoreCase(OPTIONS_PANEL)){
+                //(OptionsPanel)(p).g
+                //player1.setLives();
+            }
+        }
         
     }
 

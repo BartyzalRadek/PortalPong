@@ -49,13 +49,12 @@ public class OptionsPanel extends JPanel {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     
-    public boolean matrixOn = true;
-    public int type = 0;
-    public int winningScore = 10;
-    public boolean fixedSpeed = true;
-    public boolean endlessFixedSpeed = true;
-    public int lives = 1;
-    public boolean toClose = false;
+    private boolean matrixOn = true;
+    private int type = 0;
+    private int winningScore = 10;
+    private boolean fixedSpeed = true;
+    private boolean endlessFixedSpeed = true;
+    private int lives = 1;
     
     public OptionsPanel(){
         initComponents();
@@ -698,4 +697,30 @@ public class OptionsPanel extends JPanel {
         jLabel29.setForeground(new Color(153, 153, 153));
         endlessFixedSpeed = false;
     }
+
+    public boolean isMatrixOn() {
+        return matrixOn;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public int getWinningScore() {
+        return winningScore;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public boolean isFixedSpeed() {
+        return fixedSpeed;
+    }
+
+    public boolean isEndlessFixedSpeed() {
+        return endlessFixedSpeed;
+    }
+
+    
 }

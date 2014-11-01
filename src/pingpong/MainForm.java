@@ -174,7 +174,8 @@ public class MainForm {
         //Show specific card
         CardLayout cl = (CardLayout) (cards.getLayout());
         cl.show(cards, MENU_PANEL);
-        menuCard.requestFocus();
+        
+        
     }
 
     private static void createAndShowGUI() {

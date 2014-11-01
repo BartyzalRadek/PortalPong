@@ -2,6 +2,8 @@ package pingpong;
 
 import java.awt.GridLayout;
 import javax.swing.JFrame;
+import static pingpong.MainForm.FRAME_HEIGHT;
+import static pingpong.MainForm.FRAME_WIDTH;
 
 /**
  *
@@ -9,9 +11,6 @@ import javax.swing.JFrame;
  */
 public class GameFrame extends JFrame {
     
-    public static final int FRAME_WIDTH = 1000;
-    public static final int FRAME_HEIGHT = 500;
-
     /*public MPGraphicsPanel mpgp;
     public SPGraphicsPanel spgp;
     public EndlessPanel endlessgp;*/

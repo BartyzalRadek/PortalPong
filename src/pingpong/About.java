@@ -2,8 +2,8 @@
 package pingpong;
 
 import java.awt.Font;
-import static pingpong.GameFrame.FRAME_HEIGHT;
-import static pingpong.GameFrame.FRAME_WIDTH;
+import static pingpong.MainForm.FRAME_HEIGHT;
+import static pingpong.MainForm.FRAME_WIDTH;
 
 /**
  *

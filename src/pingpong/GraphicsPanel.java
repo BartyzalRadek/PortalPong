@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import static pingpong.GameFrame.FRAME_WIDTH;
+import static pingpong.MainForm.FRAME_WIDTH;
 
 /**
  *

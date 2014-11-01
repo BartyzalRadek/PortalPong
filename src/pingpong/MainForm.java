@@ -1,439 +1,189 @@
 package pingpong;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
-import javax.swing.Timer;
-import static pingpong.GameFrame.FRAME_HEIGHT;
-import static pingpong.GameFrame.FRAME_WIDTH;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Radek Bartyzal
  */
-public class MainForm extends JFrame {
+public class MainForm {
 
+    private JPanel cards; ///< A panel that uses CardLayout
+    public final static int FRAME_HEIGHT = 500;
+    public final static int FRAME_WIDTH = 1000;
+    public final static String MENU_PANEL = "Card with menu";
+    public final static String OPTIONS_PANEL = "Card with options";
+    public final static String ABOUT_PANEL = "Card with about";
+    public final static String LEADERBOARDS_PANEL = "Card with leaderboards";
+    public final static String SP_PANEL = "Card with singleplayer mode choice";
+    public final static String CLASSIC_PANEL = "Card with classic singleplayer";
+    public final static String ENDLESS_PANEL = "Card with endless singleplayer";
+    public final static String MP_PANEL = "Card with multiplayer";
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private static javax.swing.JLabel jLabel7;
-    private static javax.swing.JLabel jLabel8;
 
-    /**
-     * Creates new form Menu
-     */
-    public MainForm() {
-        initComponents();
-        this.setBounds(100, 100, FRAME_WIDTH, FRAME_HEIGHT);
-        
-    }
-
-    private static MatrixPanel matrixPanel = new MatrixPanel();
-    private static MainForm mainForm = new MainForm();
-    private static GameFrame gFrame;
-    private static Options options;
-    private static Leaderboards leaderboards;
-    private static About about;
-
-    private static void backToMenu() {
-        if (gFrame != null && gFrame.gp.closePanel) {
-            gFrame.setVisible(false);
-            mainForm.setVisible(true);
-            gFrame.dispose();
-        }
-        if (about != null && about.toClose) {
-            about.toClose = false;
-            about.dispose();
-            mainForm.setVisible(true);
-        }
-        if (options != null && options.toClose) {
-            options.toClose = false;
-            options.dispose();
-            //optionSettings();
-            mainForm.setVisible(true);
-        }
-        if (leaderboards != null && leaderboards.toClose) {
-            leaderboards.toClose = false;
-            leaderboards.dispose();
-            mainForm.setVisible(true);
-        }
-
-        
-
-    }
-
-    private static void optionSettings() {
-        matrixPanel.setMatrixOn(options.matrixOn);
-        matrixPanel.setType(options.type);
-        //gFrame.gp.player1.winningScore = options.winningScore;
-        //gFrame.gp.player2.winningScore = options.winningScore;
-
-        gFrame.gp.fixedSpeed = options.fixedSpeed;
-
-        /*Because of Player.endlessWin()*/
-        gFrame.gp.player1.setLives(options.lives);
-        gFrame.gp.player2.setLives(options.lives);
-
-        //gFrame.gp.leaderboardsArray = leaderboards.leaderboardsPanel.getLeaderboard();
-        if (gFrame.gp.hasSomebodyWon()) {
-
-            //leaderboards.leaderboardsPanel.setLeaderboard(endless.endlessgp.finalArray);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Portal Pong");
-        setBackground(new java.awt.Color(0, 0, 0));
-        setResizable(false);
-
-        matrixPanel.setBackground(new java.awt.Color(0, 0, 0));
-        matrixPanel.setPreferredSize(new java.awt.Dimension(1000, 500));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel1.setText("Multiplayer");
-        jLabel1.setMaximumSize(new java.awt.Dimension(110, 25));
-        jLabel1.setMinimumSize(new java.awt.Dimension(110, 25));
-        jLabel1.setPreferredSize(new java.awt.Dimension(40, 20));
+    private void labelActions() {
+        //Singleplayer
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
+                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                CardLayout cl = (CardLayout) (cards.getLayout());
+                cl.show(cards, SP_PANEL);
             }
 
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel1MouseEntered(evt);
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel1MouseExited(evt);
-            }
         });
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20));
-        jLabel2.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel2.setText("Singleplayer");
-        jLabel2.setMaximumSize(new java.awt.Dimension(110, 25));
-        jLabel2.setMinimumSize(new java.awt.Dimension(110, 25));
-        jLabel2.setPreferredSize(new java.awt.Dimension(40, 20));
+        
+        //Multiplayer
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
-
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2MouseClicked(evt);
+                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                CardLayout cl = (CardLayout) (cards.getLayout());
+                cl.show(cards, MP_PANEL);
             }
 
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel2MouseEntered(evt);
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel2MouseExited(evt);
-            }
         });
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20));
-        jLabel3.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel3.setText("Options");
-        jLabel3.setMaximumSize(new java.awt.Dimension(110, 25));
-        jLabel3.setMinimumSize(new java.awt.Dimension(110, 25));
+        
+        //Options
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
-
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3MouseClicked(evt);
+                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                CardLayout cl = (CardLayout) (cards.getLayout());
+                cl.show(cards, OPTIONS_PANEL);
             }
 
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel3MouseEntered(evt);
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel3MouseExited(evt);
-            }
         });
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20));
-        jLabel4.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel4.setText("Leaderboards");
-        jLabel4.setMaximumSize(new java.awt.Dimension(110, 25));
-        jLabel4.setMinimumSize(new java.awt.Dimension(110, 25));
+        
+        //Leaderboards
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
+                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                CardLayout cl = (CardLayout) (cards.getLayout());
+                cl.show(cards, LEADERBOARDS_PANEL);
             }
 
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel4MouseEntered(evt);
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel4MouseExited(evt);
-            }
         });
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 20));
-        jLabel5.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel5.setText("About");
-        jLabel5.setMaximumSize(new java.awt.Dimension(110, 25));
-        jLabel5.setMinimumSize(new java.awt.Dimension(110, 25));
+        
+        //About
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
+                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                CardLayout cl = (CardLayout) (cards.getLayout());
+                cl.show(cards, ABOUT_PANEL);
             }
 
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel5MouseEntered(evt);
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel5MouseExited(evt);
-            }
         });
-
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 20));
-        jLabel6.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel6.setText("Exit");
-        jLabel6.setMaximumSize(new java.awt.Dimension(110, 25));
-        jLabel6.setMinimumSize(new java.awt.Dimension(110, 25));
+        
+        //Exit
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
+                System.exit(1);
             }
 
+        });
+        
+        
+    }
+
+    private void setLabelParam(final JLabel label) {
+        label.setFont(new java.awt.Font("Tahoma", 0, 20));
+        label.setForeground(new java.awt.Color(240, 240, 240));
+        label.setMaximumSize(new java.awt.Dimension(200, 25));
+        label.setMinimumSize(new java.awt.Dimension(200, 25));
+        label.setPreferredSize(new java.awt.Dimension(200, 25));
+        label.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel6MouseEntered(evt);
+                label.setFont(new Font("Tahoma", Font.BOLD, 22));
             }
 
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel6MouseExited(evt);
+                label.setFont(new Font("Tahoma", Font.PLAIN, 20));
             }
         });
+    }
 
-        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 20));
-        jLabel7.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel7.setText("Classic");
-        jLabel7.setMaximumSize(new java.awt.Dimension(110, 25));
-        jLabel7.setMinimumSize(new java.awt.Dimension(110, 25));
-        jLabel7.setVisible(false);
-        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+    //private JLabel labels[];
+    public void addComponentToPane(Container pane) {
+        //Create the "cards".
+        JPanel menuCard = new MatrixPanel();
+        menuCard.setLayout(new BoxLayout(menuCard, BoxLayout.Y_AXIS));
 
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel7MouseClicked(evt);
-            }
+        jLabel1 = new javax.swing.JLabel("Singleplayer");
+        jLabel2 = new javax.swing.JLabel("Multiplayer");
+        jLabel3 = new javax.swing.JLabel("Options");
+        jLabel4 = new javax.swing.JLabel("Leaderboards");
+        jLabel5 = new javax.swing.JLabel("About");
+        jLabel6 = new javax.swing.JLabel("Exit");
 
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel7MouseEntered(evt);
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel7MouseExited(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 20));
-        jLabel8.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel8.setText("Endless");
-        jLabel8.setMaximumSize(new java.awt.Dimension(110, 25));
-        jLabel8.setMinimumSize(new java.awt.Dimension(110, 25));
-        jLabel8.setVisible(false);
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
-
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
-            }
-
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel8MouseEntered(evt);
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel8MouseExited(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(matrixPanel);
-        matrixPanel.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGap(65, 65, 65).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(18, 18, 18).addComponent(jLabel8).addGap(18, 18, 18).addComponent(jLabel7).addContainerGap()).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 923, Short.MAX_VALUE).addContainerGap()).addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap()).addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabel5).addContainerGap()).addGroup(jPanel1Layout.createSequentialGroup().addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE).addGap(870, 870, 870)))))));
-        jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addGroup(jPanel1Layout.createSequentialGroup().addGap(104, 104, 104).addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(18, 18, 18).addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE).addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE).addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)).addGap(18, 18, 18).addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(18, 18, 18).addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(18, 18, 18).addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE).addGap(18, 18, 18).addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE).addContainerGap(90, Short.MAX_VALUE)));
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(matrixPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING).addComponent(matrixPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE));
-
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
-
-        jLabel6.setFont(new Font("Tahoma", Font.PLAIN, 20));
-    }//GEN-LAST:event_jLabel6MouseExited
-
-    private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
-
-        jLabel6.setFont(new Font("Tahoma", Font.BOLD, 22));
-    }//GEN-LAST:event_jLabel6MouseEntered
-
-    //Exit
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        setVisible(false);
-        dispose();
-        System.exit(0);
-    }//GEN-LAST:event_jLabel6MouseClicked
-
-    private void jLabel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseExited
-
-        jLabel5.setFont(new Font("Tahoma", Font.PLAIN, 20));
-    }//GEN-LAST:event_jLabel5MouseExited
-
-    private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
-
-        jLabel5.setFont(new Font("Tahoma", Font.BOLD, 22));
-    }//GEN-LAST:event_jLabel5MouseEntered
-
-    //About
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        jLabel5.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        setVisible(false);
-        about = new About();
-        dispose();
-        about.setVisible(true);
-    }//GEN-LAST:event_jLabel5MouseClicked
-
-    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
-
-        jLabel4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-    }//GEN-LAST:event_jLabel4MouseExited
-
-    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
-
-        jLabel4.setFont(new Font("Tahoma", Font.BOLD, 22));
-    }//GEN-LAST:event_jLabel4MouseEntered
-
-    //Leaderboards
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        jLabel4.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        setVisible(false);
-        leaderboards = new Leaderboards();
-        dispose();
-        leaderboards.setVisible(true);
-    }//GEN-LAST:event_jLabel4MouseClicked
-
-    private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseExited
-
-        jLabel3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-    }//GEN-LAST:event_jLabel3MouseExited
-
-    private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseEntered
-
-        jLabel3.setFont(new Font("Tahoma", Font.BOLD, 22));
-    }//GEN-LAST:event_jLabel3MouseEntered
-
-    //Options
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
-        jLabel3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        setVisible(false);
-        options = new Options();
-        dispose();
-        options.setVisible(true);
-    }//GEN-LAST:event_jLabel3MouseClicked
-
-    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
-
-        jLabel2.setFont(new Font("Tahoma", Font.BOLD, 22));
-    }//GEN-LAST:event_jLabel2MouseEntered
-
-    private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
-        jLabel2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-
-    }//GEN-LAST:event_jLabel2MouseExited
-
-    //Singleplayer
-    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        jLabel2.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        if (jLabel7.isVisible()) {
-            jLabel7.setVisible(false);
-            jLabel8.setVisible(false);
-        } else {
-            jLabel7.setVisible(true);
-            jLabel8.setVisible(true);
+        JLabel labels[] = {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6};
+        for (final JLabel label : labels) {
+            label.setAlignmentX(Component.LEFT_ALIGNMENT);
+            setLabelParam(label);
         }
-    }//GEN-LAST:event_jLabel2MouseClicked
 
-    private void jLabel1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseExited
+        labelActions();
 
-        jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-    }//GEN-LAST:event_jLabel1MouseExited
+        menuCard.add(Box.createRigidArea(new Dimension(20, 100)));
+        for (JLabel label : labels) {
+            menuCard.add(label);
+            menuCard.add(Box.createRigidArea(new Dimension(20, 20)));
+        }
 
-    private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
+        JPanel optionsCard = new OptionsPanel();
+        JPanel aboutCard = new AboutPanel();
+        JPanel leaderCard = new LeaderboardsPanel();
+        JPanel spCard = new SPChoicePanel();
+        JPanel mpCard = new MPGraphicsPanel();
+        JPanel classicCard = new SPGraphicsPanel();
+        JPanel endlessCard = new EndlessPanel();
 
-        jLabel1.setFont(new Font("Tahoma", Font.BOLD, 22));
-    }//GEN-LAST:event_jLabel1MouseEntered
+        //Create the panel that contains the "cards".
+        cards = new JPanel(new CardLayout());
+        cards.add(spCard, SP_PANEL);
+        cards.add(mpCard, MP_PANEL);
+        cards.add(classicCard, CLASSIC_PANEL);
+        cards.add(endlessCard, ENDLESS_PANEL);
+        cards.add(menuCard, MENU_PANEL);
+        cards.add(optionsCard, OPTIONS_PANEL);
+        cards.add(leaderCard, LEADERBOARDS_PANEL);
+        cards.add(aboutCard, ABOUT_PANEL);
 
-    //Multiplayer
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        setVisible(false);
-        gFrame = new GameFrame("mp");
-        dispose();
-        gFrame.setVisible(true);
-    }//GEN-LAST:event_jLabel1MouseClicked
+        pane.add(cards, BorderLayout.CENTER);
 
-    private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
-        jLabel7.setFont(new Font("Tahoma", Font.PLAIN, 20));
-    }//GEN-LAST:event_jLabel7MouseExited
+        //Show specific card
+        CardLayout cl = (CardLayout) (cards.getLayout());
+        cl.show(cards, MENU_PANEL);
+    }
 
-    private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
-        jLabel7.setFont(new Font("Tahoma", Font.BOLD, 22));
-    }//GEN-LAST:event_jLabel7MouseEntered
+    private static void createAndShowGUI() {
+        //Create and set up the window.
+        JFrame frame = new JFrame("Portal Pong");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBounds(100, 100, FRAME_WIDTH, FRAME_HEIGHT);
+        frame.setResizable(false);
 
-    //Singleplayer
-    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
-        jLabel7.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        setVisible(false);
-        gFrame = new GameFrame("sp");
-        gFrame.setVisible(true);
-        dispose();
-    }//GEN-LAST:event_jLabel7MouseClicked
+        //Create and set up the content pane.
+        MainForm mainFrame = new MainForm();
+        mainFrame.addComponentToPane(frame.getContentPane());
 
-    private void jLabel8MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseExited
-        jLabel8.setFont(new Font("Tahoma", Font.PLAIN, 20));
-    }//GEN-LAST:event_jLabel8MouseExited
-
-    private void jLabel8MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseEntered
-        jLabel8.setFont(new Font("Tahoma", Font.BOLD, 22));
-    }//GEN-LAST:event_jLabel8MouseEntered
-
-    //Endless
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
-        jLabel8.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        setVisible(false);
-        gFrame = new GameFrame("endless");
-        dispose();
-        gFrame.setVisible(true);
-    }//GEN-LAST:event_jLabel8MouseClicked
+        //Display the window.
+        frame.setVisible(true);
+    }
 
     /**
      * @param args the command line arguments
@@ -462,16 +212,11 @@ public class MainForm extends JFrame {
         }
         //</editor-fold>
 
-        Timer timer = new Timer(10, new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                backToMenu();
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                createAndShowGUI();
             }
         });
-
-        mainForm.setVisible(true);
-        timer.start();
 
     }
 }

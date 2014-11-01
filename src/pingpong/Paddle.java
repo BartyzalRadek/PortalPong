@@ -2,7 +2,7 @@ package pingpong;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import static pingpong.GameFrame.FRAME_HEIGHT;
+import static pingpong.MainForm.FRAME_HEIGHT;
 
 /**
  *

@@ -1,12 +1,12 @@
 package pingpong;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.AbstractAction;
@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import static pingpong.MainForm.FRAME_WIDTH;
+import static pingpong.MainForm.MENU_PANEL;
 
 /**
  *
@@ -23,7 +24,7 @@ import static pingpong.MainForm.FRAME_WIDTH;
  */
 public class GraphicsPanel extends JPanel {
 
-    protected boolean isEndless = false; //Whether the game mode is endless - for ball bouncing etc
+    protected boolean isEndless = false; ///< Whether the game mode is endless - for ball bouncing etc
     private boolean isTeleport = false;
 
     protected Ball ball = new Ball();
@@ -35,13 +36,12 @@ public class GraphicsPanel extends JPanel {
     protected List<Drawable> drawableList = new ArrayList<Drawable>();
     protected List<PowerUp> powerUpList = new ArrayList<PowerUp>();
 
-    protected Color gameOverColor = Color.WHITE; //because of drawSomebodyWon() - switching colors
-    protected boolean colorChanged = false; //because of drawSomebodyWon()
+    protected Color gameOverColor = Color.WHITE; ///< because of drawSomebodyWon() - switching colors
+    protected boolean colorChanged = false; ///< because of drawSomebodyWon()
 
     protected boolean gamePaused = false;
-    protected boolean fixedSpeed = false;  //speed of ball is not increasing in time
-    protected boolean closePanel = false; //True = this panel should be closed or made invisible
-    protected boolean hasStarted = false; //True if the game has already started
+    protected boolean hasStarted = false; ///< True if the game has already started
+    protected boolean fixedSpeed = false;  ///< speed of ball is not increasing in time
 
     protected InputMap im = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
     protected ActionMap am = this.getActionMap();
@@ -285,7 +285,6 @@ public class GraphicsPanel extends JPanel {
         player2.reset();
         powerUpList.clear();
         colorChanged = false;
-        closePanel = false;
         hasStarted = false;
         gamePaused = false;
 
@@ -293,8 +292,10 @@ public class GraphicsPanel extends JPanel {
         ball.reset();
     }
 
-    public boolean isClosePanel() {
-        return closePanel;
+    protected void backToMenu() {
+        reset();
+        CardLayout cl = (CardLayout) (getParent().getLayout());
+        cl.show(getParent(), MENU_PANEL);
     }
 
     /**
@@ -349,7 +350,7 @@ public class GraphicsPanel extends JPanel {
 
                 case KeyEvent.VK_ENTER:
                     if (hasSomebodyWon() || gamePaused) {
-                        closePanel = true;
+                        backToMenu();
                     }
                     break;
                 case KeyEvent.VK_ESCAPE:

@@ -37,7 +37,7 @@ public class MainForm {
     private javax.swing.JLabel jLabel6;
     private JPanel optionsCard;
     private JPanel aboutCard;
-    private JPanel leaderCard;
+    private LeaderboardsPanel leaderCard;
     private SPChoicePanel spCard;
     private MPGraphicsPanel mpCard;
     private SPGraphicsPanel classicCard;
@@ -60,9 +60,6 @@ public class MainForm {
                 jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
                 CardLayout cl = (CardLayout) (cards.getLayout());
                 cl.show(cards, MP_PANEL);
-                //mpCard.requestFocus();
-                //mpCard.requestFocusInWindow();
-                //cards.requestFocusInWindow();
             }
 
         });

@@ -48,7 +48,7 @@ public class EndlessPanel extends GraphicsPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if (showFinalScore || gamePaused) {
-                    closePanel = true;
+                    backToMenu();
                 }
                 if (!showFinalScore && hasSomebodyWon()) {
                     showFinalScore = true;

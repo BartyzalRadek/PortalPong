@@ -43,11 +43,11 @@ public class GameFrame extends JFrame {
 
     }
 
-    public void checkVisible() {
+    /*public void checkVisible() {
         if (gp.isClosePanel()) {
             visible = false;
             gp.reset();
         }
 
-    }
+    }*/
 }

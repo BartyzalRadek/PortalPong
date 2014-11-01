@@ -23,7 +23,7 @@ public class MatrixPanel extends JPanel {
     private String numbers = "0123456789";
     private String signs = "~!@#$%^&*()_+/*-.°=´)§¨,[];',/\"";
     
-    public Timer timer1 = new Timer(30, new ActionListener() {
+    private Timer timer1 = new Timer(30, new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -41,7 +41,7 @@ public class MatrixPanel extends JPanel {
         }
     });
     //pridavani novych znaku
-    public Timer timer2 = new Timer(100, new ActionListener() {
+    private Timer timer2 = new Timer(100, new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {

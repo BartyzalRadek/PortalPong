@@ -9,7 +9,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
+import javax.swing.InputMap;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import static pingpong.MainForm.FRAME_WIDTH;
 
@@ -17,15 +21,15 @@ import static pingpong.MainForm.FRAME_WIDTH;
  *
  * @author Radek Bartyzal
  */
-public class GraphicsPanel extends JPanel implements KeyListener {
+public class GraphicsPanel extends JPanel {
 
     protected boolean isEndless = false; //Whether the game mode is endless - for ball bouncing etc
     private boolean isTeleport = false;
 
     protected Ball ball = new Ball();
     protected Teleport teleport = new Teleport();
-    protected Paddle paddle1 = new Paddle(10); 
-    protected Paddle paddle2 = new Paddle(FRAME_WIDTH - 50); 
+    protected Paddle paddle1 = new Paddle(10);
+    protected Paddle paddle2 = new Paddle(FRAME_WIDTH - 50);
     protected Player player1 = new Player();
     protected Player player2 = new Player();
     protected List<Drawable> drawableList = new ArrayList<Drawable>();
@@ -39,6 +43,26 @@ public class GraphicsPanel extends JPanel implements KeyListener {
     protected boolean closePanel = false; //True = this panel should be closed or made invisible
     protected boolean hasStarted = false; //True if the game has already started
 
+    protected InputMap im = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+    protected ActionMap am = this.getActionMap();
+
+    protected void setKeyBindings() {
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), KeyEvent.VK_SPACE);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), KeyEvent.VK_W);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), KeyEvent.VK_S);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0), KeyEvent.VK_E);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), KeyEvent.VK_ESCAPE);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), KeyEvent.VK_A);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0), KeyEvent.VK_Q);
+
+        am.put(KeyEvent.VK_SPACE, new Action(KeyEvent.VK_SPACE));
+        am.put(KeyEvent.VK_W, new Action(KeyEvent.VK_W));
+        am.put(KeyEvent.VK_S, new Action(KeyEvent.VK_S));
+        am.put(KeyEvent.VK_E, new Action(KeyEvent.VK_E));
+        am.put(KeyEvent.VK_ESCAPE, new Action(KeyEvent.VK_ESCAPE));
+        am.put(KeyEvent.VK_A, new Action(KeyEvent.VK_A));
+        am.put(KeyEvent.VK_Q, new Action(KeyEvent.VK_Q));
+    }
 
     //Main timer
     protected Timer mainTimer = new Timer(20, new ActionListener() {
@@ -143,54 +167,6 @@ public class GraphicsPanel extends JPanel implements KeyListener {
             drawSomebodyWon(g);
             g.dispose(); //If paint() is overriden, g must be disposed in overriding method
         }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        switch (keyCode) {
-            case KeyEvent.VK_W:
-                paddle1.moveUp();
-
-                break;
-            case KeyEvent.VK_S:
-                paddle1.moveDown();
-
-                break;
-            case KeyEvent.VK_E:
-                if (player1.teleports > 0) {
-                    createTeleport();
-                    player1.teleports -= 1;
-                }
-
-                break;
-            case KeyEvent.VK_Q:
-                ball.vx += 1;
-                ball.vy += 1;
-                break;
-            case KeyEvent.VK_A:
-                ball.vx -= 1;
-                ball.vy -= 1;
-                break;
-            case KeyEvent.VK_ESCAPE:
-                if (!hasSomebodyWon() && hasStarted) {
-                    pauseGame();
-                }
-                break;
-            case KeyEvent.VK_SPACE:
-                if (!gamePaused) {
-                    startGame();
-                }
-                break;
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
     }
 
     protected void pauseGame() {
@@ -319,6 +295,76 @@ public class GraphicsPanel extends JPanel implements KeyListener {
 
     public boolean isClosePanel() {
         return closePanel;
+    }
+
+    /**
+     * Nested class, to be able to access internal varibles player1, paddle1 etc
+     */
+    public class Action extends AbstractAction {
+
+        private int keyCode;
+
+        public Action(int keyCode) {
+            this.keyCode = keyCode;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            switch (keyCode) {
+                case KeyEvent.VK_W:
+                    paddle1.moveUp();
+
+                    break;
+                case KeyEvent.VK_S:
+                    paddle1.moveDown();
+
+                    break;
+                case KeyEvent.VK_UP:
+                    paddle2.moveUp();
+                    break;
+                case KeyEvent.VK_DOWN:
+                    paddle2.moveDown();
+                    break;
+                case KeyEvent.VK_P:
+                    if (player2.teleports > 0) {
+                        createTeleport();
+                        player2.teleports -= 1;
+                    }
+                    break;
+                case KeyEvent.VK_E:
+                    if (player1.teleports > 0) {
+                        createTeleport();
+                        player1.teleports -= 1;
+                    }
+
+                    break;
+                case KeyEvent.VK_Q:
+                    ball.vx += 1;
+                    ball.vy += 1;
+                    break;
+                case KeyEvent.VK_A:
+                    ball.vx -= 1;
+                    ball.vy -= 1;
+                    break;
+
+                case KeyEvent.VK_ENTER:
+                    if (hasSomebodyWon() || gamePaused) {
+                        closePanel = true;
+                    }
+                    break;
+                case KeyEvent.VK_ESCAPE:
+                    if (!hasSomebodyWon() && hasStarted) {
+                        pauseGame();
+                    }
+                    break;
+                case KeyEvent.VK_SPACE:
+                    if (!gamePaused) {
+                        startGame();
+                    }
+                    break;
+            }
+        }
+
     }
 
 }

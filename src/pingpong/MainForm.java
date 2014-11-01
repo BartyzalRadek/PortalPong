@@ -35,6 +35,13 @@ public class MainForm {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private JPanel optionsCard;
+    private JPanel aboutCard;
+    private JPanel leaderCard;
+    private SPChoicePanel spCard;
+    private MPGraphicsPanel mpCard;
+    private SPGraphicsPanel classicCard;
+    private EndlessPanel endlessCard;
 
     private void labelActions() {
         //Singleplayer
@@ -46,17 +53,20 @@ public class MainForm {
             }
 
         });
-        
+
         //Multiplayer
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
                 CardLayout cl = (CardLayout) (cards.getLayout());
                 cl.show(cards, MP_PANEL);
+                //mpCard.requestFocus();
+                //mpCard.requestFocusInWindow();
+                //cards.requestFocusInWindow();
             }
 
         });
-        
+
         //Options
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -66,7 +76,7 @@ public class MainForm {
             }
 
         });
-        
+
         //Leaderboards
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -76,7 +86,7 @@ public class MainForm {
             }
 
         });
-        
+
         //About
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -86,7 +96,7 @@ public class MainForm {
             }
 
         });
-        
+
         //Exit
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -94,8 +104,7 @@ public class MainForm {
             }
 
         });
-        
-        
+
     }
 
     private void setLabelParam(final JLabel label) {
@@ -144,13 +153,13 @@ public class MainForm {
             menuCard.add(Box.createRigidArea(new Dimension(20, 20)));
         }
 
-        JPanel optionsCard = new OptionsPanel();
-        JPanel aboutCard = new AboutPanel();
-        JPanel leaderCard = new LeaderboardsPanel();
-        JPanel spCard = new SPChoicePanel();
-        JPanel mpCard = new MPGraphicsPanel();
-        JPanel classicCard = new SPGraphicsPanel();
-        JPanel endlessCard = new EndlessPanel();
+        optionsCard = new OptionsPanel();
+        aboutCard = new AboutPanel();
+        leaderCard = new LeaderboardsPanel();
+        spCard = new SPChoicePanel();
+        mpCard = new MPGraphicsPanel();
+        classicCard = new SPGraphicsPanel();
+        endlessCard = new EndlessPanel();
 
         //Create the panel that contains the "cards".
         cards = new JPanel(new CardLayout());
@@ -168,6 +177,7 @@ public class MainForm {
         //Show specific card
         CardLayout cl = (CardLayout) (cards.getLayout());
         cl.show(cards, MENU_PANEL);
+        menuCard.requestFocus();
     }
 
     private static void createAndShowGUI() {

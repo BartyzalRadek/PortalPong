@@ -39,7 +39,7 @@ public class GameFrame extends JFrame {
 
         this.add(gp);
         this.gp.powerUpTimer.start();
-        this.addKeyListener(gp);
+        //this.addKeyListener(gp);
 
     }
 

@@ -3,7 +3,10 @@ package pingpong;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import javax.swing.AbstractAction;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -28,6 +31,30 @@ public class EndlessPanel extends GraphicsPanel {
         drawableList.add(paddle1);
         endGameTimer.start();
         isEndless = true;
+        init();
+    }
+
+    private void init() {
+        setKeyBindings();
+    }
+
+    @Override
+    protected void setKeyBindings() {
+        super.setKeyBindings();
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), KeyEvent.VK_ENTER);
+
+        am.put(KeyEvent.VK_ENTER, new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (showFinalScore || gamePaused) {
+                    closePanel = true;
+                }
+                if (!showFinalScore && hasSomebodyWon()) {
+                    showFinalScore = true;
+                }
+            }
+        });
     }
 
     @Override
@@ -48,57 +75,57 @@ public class EndlessPanel extends GraphicsPanel {
     }
 
     /*public void sortLeaderboards() {
-        while (!leaderboardSorted) {
-            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-            Date date = new Date();
-            boolean sorted = false;
+     while (!leaderboardSorted) {
+     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+     Date date = new Date();
+     boolean sorted = false;
 
-            if (player1.endlessScore() > Integer.valueOf(leaderboardsArray[9][1])) {
-                newHighScore = true;
-            }
+     if (player1.endlessScore() > Integer.valueOf(leaderboardsArray[9][1])) {
+     newHighScore = true;
+     }
 
-            for (int i = 0; i < finalArray.length; i++) {
-                endlessArray[i][0] = leaderboardsArray[i][0];
-                endlessArray[i][1] = leaderboardsArray[i][1];
-                endlessArray[i][2] = leaderboardsArray[i][2];
+     for (int i = 0; i < finalArray.length; i++) {
+     endlessArray[i][0] = leaderboardsArray[i][0];
+     endlessArray[i][1] = leaderboardsArray[i][1];
+     endlessArray[i][2] = leaderboardsArray[i][2];
 
-            }
+     }
 
-            endlessArray[10][0] = name;
-            endlessArray[10][1] = String.valueOf(player1.endlessScore());
-            endlessArray[10][2] = dateFormat.format(date);
+     endlessArray[10][0] = name;
+     endlessArray[10][1] = String.valueOf(player1.endlessScore());
+     endlessArray[10][2] = dateFormat.format(date);
 
-            do {
-                sorted = true;
-                for (int i = 0; i < endlessArray.length - 1; i++) {
-                    if (Integer.valueOf(endlessArray[i][1])
-                            < Integer.valueOf(endlessArray[i + 1][1])) {
-                        String temp1 = endlessArray[i][1];
-                        endlessArray[i][1] = endlessArray[i + 1][1];
-                        endlessArray[i + 1][1] = temp1;
-                        String temp2 = endlessArray[i][0];
-                        endlessArray[i][0] = endlessArray[i + 1][0];
-                        endlessArray[i + 1][0] = temp2;
-                        String temp3 = endlessArray[i][2];
-                        endlessArray[i][2] = endlessArray[i + 1][2];
-                        endlessArray[i + 1][2] = temp3;
-                        sorted = false;
+     do {
+     sorted = true;
+     for (int i = 0; i < endlessArray.length - 1; i++) {
+     if (Integer.valueOf(endlessArray[i][1])
+     < Integer.valueOf(endlessArray[i + 1][1])) {
+     String temp1 = endlessArray[i][1];
+     endlessArray[i][1] = endlessArray[i + 1][1];
+     endlessArray[i + 1][1] = temp1;
+     String temp2 = endlessArray[i][0];
+     endlessArray[i][0] = endlessArray[i + 1][0];
+     endlessArray[i + 1][0] = temp2;
+     String temp3 = endlessArray[i][2];
+     endlessArray[i][2] = endlessArray[i + 1][2];
+     endlessArray[i + 1][2] = temp3;
+     sorted = false;
 
-                    }
-                }
-            } while (sorted == false);
+     }
+     }
+     } while (sorted == false);
 
-            for (int i = 0; i < finalArray.length; i++) {
-                finalArray[i][0] = endlessArray[i][0];
-                finalArray[i][1] = endlessArray[i][1];
-                finalArray[i][2] = endlessArray[i][2];
+     for (int i = 0; i < finalArray.length; i++) {
+     finalArray[i][0] = endlessArray[i][0];
+     finalArray[i][1] = endlessArray[i][1];
+     finalArray[i][2] = endlessArray[i][2];
 
-            }
-            leaderboardSorted = true;
-        }
-    }
-*/
-    @Override
+     }
+     leaderboardSorted = true;
+     }
+     }
+     */
+    /*@Override
     public void keyTyped(KeyEvent e) {
         if (sb.length() < 10) {
             sb.append(e.getKeyChar());
@@ -125,7 +152,7 @@ public class EndlessPanel extends GraphicsPanel {
                 }
                 break;
         }
-    }
+    }*/
 
     @Override
     protected boolean hasSomebodyWon() {

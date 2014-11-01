@@ -1,6 +1,7 @@
 package pingpong;
 
 import java.awt.event.KeyEvent;
+import javax.swing.KeyStroke;
 
 /**
  *
@@ -13,6 +14,19 @@ public class SPGraphicsPanel extends GraphicsPanel {
         drawableList.add(paddle1);
         drawableList.add(paddle2);
         endGameTimer.start();
+        init();
+    }
+    
+    private void init(){
+        setKeyBindings();
+    }
+
+    @Override
+    protected void setKeyBindings(){
+        super.setKeyBindings();
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), KeyEvent.VK_ENTER);
+        
+        am.put(KeyEvent.VK_ENTER, new Action(KeyEvent.VK_ENTER));
     }
 
     @Override
@@ -23,7 +37,7 @@ public class SPGraphicsPanel extends GraphicsPanel {
         AIteleport();
     }
 
-    @Override
+    /*@Override
     public void keyPressed(KeyEvent e) {
         super.keyPressed(e);
         
@@ -34,7 +48,7 @@ public class SPGraphicsPanel extends GraphicsPanel {
                     closePanel = true;
                 }
         }
-    }
+    }*/
 
     /**
      * Different AI than the one in Endless Panel

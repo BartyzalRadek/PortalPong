@@ -181,12 +181,18 @@ public class GraphicsPanel extends JPanel {
             startGame();
         }
     }
+    
+    protected void getOptions() {
+        System.out.println(getParent().getComponent(6).getName());
+        
+    }
 
     protected void startGame() {
         mainTimer.start();
         powerUpTimer.start();
         gamePaused = false;
         hasStarted = true;
+        getOptions();
     }
 
     protected boolean hasSomebodyWon() {

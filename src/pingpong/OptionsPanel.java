@@ -7,6 +7,7 @@ import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import static pingpong.MainForm.MENU_PANEL;
+import static pingpong.MainForm.OPTIONS_PANEL;
 
 /**
  *
@@ -58,6 +59,7 @@ public class OptionsPanel extends JPanel {
     
     public OptionsPanel(){
         initComponents();
+        setName(OPTIONS_PANEL);
     }
     
     //Greying out other labels in settings
@@ -565,10 +567,11 @@ public class OptionsPanel extends JPanel {
         
     }
     
+    //Back
     private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {                                     
         jLabel3.setFont(new Font("Tahoma", Font.BOLD, 22));
     }                                    
-
+    //Back
     private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {                                    
         jLabel3.setFont(new Font("Tahoma", Font.PLAIN, 20));
     }                                   

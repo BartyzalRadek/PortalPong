@@ -124,7 +124,7 @@ public class MainForm {
     }
 
     //private JLabel labels[];
-    public void addComponentToPane(Container pane) {
+    private void addComponentsToPane(Container pane) {
         //Create the "cards".
         JPanel menuCard = new MatrixPanel();
         menuCard.setLayout(new BoxLayout(menuCard, BoxLayout.Y_AXIS));
@@ -187,7 +187,7 @@ public class MainForm {
 
         //Create and set up the content pane.
         MainForm mainFrame = new MainForm();
-        mainFrame.addComponentToPane(frame.getContentPane());
+        mainFrame.addComponentsToPane(frame.getContentPane());
 
         //Display the window.
         frame.setVisible(true);

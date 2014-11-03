@@ -1,6 +1,7 @@
 package pingpong;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -95,12 +96,27 @@ public class MatrixPanel extends JPanel {
         }
     }
     
-    public boolean isMatrixOn() {
-        return matrixOn;
+    public void startMatrix(){
+        timer1.start();
+        timer2.start();
     }
-
-    public void setMatrixOn(boolean matrixOn) {
-        this.matrixOn = matrixOn;
+    
+    public void stopMatrix(){
+        timer1.stop();
+        timer2.stop();
+    }
+    
+    public void getOptions(){
+        for(Component p : getParent().getComponents()){
+            if(p instanceof OptionsPanel){
+                matrixOn = ((OptionsPanel)p).isMatrixOn();
+                type = ((OptionsPanel)p).getType();
+            }
+        }
+        
+        if(matrixOn && !timer1.isRunning()){
+            
+        }
     }
 
     public int getType() {

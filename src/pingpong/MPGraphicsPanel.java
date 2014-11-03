@@ -14,14 +14,6 @@ public class MPGraphicsPanel extends GraphicsPanel {
         drawableList.add(paddle1);
         drawableList.add(paddle2);
         endGameTimer.start();
-        /*setFocusable(true);
-         this.addComponentListener(new ComponentAdapter() {
-         @Override
-         public void componentShown(ComponentEvent e) {
-         MPGraphicsPanel.this.requestFocusInWindow();
-         }
-         });*/
-
         init();
     }
     

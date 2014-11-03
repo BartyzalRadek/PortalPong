@@ -84,6 +84,12 @@ public class Player {
     public int gettCount() {
         return tCount;
     }
+
+    public void setWinningScore(int winningScore) {
+        this.winningScore = winningScore;
+    }
+    
+    
     
     
     

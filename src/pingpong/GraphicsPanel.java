@@ -186,9 +186,12 @@ public class GraphicsPanel extends JPanel {
     
     protected void getOptions() {
         for(Component p : getParent().getComponents()){
-            if(p.getName().equalsIgnoreCase(OPTIONS_PANEL)){
-                //(OptionsPanel)(p).g
-                //player1.setLives();
+            if(p instanceof OptionsPanel){
+                fixedSpeed = ((OptionsPanel)p).isFixedSpeed();
+                player1.setLives(((OptionsPanel)p).getLives());
+                player2.setLives(((OptionsPanel)p).getLives());
+                player1.setWinningScore(((OptionsPanel)p).getWinningScore());
+                player2.setWinningScore(((OptionsPanel)p).getWinningScore());
             }
         }
         

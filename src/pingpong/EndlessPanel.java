@@ -1,6 +1,7 @@
 package pingpong;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -61,6 +62,17 @@ public class EndlessPanel extends GraphicsPanel {
     protected void mainTimer() {
         super.mainTimer();
         AIteleport();
+    }
+    
+
+    @Override
+    protected void getOptions(){
+        super.getOptions();
+        for(Component p : getParent().getComponents()){
+            if(p instanceof OptionsPanel){
+                fixedSpeed = ((OptionsPanel)p).isEndlessFixedSpeed();
+            }
+        }
     }
 
     @Override

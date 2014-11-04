@@ -3,6 +3,7 @@ package pingpong;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,7 +19,7 @@ public class PowerUp implements Drawable {
     public int type; //0 = T, 1 = +, 2 = -
     public boolean isDeleted;
     private int expire = 0;
-    public int random;
+    private double rnd;
 
     public PowerUp(int type) {
         this.type = type;
@@ -32,18 +33,18 @@ public class PowerUp implements Drawable {
     }
 
     /*MATRIX BLOCK START*/
-    public PowerUp(int random, boolean tmp) { //tmp just for allowing to have 2 constructors
+    public PowerUp() { 
         x = (int) (Math.round(Math.random() * 1000));
         y = (int) (Math.round(Math.random() * 500) - 50);
         vx = 0;
         vy = (int) (Math.round(Math.random() * 3) + 2);
         isDeleted = false;
-        this.random = random;
+        rnd = Math.random();
     }
 
     public void drawMatrix(Graphics g, String s) {
         g.setColor(Color.green);
-        g.drawString(s.substring(random, random + 1), x, y);
+        g.drawString(Character.toString(s.charAt((int)(rnd * (s.length() - 1)))), x, y);
         g.setColor(Color.WHITE);
     }
 

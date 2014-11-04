@@ -3,6 +3,7 @@ package pingpong;
 
 import java.awt.CardLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -574,8 +575,14 @@ public class OptionsPanel extends JPanel {
     private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {                                    
         jLabel3.setFont(new Font("Tahoma", Font.PLAIN, 20));
     }                                   
-    //Back
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {                                     
+    //---------Back
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {  
+        //Set options of menu Matrix panel 
+        for (Component p : getParent().getComponents()) {
+            if (p instanceof MatrixPanel) {
+                ((MatrixPanel) p).getOptions();
+            }
+        }
         CardLayout cl = (CardLayout) (getParent().getLayout());
         cl.show(getParent(), MENU_PANEL);
     }                                    

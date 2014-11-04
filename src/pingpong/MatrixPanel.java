@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -18,12 +19,12 @@ public class MatrixPanel extends JPanel {
 
     private List<PowerUp> powerUpList = new ArrayList<PowerUp>();
     private boolean matrixOn = true;
-    private int type = 0;
-    private String chinese = "あたアカサザジズゼゾシスセソキクケコイウエオジャな";
-    private String latin = "QWERTYUIOPASDFGHJKLZXCVBNM";
-    private String numbers = "0123456789";
-    private String signs = "~!@#$%^&*()_+/*-.°=´)§¨,[];',/\"";
-    
+    private int type = 2;
+    private final String chinese = "あたアカサザジズゼゾシスセソキクケコイウエオジャな";
+    private final String latin = "QWERTYUIOPASDFGHJKLZXCVBNM";
+    private final String numbers = "01234567890123456789012345"; //to have the same length - filling up an array and painting it later => trying to draw a string of powerup init with different length of string because the settings changed
+    private final String signs = "~!@#$%^&*()_+/*-.°=´)§¨,[];',/\"";
+
     private Timer timer1 = new Timer(30, new ActionListener() {
 
         @Override
@@ -47,20 +48,7 @@ public class MatrixPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < 10; i++) {
-                switch (type) {
-                    case 0:
-                        powerUpList.add(new PowerUp((int) (Math.random() * chinese.length()-1), true));
-                        break;
-                    case 1:
-                        powerUpList.add(new PowerUp((int) (Math.random() * latin.length()-1), true));
-                        break;
-                    case 2:
-                        powerUpList.add(new PowerUp((int) (Math.random() * numbers.length()-1), true));
-                        break;
-                    case 3:
-                        powerUpList.add(new PowerUp((int) (Math.random() * signs.length()-1), true));
-                        break;
-                }
+                powerUpList.add(new PowerUp());
             }
         }
     });
@@ -95,28 +83,31 @@ public class MatrixPanel extends JPanel {
             }
         }
     }
-    
-    public void startMatrix(){
-        timer1.start();
-        timer2.start();
+
+    private void startMatrix() {
+        if (!timer1.isRunning()) {
+            timer1.start();
+            timer2.start();
+        }
     }
-    
-    public void stopMatrix(){
-        timer1.stop();
-        timer2.stop();
+
+    private void stopMatrix() {
+        if (timer1.isRunning()) {
+            timer1.stop();
+            timer2.stop();
+        }
     }
-    
-    public void getOptions(){
-        for(Component p : getParent().getComponents()){
-            if(p instanceof OptionsPanel){
-                matrixOn = ((OptionsPanel)p).isMatrixOn();
-                type = ((OptionsPanel)p).getType();
+
+    public void getOptions() {
+        for (Component p : getParent().getComponents()) {
+            if (p instanceof OptionsPanel) {
+                matrixOn = ((OptionsPanel) p).isMatrixOn();
+                type = ((OptionsPanel) p).getType();
             }
         }
-        
-        if(matrixOn && !timer1.isRunning()){
-            
-        }
+
+        if (matrixOn) startMatrix();
+        else stopMatrix();
     }
 
     public int getType() {

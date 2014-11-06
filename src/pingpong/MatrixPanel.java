@@ -30,7 +30,7 @@ public class MatrixPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < powerUpList.size(); i++) {
-                if (powerUpList.get(i).isDeleted) {
+                if (powerUpList.get(i).isExpired()) {
                     powerUpList.remove(i);
                 }
             }

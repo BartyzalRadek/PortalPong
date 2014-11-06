@@ -97,7 +97,7 @@ public class GraphicsPanel extends JPanel {
         }
 
         for (int i = 0; i < powerUpList.size(); i++) {
-            if (powerUpList.get(i).isDeleted) {
+            if (powerUpList.get(i).isExpired()) {
                 powerUpList.remove(i);
             }
         }

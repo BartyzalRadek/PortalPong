@@ -3,7 +3,6 @@ package pingpong;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -11,15 +10,15 @@ import javax.swing.JOptionPane;
  */
 public class PowerUp implements Drawable {
 
-    public int x;
-    public int y;
-    public double vx;
-    public double vy;
-    public int v;
-    public int type; //0 = T, 1 = +, 2 = -
-    public boolean isDeleted;
+    private int x;
+    private int y;
+    private double vx;
+    private double vy;
+    private int v;
+    private int type; //0 = T, 1 = +, 2 = -
     private int expire = 0;
     private double rnd;
+    private boolean isExpired;
 
     public PowerUp(int type) {
         this.type = type;
@@ -27,7 +26,7 @@ public class PowerUp implements Drawable {
         vy = (int) (Math.round(Math.random() * 7) + 1);
         x = 450;
         y = 250;
-        isDeleted = false;
+        isExpired = false;
         v = 1;
 
     }
@@ -38,7 +37,7 @@ public class PowerUp implements Drawable {
         y = (int) (Math.round(Math.random() * 500) - 50);
         vx = 0;
         vy = (int) (Math.round(Math.random() * 3) + 2);
-        isDeleted = false;
+        isExpired = false;
         rnd = Math.random();
     }
 
@@ -51,7 +50,7 @@ public class PowerUp implements Drawable {
     public void expire() {
         expire++;
         if (expire == 20) {
-            isDeleted = true;
+            isExpired = true;
         }
     }
     /*MATRIX BLOCK END*/
@@ -89,7 +88,7 @@ public class PowerUp implements Drawable {
                     toCenter();
                     break;
                 default: 
-                    isDeleted = true;
+                    isExpired = true;
                     break;
             }
         }
@@ -127,5 +126,9 @@ public class PowerUp implements Drawable {
         } else {
             return 1;
         }
+    }
+    
+    public boolean isExpired(){
+        return isExpired;
     }
 }

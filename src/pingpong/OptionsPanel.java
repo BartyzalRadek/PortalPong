@@ -567,6 +567,23 @@ public class OptionsPanel extends JPanel {
         
     }
     
+    
+    //---------Back----Setting options of all panels------------
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {  
+        //Set options of main menu Matrix panel 
+        for (Component p : getParent().getComponents()) {
+            /*if (p instanceof MatrixPanel) {
+                ((MatrixPanel) p).getOptions();
+            }*/
+            
+            if(p instanceof AbleToGetOptions) {
+                ((AbleToGetOptions) p).getOptions();
+            }
+        }
+        CardLayout cl = (CardLayout) (getParent().getLayout());
+        cl.show(getParent(), MENU_PANEL);
+    }       
+    
     //Back
     private void jLabel3MouseEntered(java.awt.event.MouseEvent evt) {                                     
         jLabel3.setFont(new Font("Tahoma", Font.BOLD, 22));
@@ -574,18 +591,8 @@ public class OptionsPanel extends JPanel {
     //Back
     private void jLabel3MouseExited(java.awt.event.MouseEvent evt) {                                    
         jLabel3.setFont(new Font("Tahoma", Font.PLAIN, 20));
-    }                                   
-    //---------Back
-    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {  
-        //Set options of menu Matrix panel 
-        for (Component p : getParent().getComponents()) {
-            if (p instanceof MatrixPanel) {
-                ((MatrixPanel) p).getOptions();
-            }
-        }
-        CardLayout cl = (CardLayout) (getParent().getLayout());
-        cl.show(getParent(), MENU_PANEL);
-    }                                    
+    }    
+    
     //Off
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {                                      
 

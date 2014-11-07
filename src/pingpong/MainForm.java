@@ -57,7 +57,7 @@ public class MainForm {
         //Multiplayer
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel2.setFont(new Font("Tahoma", Font.PLAIN, 20));
                 CardLayout cl = (CardLayout) (cards.getLayout());
                 cl.show(cards, MP_PANEL);
             }
@@ -67,7 +67,7 @@ public class MainForm {
         //Options
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel3.setFont(new Font("Tahoma", Font.PLAIN, 20));
                 CardLayout cl = (CardLayout) (cards.getLayout());
                 cl.show(cards, OPTIONS_PANEL);
             }
@@ -77,7 +77,7 @@ public class MainForm {
         //Leaderboards
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel4.setFont(new Font("Tahoma", Font.PLAIN, 20));
                 CardLayout cl = (CardLayout) (cards.getLayout());
                 cl.show(cards, LEADERBOARDS_PANEL);
             }
@@ -87,7 +87,7 @@ public class MainForm {
         //About
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel5.setFont(new Font("Tahoma", Font.PLAIN, 20));
                 CardLayout cl = (CardLayout) (cards.getLayout());
                 cl.show(cards, ABOUT_PANEL);
             }

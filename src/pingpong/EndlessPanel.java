@@ -66,7 +66,7 @@ public class EndlessPanel extends GraphicsPanel {
     
 
     @Override
-    protected void getOptions(){
+    public void getOptions(){
         super.getOptions();
         for(Component p : getParent().getComponents()){
             if(p instanceof OptionsPanel){

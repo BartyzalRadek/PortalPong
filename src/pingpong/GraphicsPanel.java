@@ -18,13 +18,12 @@ import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import static pingpong.MainForm.FRAME_WIDTH;
 import static pingpong.MainForm.MENU_PANEL;
-import static pingpong.MainForm.OPTIONS_PANEL;
 
 /**
  *
  * @author Radek Bartyzal
  */
-public class GraphicsPanel extends JPanel {
+public class GraphicsPanel extends JPanel implements AbleToGetOptions {
 
     protected boolean isEndless = false; ///< Whether the game mode is endless - for ball bouncing etc
     private boolean isTeleport = false;
@@ -184,7 +183,8 @@ public class GraphicsPanel extends JPanel {
         }
     }
     
-    protected void getOptions() {
+    @Override
+    public void getOptions() {
         for(Component p : getParent().getComponents()){
             if(p instanceof OptionsPanel){
                 fixedSpeed = ((OptionsPanel)p).isFixedSpeed();

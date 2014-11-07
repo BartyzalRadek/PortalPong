@@ -14,7 +14,7 @@ import javax.swing.Timer;
  *
  * @author Radek Bartyzal
  */
-public class MatrixPanel extends JPanel {
+public class MatrixPanel extends JPanel implements AbleToGetOptions {
 
     private List<PowerUp> powerUpList = new ArrayList<PowerUp>();
     private boolean matrixOn = true;

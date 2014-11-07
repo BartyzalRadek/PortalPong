@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
@@ -19,12 +18,13 @@ public class MatrixPanel extends JPanel {
 
     private List<PowerUp> powerUpList = new ArrayList<PowerUp>();
     private boolean matrixOn = true;
-    private int type = 2;
+    private int type = 0;
     private final String chinese = "あたアカサザジズゼゾシスセソキクケコイウエオジャな";
     private final String latin = "QWERTYUIOPASDFGHJKLZXCVBNM";
-    private final String numbers = "01234567890123456789012345"; //to have the same length - filling up an array and painting it later => trying to draw a string of powerup init with different length of string because the settings changed
+    private final String numbers = "0123456789";
     private final String signs = "~!@#$%^&*()_+/*-.°=´)§¨,[];',/\"";
 
+    //Main timer for moving the signs
     private Timer timer1 = new Timer(30, new ActionListener() {
 
         @Override
@@ -42,7 +42,8 @@ public class MatrixPanel extends JPanel {
             repaint();
         }
     });
-    //pridavani novych znaku
+
+    //Adding new signs
     private Timer timer2 = new Timer(100, new ActionListener() {
 
         @Override
@@ -54,7 +55,6 @@ public class MatrixPanel extends JPanel {
     });
 
     public MatrixPanel() {
-
         timer1.start();
         timer2.start();
     }
@@ -106,16 +106,10 @@ public class MatrixPanel extends JPanel {
             }
         }
 
-        if (matrixOn) startMatrix();
-        else stopMatrix();
+        if (matrixOn) {
+            startMatrix();
+        } else {
+            stopMatrix();
+        }
     }
-
-    public int getType() {
-        return type;
-    }
-
-    public void setType(int type) {
-        this.type = type;
-    }
-
 }

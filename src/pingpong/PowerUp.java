@@ -3,6 +3,8 @@ package pingpong;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import static pingpong.MainForm.FRAME_HEIGHT;
+import static pingpong.MainForm.FRAME_WIDTH;
 
 /**
  *
@@ -17,8 +19,8 @@ public class PowerUp implements Drawable {
     private int v;
     private int type; //0 = T, 1 = +, 2 = -
     private int expire = 0;
-    private double rnd;
-    private boolean isExpired;
+    private boolean isExpired = false;
+    private double rnd; // For matrix effect
 
     public PowerUp(int type) {
         this.type = type;
@@ -26,18 +28,16 @@ public class PowerUp implements Drawable {
         vy = (int) (Math.round(Math.random() * 7) + 1);
         x = 450;
         y = 250;
-        isExpired = false;
         v = 1;
 
     }
 
     /*MATRIX BLOCK START*/
     public PowerUp() { 
-        x = (int) (Math.round(Math.random() * 1000));
-        y = (int) (Math.round(Math.random() * 500) - 50);
+        x = (int) (Math.round(Math.random() * FRAME_WIDTH));
+        y = (int) (Math.round(Math.random() * FRAME_HEIGHT) - 50);
         vx = 0;
         vy = (int) (Math.round(Math.random() * 3) + 2);
-        isExpired = false;
         rnd = Math.random();
     }
 

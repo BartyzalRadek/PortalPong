@@ -3,11 +3,14 @@ package pingpong;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
+import static pingpong.MainForm.FRAME_HEIGHT;
+import static pingpong.MainForm.FRAME_WIDTH;
 
 /**
  *
@@ -30,7 +33,6 @@ public class EndlessPanel extends GraphicsPanel {
     public EndlessPanel() {
         drawableList.add(ball);
         drawableList.add(paddle1);
-        endGameTimer.start();
         isEndless = true;
         init();
     }
@@ -53,6 +55,8 @@ public class EndlessPanel extends GraphicsPanel {
                 }
                 if (!showFinalScore && hasSomebodyWon()) {
                     showFinalScore = true;
+                    //drawFinalScore();
+                    //repaint();
                 }
             }
         });
@@ -63,14 +67,13 @@ public class EndlessPanel extends GraphicsPanel {
         super.mainTimer();
         AIteleport();
     }
-    
 
     @Override
-    public void getOptions(){
+    public void getOptions() {
         super.getOptions();
-        for(Component p : getParent().getComponents()){
-            if(p instanceof OptionsPanel){
-                fixedSpeed = ((OptionsPanel)p).isEndlessFixedSpeed();
+        for (Component p : getParent().getComponents()) {
+            if (p instanceof OptionsPanel) {
+                fixedSpeed = ((OptionsPanel) p).isEndlessFixedSpeed();
             }
         }
     }
@@ -78,93 +81,31 @@ public class EndlessPanel extends GraphicsPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        /*if (showFinalScore) {
+         drawFinalScore(g);
+         } else {
+         drawSomebodyWon(g);
+         }*/
+        g.dispose();
+    }
+
+    @Override
+    protected void endGameTimer() {
+        if (colorChanged == true) {
+            gameOverColor = Color.BLUE;
+            colorChanged = false;
+        } else {
+            gameOverColor = Color.RED;
+            colorChanged = true;
+        }
+
+        Graphics g = this.getGraphics();
         if (showFinalScore) {
             drawFinalScore(g);
         } else {
             drawSomebodyWon(g);
         }
-        g.dispose();
     }
-
-    /*public void sortLeaderboards() {
-     while (!leaderboardSorted) {
-     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-     Date date = new Date();
-     boolean sorted = false;
-
-     if (player1.endlessScore() > Integer.valueOf(leaderboardsArray[9][1])) {
-     newHighScore = true;
-     }
-
-     for (int i = 0; i < finalArray.length; i++) {
-     endlessArray[i][0] = leaderboardsArray[i][0];
-     endlessArray[i][1] = leaderboardsArray[i][1];
-     endlessArray[i][2] = leaderboardsArray[i][2];
-
-     }
-
-     endlessArray[10][0] = name;
-     endlessArray[10][1] = String.valueOf(player1.endlessScore());
-     endlessArray[10][2] = dateFormat.format(date);
-
-     do {
-     sorted = true;
-     for (int i = 0; i < endlessArray.length - 1; i++) {
-     if (Integer.valueOf(endlessArray[i][1])
-     < Integer.valueOf(endlessArray[i + 1][1])) {
-     String temp1 = endlessArray[i][1];
-     endlessArray[i][1] = endlessArray[i + 1][1];
-     endlessArray[i + 1][1] = temp1;
-     String temp2 = endlessArray[i][0];
-     endlessArray[i][0] = endlessArray[i + 1][0];
-     endlessArray[i + 1][0] = temp2;
-     String temp3 = endlessArray[i][2];
-     endlessArray[i][2] = endlessArray[i + 1][2];
-     endlessArray[i + 1][2] = temp3;
-     sorted = false;
-
-     }
-     }
-     } while (sorted == false);
-
-     for (int i = 0; i < finalArray.length; i++) {
-     finalArray[i][0] = endlessArray[i][0];
-     finalArray[i][1] = endlessArray[i][1];
-     finalArray[i][2] = endlessArray[i][2];
-
-     }
-     leaderboardSorted = true;
-     }
-     }
-     */
-    /*@Override
-    public void keyTyped(KeyEvent e) {
-        if (sb.length() < 10) {
-            sb.append(e.getKeyChar());
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        super.keyPressed(e);
-
-        int keyCode = e.getKeyCode();
-        switch (keyCode) {
-            case KeyEvent.VK_ENTER:
-                if (showFinalScore || gamePaused) {
-                    closePanel = true;
-                }
-                if (!showFinalScore && hasSomebodyWon()) {
-                    showFinalScore = true;
-                }
-                break;
-            case KeyEvent.VK_BACK_SPACE:
-                if (sb.length() > 0) {
-                    sb.deleteCharAt(sb.length() - 1);
-                }
-                break;
-        }
-    }*/
 
     @Override
     protected boolean hasSomebodyWon() {
@@ -174,15 +115,16 @@ public class EndlessPanel extends GraphicsPanel {
     @Override
     protected void drawSomebodyWon(Graphics g) {
         g.setColor(gameOverColor);
-        if (hasSomebodyWon()) {
-            somebodyWon();
-            g.drawString("Press enter to see your score", 400, 250);
-            g.setFont(new Font("Tahoma", Font.BOLD, 50));
-            g.drawString("GAME OVER !!!", 320, 230);
-            g.setFont(new Font("Tahoma", Font.BOLD, 20));
-            //sortLeaderboards();
-        }
-        g.setColor(Color.WHITE);
+        somebodyWon();
+        g.setFont(new Font("Tahoma", Font.BOLD, 50));
+        g.drawString("GAME OVER !!!", 320, 230);
+
+        g.setColor(Color.GRAY);
+        g.setFont(new Font("Tahoma", Font.BOLD, 20));
+
+        FontMetrics fontMetrics = g.getFontMetrics();
+        int strL = fontMetrics.stringWidth("Press enter to see your score.");
+        g.drawString("Press enter to see your score.", FRAME_WIDTH / 2 - strL / 2, FRAME_HEIGHT / 2 + 100);
     }
 
     /*Tesne po odrazu probehne vetev createTeleport() misto aktualizace tempBallReturned, proto tempB. +1*/
@@ -243,7 +185,7 @@ public class EndlessPanel extends GraphicsPanel {
     private void drawFinalScore(Graphics g) {
         //Clean screen behind final score
         g.setColor(Color.BLACK);
-        g.fillRect(0, 0, this.getSize().width, this.getSize().height);
+        g.fillRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
         //Draw final score
         g.setColor(Color.WHITE);
         g.setFont(new Font("Tahoma", Font.BOLD, 20));

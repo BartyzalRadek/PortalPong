@@ -13,7 +13,6 @@ public class SPGraphicsPanel extends GraphicsPanel {
         drawableList.add(ball);
         drawableList.add(paddle1);
         drawableList.add(paddle2);
-        endGameTimer.start();
         init();
     }
     
@@ -36,19 +35,6 @@ public class SPGraphicsPanel extends GraphicsPanel {
         paddle2.AImove(ball, 500);
         AIteleport();
     }
-
-    /*@Override
-    public void keyPressed(KeyEvent e) {
-        super.keyPressed(e);
-        
-        int keyCode = e.getKeyCode();
-        switch (keyCode) {
-            case KeyEvent.VK_ENTER:
-                if(hasSomebodyWon() || gamePaused){
-                    closePanel = true;
-                }
-        }
-    }*/
 
     /**
      * Different AI than the one in Endless Panel

@@ -4,6 +4,7 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +17,7 @@ import javax.swing.InputMap;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
+import static pingpong.MainForm.FRAME_HEIGHT;
 import static pingpong.MainForm.FRAME_WIDTH;
 import static pingpong.MainForm.MENU_PANEL;
 
@@ -81,7 +83,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
             powerUpTimer();
         }
     });
-    //endGame() blinking lights
+    //endGame() blinking game over text
     protected Timer endGameTimer = new Timer(400, new ActionListener() {
 
         @Override
@@ -150,6 +152,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
             gameOverColor = Color.RED;
             colorChanged = true;
         }
+        Graphics g = this.getGraphics();
+        drawSomebodyWon(g);
     }
 
     @Override
@@ -165,7 +169,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
             drawTeleport(g);
         }
         if (!isEndless) {
-            drawSomebodyWon(g);
+            //drawSomebodyWon(g);
             g.dispose(); //If paint() is overriden, g must be disposed in overriding method
         }
     }
@@ -182,19 +186,19 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
             startGame();
         }
     }
-    
+
     @Override
     public void getOptions() {
-        for(Component p : getParent().getComponents()){
-            if(p instanceof OptionsPanel){
-                fixedSpeed = ((OptionsPanel)p).isFixedSpeed();
-                player1.setLives(((OptionsPanel)p).getLives());
-                player2.setLives(((OptionsPanel)p).getLives());
-                player1.setWinningScore(((OptionsPanel)p).getWinningScore());
-                player2.setWinningScore(((OptionsPanel)p).getWinningScore());
+        for (Component p : getParent().getComponents()) {
+            if (p instanceof OptionsPanel) {
+                fixedSpeed = ((OptionsPanel) p).isFixedSpeed();
+                player1.setLives(((OptionsPanel) p).getLives());
+                player2.setLives(((OptionsPanel) p).getLives());
+                player1.setWinningScore(((OptionsPanel) p).getWinningScore());
+                player2.setWinningScore(((OptionsPanel) p).getWinningScore());
             }
         }
-        
+
     }
 
     protected void startGame() {
@@ -202,7 +206,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
         powerUpTimer.start();
         gamePaused = false;
         hasStarted = true;
-        getOptions();
+        //getOptions();
     }
 
     protected boolean hasSomebodyWon() {
@@ -212,25 +216,28 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
     protected void somebodyWon() {
         mainTimer.stop();
         powerUpTimer.stop();
+        endGameTimer.start();
     }
 
     protected void drawSomebodyWon(Graphics g) {
         g.setColor(gameOverColor);
+        somebodyWon();
+        g.setFont(new Font("Tahoma", Font.BOLD, 50));
+        
         if (player1.win()) {
-            somebodyWon();
-            g.drawString("Press enter to go back to menu.", 400, 250);
-            g.setFont(new Font("Tahoma", Font.BOLD, 50));
             g.drawString("PLAYER 1 WON !!!", 250, 230);
-            g.setFont(new Font("Tahoma", Font.BOLD, 20));
         }
         if (player2.win()) {
-            somebodyWon();
-            g.drawString("Press enter to go back to menu.", 400, 250);
-            g.setFont(new Font("Tahoma", Font.BOLD, 50));
             g.drawString("PLAYER 2 WON !!!", 250, 230);
-            g.setFont(new Font("Tahoma", Font.BOLD, 20));
         }
-        g.setColor(Color.WHITE);
+        
+        g.setColor(Color.GRAY);
+        g.setFont(new Font("Tahoma", Font.BOLD, 20));
+        
+        FontMetrics fontMetrics = g.getFontMetrics();
+        int strL = fontMetrics.stringWidth("Press enter to go back to menu.");
+        g.drawString("Press enter to go back to menu.", FRAME_WIDTH / 2 - strL / 2, FRAME_HEIGHT/2 + 100);
+
     }
 
     protected void createTeleport() {
@@ -296,16 +303,17 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
     }
 
     protected void reset() {
-
         player1.reset();
         player2.reset();
+        ball.reset();
         powerUpList.clear();
         colorChanged = false;
         hasStarted = false;
         gamePaused = false;
 
-        powerUpTimer.start();
-        ball.reset();
+        mainTimer.stop();
+        powerUpTimer.stop();
+        endGameTimer.stop();
     }
 
     protected void backToMenu() {

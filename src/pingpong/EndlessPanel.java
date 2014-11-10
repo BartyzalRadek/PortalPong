@@ -29,6 +29,7 @@ public class EndlessPanel extends GraphicsPanel {
     private String name = "Player";
     /*leaderboards variables end*/
     private int tempBallReturned = 0;   //because of AITeleport()
+    private boolean screenCleaned = false;
 
     public EndlessPanel() {
         drawableList.add(ball);
@@ -184,8 +185,11 @@ public class EndlessPanel extends GraphicsPanel {
 
     private void drawFinalScore(Graphics g) {
         //Clean screen behind final score
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+        if (!screenCleaned) {
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
+            screenCleaned = true;
+        }
         //Draw final score
         g.setColor(Color.WHITE);
         g.setFont(new Font("Tahoma", Font.BOLD, 20));

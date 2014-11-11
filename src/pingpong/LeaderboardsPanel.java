@@ -19,6 +19,8 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import static pingpong.MainForm.FRAME_HEIGHT;
+import static pingpong.MainForm.FRAME_WIDTH;
 import static pingpong.MainForm.MENU_PANEL;
 
 /**
@@ -26,9 +28,10 @@ import static pingpong.MainForm.MENU_PANEL;
  * @author Leaderboards.java
  */
 public class LeaderboardsPanel extends JPanel {
-    
+
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private  LeaderboardsDrawPanel drawPanel;
 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private Date date;
@@ -64,42 +67,55 @@ public class LeaderboardsPanel extends JPanel {
     private void init() {
         stats = new File("stats.txt");
         date = new Date();
-        initLabel1();
-        initLabel2();
-        initLayout();
         
-
         for (int i = 0; i < leaderboard.length; i++) {
             leaderboard[i][0] = "Player";
             leaderboard[i][1] = "0";
             leaderboard[i][2] = dateFormat.format(date);
         }
+        
+        drawPanel = new LeaderboardsDrawPanel(leaderboard, 100,0);
+        //drawPanel.setLocation(100, 0);
+        drawPanel.setMinimumSize(new Dimension(FRAME_WIDTH-100, FRAME_HEIGHT-200));
+        drawPanel.setMaximumSize(new Dimension(FRAME_WIDTH-100, FRAME_HEIGHT-200));
+        drawPanel.setPreferredSize(new Dimension(FRAME_WIDTH-100, FRAME_HEIGHT-200));
+        drawPanel.setAlignmentX(LEFT_ALIGNMENT);
+        initLabel1();
+        initLabel2();
+        initLayout();
+
+        
+
+        //repaint();
 
         /*try {
-            loadStats();
-        } catch (IOException ex) {
-            //IO ex while reading line of stats file
-        }*/
+         loadStats();
+         } catch (IOException ex) {
+         //IO ex while reading line of stats file
+         }*/
     }
-    
-    private void initLayout(){
+
+    private void initLayout() {
         setBackground(Color.black);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(Box.createRigidArea(new Dimension(15, 50)));
+        add(Box.createRigidArea(new Dimension(20, 50)));
         add(jLabel1);
-        add(Box.createRigidArea(new Dimension(15, 330)));
+        add(Box.createRigidArea(new Dimension(20, 0)));
+        add(drawPanel);
+        //drawPanel.repaint();
+        add(Box.createRigidArea(new Dimension(20, 0)));
         add(jLabel2);
-        
+
     }
-    
+
     private void initLabel1() {
         jLabel1 = new javax.swing.JLabel("Leaderboards");
         jLabel1.setAlignmentX(LEFT_ALIGNMENT);
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20));
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
     }
-    
-    private void initLabel2(){
+
+    private void initLabel2() {
         jLabel2 = new javax.swing.JLabel("Back");
         jLabel2.setAlignmentX(LEFT_ALIGNMENT);
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20));
@@ -111,10 +127,12 @@ public class LeaderboardsPanel extends JPanel {
                 CardLayout cl = (CardLayout) (getParent().getLayout());
                 cl.show(getParent(), MENU_PANEL);
             }
+
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel2.setFont(new Font("Tahoma", Font.BOLD, 22));
             }
+
             @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jLabel2.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -140,11 +158,9 @@ public class LeaderboardsPanel extends JPanel {
                 words = line.split(" ");
                 leaderboard[i] = words;
             }
-            
+
             bfr.close();
         }
-        
-        
 
     }
 
@@ -164,23 +180,5 @@ public class LeaderboardsPanel extends JPanel {
         }
     }
 
-    /*@Override
-    public void paint(Graphics g) {
-        g.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        g.setColor(Color.WHITE);
-
-        //update();
-
-        for (int i = 0; i < leaderboard.length; i++) {
-            if (i != 9) {
-                g.drawString(String.valueOf(i + 1) + ".", 150, 30 * i + 80);
-            } else {
-                g.drawString(String.valueOf(i + 1) + ".", 140, 30 * i + 80);
-            }
-            g.drawString(leaderboard[i][0], 180, 30 * i + 80);
-            g.drawString(leaderboard[i][1], 280, 30 * i + 80);
-            g.drawString(leaderboard[i][2], 350, 30 * i + 80);
-        }
-    }*/
-
+    
 }

@@ -85,9 +85,9 @@ public class LeaderboardsPanel extends JPanel {
     private void initLayout(){
         setBackground(Color.black);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(Box.createRigidArea(new Dimension(20, 50)));
+        add(Box.createRigidArea(new Dimension(15, 50)));
         add(jLabel1);
-        add(Box.createRigidArea(new Dimension(20, 300)));
+        add(Box.createRigidArea(new Dimension(15, 330)));
         add(jLabel2);
         
     }

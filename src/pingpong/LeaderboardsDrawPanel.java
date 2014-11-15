@@ -20,7 +20,8 @@ import static pingpong.MainForm.FRAME_WIDTH;
  */
 public class LeaderboardsDrawPanel extends JPanel {
     String[][] leaderboard;
-
+    private static final int TOP_OFFSET = 20;
+    
     /**
      * Drawing leaderboard
      * @param leaderboard 
@@ -29,27 +30,34 @@ public class LeaderboardsDrawPanel extends JPanel {
      */
     public LeaderboardsDrawPanel(String[][] leaderboard, int locX, int locY) {
         this.leaderboard = leaderboard;
-        this.setBackground(Color.red);
         this.setSize(new Dimension(FRAME_WIDTH - locX, FRAME_HEIGHT-locY));
+        init();
     }
     
-    /*@Override
+    private void init(){
+        setBackground(Color.red);
+        setMinimumSize(new Dimension(FRAME_WIDTH-100, FRAME_HEIGHT-200));
+        setMaximumSize(new Dimension(FRAME_WIDTH-100, FRAME_HEIGHT-200));
+        setPreferredSize(new Dimension(FRAME_WIDTH-100, FRAME_HEIGHT-200));
+        setAlignmentX(LEFT_ALIGNMENT);
+    }
+    
+    @Override
     public void paint(Graphics g) {
         g.setFont(new Font("Tahoma", Font.PLAIN, 20));
         g.setColor(Color.WHITE);
 
-        //update();
         for (int i = 0; i < leaderboard.length; i++) {
             if (i != 9) {
-                g.drawString(String.valueOf(i + 1) + ".", 150, 30 * i + 80);
+                g.drawString(String.valueOf(i + 1) + ".", 150, 30 * i + TOP_OFFSET);
             } else {
-                g.drawString(String.valueOf(i + 1) + ".", 140, 30 * i + 80);
+                g.drawString(String.valueOf(i + 1) + ".", 140, 30 * i + TOP_OFFSET);
             }
-            g.drawString(leaderboard[i][0], 180, 30 * i + 80);
-            g.drawString(leaderboard[i][1], 280, 30 * i + 80);
-            g.drawString(leaderboard[i][2], 350, 30 * i + 80);
+            g.drawString(leaderboard[i][0], 180, 30 * i + TOP_OFFSET);
+            g.drawString(leaderboard[i][1], 280, 30 * i + TOP_OFFSET);
+            g.drawString(leaderboard[i][2], 350, 30 * i + TOP_OFFSET);
         }
-    }*/
+    }
 
     
 }

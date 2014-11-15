@@ -41,7 +41,7 @@ public class LeaderboardsPanel extends JPanel {
     /*private File names;
      private File scores;
      private File dates;*/
-    private File stats;
+    private File statsFile;
 
     public LeaderboardsPanel() {
         init();
@@ -65,7 +65,7 @@ public class LeaderboardsPanel extends JPanel {
     }
 
     private void init() {
-        stats = new File("stats.txt");
+        statsFile = new File("stats.txt");
         date = new Date();
         
         for (int i = 0; i < leaderboard.length; i++) {
@@ -76,15 +76,11 @@ public class LeaderboardsPanel extends JPanel {
         
         drawPanel = new LeaderboardsDrawPanel(leaderboard, 100,0);
         //drawPanel.setLocation(100, 0);
-        drawPanel.setMinimumSize(new Dimension(FRAME_WIDTH-100, FRAME_HEIGHT-200));
-        drawPanel.setMaximumSize(new Dimension(FRAME_WIDTH-100, FRAME_HEIGHT-200));
-        drawPanel.setPreferredSize(new Dimension(FRAME_WIDTH-100, FRAME_HEIGHT-200));
-        drawPanel.setAlignmentX(LEFT_ALIGNMENT);
         initLabel1();
         initLabel2();
         initLayout();
 
-        
+        saveStats();
 
         //repaint();
 
@@ -93,6 +89,69 @@ public class LeaderboardsPanel extends JPanel {
          } catch (IOException ex) {
          //IO ex while reading line of stats file
          }*/
+    }
+
+    
+    private void loadStats() throws IOException {
+        String line;
+        String[] words;
+        boolean fileFound = true;
+
+        try {
+            bfr = new BufferedReader(new FileReader(statsFile));
+        } catch (FileNotFoundException ex) {
+            //File not found, it will be created when saving the stats.
+            fileFound = false;
+        }
+
+        if (fileFound) {
+            for (int i = 0; i < leaderboard.length; i++) {
+                line = bfr.readLine();
+                words = line.split(" ");
+                leaderboard[i] = words;
+            }
+
+            bfr.close();
+        }
+
+    }
+    
+    /**
+     * Saves Leaderboard to the statsFile.
+     * Firstly writes all the names then all the scores and then all the dates,
+     * every item at new line.
+     */
+    private void saveStats(){
+        int nameScoreDate = 0; ///< Names = 0, Scores = 1, Dates = 2
+        int j; ///< Line in leaderboard
+        try {
+            bfw = new BufferedWriter(new FileWriter(statsFile));
+            for (int i = 0; i < (leaderboard.length * leaderboard[0].length); i++) {
+                j = i%10;
+                if(i==leaderboard.length || i==leaderboard.length*2) nameScoreDate++;
+                bfw.write(leaderboard[j][nameScoreDate]);
+                bfw.newLine();
+            }
+            bfw.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+
+    /*Nacte data z leaderboard[][] pole a zapise je do souboru
+     nameScoreDate - name=0, score=1, date=2*/
+    private void updateFiles(File file, int nameScoreDate) {
+        try {
+            bfw = new BufferedWriter(new FileWriter(file));
+            for (int i = 0; i < leaderboard.length; i++) {
+                bfw.write(leaderboard[i][nameScoreDate]);
+                bfw.newLine();
+            }
+            bfw.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(this, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void initLayout() {
@@ -138,46 +197,6 @@ public class LeaderboardsPanel extends JPanel {
                 jLabel2.setFont(new Font("Tahoma", Font.PLAIN, 20));
             }
         });
-    }
-
-    private void loadStats() throws IOException {
-        String line;
-        String[] words;
-        boolean fileFound = true;
-
-        try {
-            bfr = new BufferedReader(new FileReader(stats));
-        } catch (FileNotFoundException ex) {
-            //File not found, it will be created when saving the stats.
-            fileFound = false;
-        }
-
-        if (fileFound) {
-            for (int i = 0; i < leaderboard.length; i++) {
-                line = bfr.readLine();
-                words = line.split(" ");
-                leaderboard[i] = words;
-            }
-
-            bfr.close();
-        }
-
-    }
-
-
-    /*Nacte data z leaderboard[][] pole a zapise je do souboru
-     nameScoreDate - name=0, score=1, date=2*/
-    private void updateFiles(File file, int nameScoreDate) {
-        try {
-            bfw = new BufferedWriter(new FileWriter(file));
-            for (int i = 0; i < leaderboard.length; i++) {
-                bfw.write(leaderboard[i][nameScoreDate]);
-                bfw.newLine();
-            }
-            bfw.close();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     

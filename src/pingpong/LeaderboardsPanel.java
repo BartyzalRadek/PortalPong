@@ -4,7 +4,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,8 +18,6 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import static pingpong.MainForm.FRAME_HEIGHT;
-import static pingpong.MainForm.FRAME_WIDTH;
 import static pingpong.MainForm.MENU_PANEL;
 
 /**
@@ -45,7 +42,6 @@ public class LeaderboardsPanel extends JPanel {
 
     public LeaderboardsPanel() {
         init();
-
     }
 
     private void init() {
@@ -64,6 +60,17 @@ public class LeaderboardsPanel extends JPanel {
             loadStats();
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(this, "Error when reading the statsFile!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    ///-----------TODO Sorting
+    public void addScore(String name, int score){
+        date = new Date();
+        if(score > Integer.parseInt(leaderboard[9][1])){
+            leaderboard[9][0] = name;
+            leaderboard[9][1] = Integer.toString(score);
+            leaderboard[9][2] = dateFormat.format(date);
+            //sortLeaderboard();
         }
     }
 
@@ -170,5 +177,6 @@ public class LeaderboardsPanel extends JPanel {
             }
         });
     }
+
 
 }

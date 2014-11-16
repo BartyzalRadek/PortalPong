@@ -13,6 +13,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -30,14 +32,11 @@ public class LeaderboardsPanel extends JPanel {
     private javax.swing.JLabel jLabel2;
     private LeaderboardsDrawPanel drawPanel;
 
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private Date date;
-    private String[][] leaderboard = new String[10][3];
+    private final String[][] leaderboard = new String[10][3];
     private BufferedReader bfr;
     private BufferedWriter bfw;
-    /*private File names;
-     private File scores;
-     private File dates;*/
     private File statsFile;
 
     public LeaderboardsPanel() {
@@ -62,23 +61,40 @@ public class LeaderboardsPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "Error when reading the statsFile!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
+
     ///-----------TODO Sorting
-    public void addScore(String name, int score){
+    public void addScore(String name, int score) {
         date = new Date();
-        if(score > Integer.parseInt(leaderboard[9][1])){
+        if (score > Integer.parseInt(leaderboard[9][1])) {
             leaderboard[9][0] = name;
             leaderboard[9][1] = Integer.toString(score);
             leaderboard[9][2] = dateFormat.format(date);
-            //sortLeaderboard();
+            sortLeaderboards();
+            drawPanel.repaint();
         }
+    }
+    
+    /**
+     * Sort according to score (second collumn) then acc. name (first column).
+     */
+    private void sortLeaderboards() {
+        Arrays.sort(leaderboard, new Comparator<String[]>() {
+            @Override
+            public int compare(final String[] entry1, final String[] entry2) {
+                if (entry1[1].compareTo(entry2[1]) == 0) {
+                    return entry1[0].compareTo(entry2[0]) * (-1);
+                } else {
+                    return entry1[1].compareTo(entry2[1]) * (-1);
+                }
+            }
+        });
     }
 
     private void loadStats() throws IOException {
         String line;
         boolean fileFound = true;
         int nameScoreDate = 0; ///< Names = 0, Scores = 1, Dates = 2
-        int j = 0; ///< Line in leaderboard
+        int j; ///< Line in leaderboard
 
         try {
             bfr = new BufferedReader(new FileReader(statsFile));
@@ -124,8 +140,8 @@ public class LeaderboardsPanel extends JPanel {
             JOptionPane.showMessageDialog(this, "File not found!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-    
-    private void initLeaderBoards(){
+
+    private void initLeaderBoards() {
         for (int i = 0; i < leaderboard.length; i++) {
             leaderboard[i][0] = "Player";
             leaderboard[i][1] = "0";

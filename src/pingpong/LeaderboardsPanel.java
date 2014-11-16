@@ -24,7 +24,7 @@ import static pingpong.MainForm.MENU_PANEL;
 
 /**
  *
- * @author Leaderboards.java
+ * @author Radek Bartyzal
  */
 public class LeaderboardsPanel extends JPanel {
 

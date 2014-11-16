@@ -19,12 +19,10 @@ public class LeaderboardsDrawPanel extends JPanel {
     
     /**
      * Drawing leaderboard
-     * @param leaderboard 
      * @param locX Location of this panel in parent component
      * @param locY Location of this panel in parent component
      */
-    public LeaderboardsDrawPanel(String[][] leaderboard, int locX, int locY) {
-        this.leaderboard = leaderboard;
+    public LeaderboardsDrawPanel(int locX, int locY) {
         this.setSize(new Dimension(FRAME_WIDTH - locX, FRAME_HEIGHT-locY));
         init();
     }
@@ -39,6 +37,7 @@ public class LeaderboardsDrawPanel extends JPanel {
     
     @Override
     public void paint(Graphics g) {
+        leaderboard = ((LeaderboardsPanel)getParent()).getLeaderboard();
         g.setFont(new Font("Tahoma", Font.PLAIN, 20));
         g.setColor(Color.WHITE);
 

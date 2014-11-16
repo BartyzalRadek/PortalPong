@@ -168,10 +168,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
         if (isTeleport) {
             drawTeleport(g);
         }
-        if (!isEndless) {
-            //drawSomebodyWon(g);
-            g.dispose(); //If paint() is overriden, g must be disposed in overriding method
-        }
+        
+        g.dispose(); //If paint() is overriden, g must be disposed in overriding method
     }
 
     protected void pauseGame() {
@@ -206,7 +204,6 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
         powerUpTimer.start();
         gamePaused = false;
         hasStarted = true;
-        //getOptions();
     }
 
     protected boolean hasSomebodyWon() {

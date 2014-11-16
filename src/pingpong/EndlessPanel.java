@@ -18,16 +18,12 @@ import static pingpong.MainForm.FRAME_WIDTH;
  */
 public class EndlessPanel extends GraphicsPanel {
 
-    private boolean showFinalScore = false;
-    private boolean newHighScore = false;
     /*leaderboards variables start*/
-    public String[][] endlessArray = new String[11][3];
-    public String[][] leaderboardsArray = new String[10][3];
-    public String[][] finalArray = new String[10][3];
-    private boolean leaderboardSorted = false;
+    private boolean newHighScore = false;
     private StringBuilder sb = new StringBuilder();
-    private String name = "Player";
+    private String name = "Darmy";
     /*leaderboards variables end*/
+    private boolean showFinalScore = false;
     private int tempBallReturned = 0;   //because of AITeleport()
     private boolean screenCleaned = false;
 
@@ -69,6 +65,9 @@ public class EndlessPanel extends GraphicsPanel {
         AIteleport();
     }
 
+    /**
+     * Different fixedSpeed than the one updating in Graphics Panel
+     */
     @Override
     public void getOptions() {
         super.getOptions();
@@ -77,17 +76,6 @@ public class EndlessPanel extends GraphicsPanel {
                 fixedSpeed = ((OptionsPanel) p).isEndlessFixedSpeed();
             }
         }
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        /*if (showFinalScore) {
-         drawFinalScore(g);
-         } else {
-         drawSomebodyWon(g);
-         }*/
-        g.dispose();
     }
 
     @Override
@@ -112,11 +100,25 @@ public class EndlessPanel extends GraphicsPanel {
     protected boolean hasSomebodyWon() {
         return player2.endlessWin();
     }
+    
+    @Override
+    protected void somebodyWon(){
+       super.somebodyWon();
+       submitNewScore();
+    }
+    
+    protected void submitNewScore(){
+        for (Component p : getParent().getComponents()) {
+            if (p instanceof LeaderboardsPanel) {
+                ((LeaderboardsPanel) p).addScore(name, player1.endlessScore());
+                newHighScore = ((LeaderboardsPanel) p).isNewHighscore(player1.endlessScore());
+            }
+        }
+    }
 
     @Override
     protected void drawSomebodyWon(Graphics g) {
         g.setColor(gameOverColor);
-        somebodyWon();
         g.setFont(new Font("Tahoma", Font.BOLD, 50));
         g.drawString("GAME OVER !!!", 320, 230);
 
@@ -125,7 +127,7 @@ public class EndlessPanel extends GraphicsPanel {
 
         FontMetrics fontMetrics = g.getFontMetrics();
         int strL = fontMetrics.stringWidth("Press enter to see your score.");
-        g.drawString("Press enter to see your score.", FRAME_WIDTH / 2 - strL / 2, FRAME_HEIGHT / 2 + 100);
+        g.drawString("Press enter to see your score.", FRAME_WIDTH / 2 - strL / 2, FRAME_HEIGHT / 2 + 50);
     }
 
     /*Tesne po odrazu probehne vetev createTeleport() misto aktualizace tempBallReturned, proto tempB. +1*/
@@ -223,6 +225,7 @@ public class EndlessPanel extends GraphicsPanel {
     @Override
     protected void reset() {
         showFinalScore = false;
+        screenCleaned = false;
         super.reset();
     }
 }

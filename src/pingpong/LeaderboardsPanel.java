@@ -49,7 +49,7 @@ public class LeaderboardsPanel extends JPanel {
 
         initLeaderBoards();
 
-        drawPanel = new LeaderboardsDrawPanel(leaderboard, 100, 0);
+        drawPanel = new LeaderboardsDrawPanel(100, 0);
         initLabel1();
         initLabel2();
         initLayout();
@@ -62,16 +62,19 @@ public class LeaderboardsPanel extends JPanel {
         }
     }
 
-    ///-----------TODO Sorting
     public void addScore(String name, int score) {
         date = new Date();
-        if (score > Integer.parseInt(leaderboard[9][1])) {
+        if (isNewHighscore(score)) {
             leaderboard[9][0] = name;
             leaderboard[9][1] = Integer.toString(score);
             leaderboard[9][2] = dateFormat.format(date);
             sortLeaderboards();
             drawPanel.repaint();
         }
+    }
+    
+    public boolean isNewHighscore(int score){
+        return (score >= Integer.parseInt(leaderboard[9][1]));
     }
     
     /**
@@ -82,9 +85,9 @@ public class LeaderboardsPanel extends JPanel {
             @Override
             public int compare(final String[] entry1, final String[] entry2) {
                 if (entry1[1].compareTo(entry2[1]) == 0) {
-                    return entry1[0].compareTo(entry2[0]) * (-1);
+                    return entry1[0].compareTo(entry2[0]);
                 } else {
-                    return entry1[1].compareTo(entry2[1]) * (-1);
+                    return entry1[1].compareTo(entry2[1]);
                 }
             }
         });
@@ -194,5 +197,10 @@ public class LeaderboardsPanel extends JPanel {
         });
     }
 
+    public String[][] getLeaderboard() {
+        return leaderboard;
+    }
+
+    
 
 }

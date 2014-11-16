@@ -570,12 +570,8 @@ public class OptionsPanel extends JPanel {
     
     //---------Back----Setting options of all panels------------
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {  
-        //Set options of main menu Matrix panel 
-        for (Component p : getParent().getComponents()) {
-            /*if (p instanceof MatrixPanel) {
-                ((MatrixPanel) p).getOptions();
-            }*/
-            
+        //Set options of all panels
+        for (Component p : getParent().getComponents()) {          
             if(p instanceof AbleToGetOptions) {
                 ((AbleToGetOptions) p).getOptions();
             }

@@ -41,6 +41,7 @@ public class EndlessPanel extends GraphicsPanel {
     @Override
     protected void setKeyBindings() {
         super.setKeyBindings();
+        
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), KeyEvent.VK_ENTER);
 
         am.put(KeyEvent.VK_ENTER, new AbstractAction() {

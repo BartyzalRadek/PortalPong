@@ -52,6 +52,6 @@ public class LeaderboardsDrawPanel extends JPanel {
             g.drawString(leaderboard[i][2], 350, 30 * i + TOP_OFFSET);
         }
     }
-
+    
     
 }

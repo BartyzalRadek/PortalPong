@@ -8,6 +8,8 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import static pingpong.MainForm.FRAME_HEIGHT;
 import static pingpong.MainForm.FRAME_WIDTH;
@@ -26,6 +28,7 @@ public class EndlessPanel extends GraphicsPanel {
     private boolean showFinalScore = false;
     private int tempBallReturned = 0;   //because of AITeleport()
     private boolean screenCleaned = false;
+    private boolean nameNotSet = true;
 
     public EndlessPanel() {
         drawableList.add(ball);
@@ -41,7 +44,7 @@ public class EndlessPanel extends GraphicsPanel {
     @Override
     protected void setKeyBindings() {
         super.setKeyBindings();
-        
+
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), KeyEvent.VK_ENTER);
 
         am.put(KeyEvent.VK_ENTER, new AbstractAction() {
@@ -101,14 +104,14 @@ public class EndlessPanel extends GraphicsPanel {
     protected boolean hasSomebodyWon() {
         return player2.endlessWin();
     }
-    
+
     @Override
-    protected void somebodyWon(){
-       super.somebodyWon();
-       submitNewScore();
+    protected void somebodyWon() {
+        super.somebodyWon();
+        
     }
-    
-    protected void submitNewScore(){
+
+    protected void submitNewScore() {
         for (Component p : getParent().getComponents()) {
             if (p instanceof LeaderboardsPanel) {
                 ((LeaderboardsPanel) p).addScore(name, player1.endlessScore());
@@ -213,9 +216,18 @@ public class EndlessPanel extends GraphicsPanel {
         g.drawString(String.valueOf(player1.gettCount()), 410, 230);
         g.drawString(String.valueOf(player1.ballReturned), 410, 270);
         g.drawString(String.valueOf(player1.endlessScore()), 410, 310);
-        g.drawString("Enter your name:", 350, 350);
-        name = sb.toString();
-        g.drawString(sb.toString(), 500, 350);
+
+        if (nameNotSet) {
+            JFrame frame = new JFrame();
+            frame.setVisible(true);
+            name = JOptionPane.showInputDialog("Enter your name:");
+            nameNotSet = false;
+            submitNewScore();
+        }
+
+        g.drawString("Your name:", 350, 350);
+        //name = sb.toString();
+        g.drawString(name, 500, 350);
         g.drawString("Press enter to go back to menu.", 350, 400);
         if (newHighScore) {
             g.setColor(gameOverColor);
@@ -227,6 +239,8 @@ public class EndlessPanel extends GraphicsPanel {
     protected void reset() {
         showFinalScore = false;
         screenCleaned = false;
+        newHighScore = false;
+        nameNotSet = false;
         super.reset();
     }
 }

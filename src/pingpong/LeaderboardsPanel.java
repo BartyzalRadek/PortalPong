@@ -78,16 +78,17 @@ public class LeaderboardsPanel extends JPanel {
     }
     
     /**
-     * Sort according to score (second collumn) then acc. name (first column).
+     * Sort according to score (second collumn) then acc name (first column).
      */
     private void sortLeaderboards() {
         Arrays.sort(leaderboard, new Comparator<String[]>() {
             @Override
             public int compare(final String[] entry1, final String[] entry2) {
                 if (entry1[1].compareTo(entry2[1]) == 0) {
-                    return entry1[0].compareTo(entry2[0]);
+                    return entry1[0].compareToIgnoreCase(entry2[0]);
                 } else {
-                    return entry1[1].compareTo(entry2[1]);
+                    //Numbers need to be sorted in reverse, because they are sorted as a string
+                    return entry1[1].compareToIgnoreCase(entry2[1])*(-1);
                 }
             }
         });
@@ -158,6 +159,7 @@ public class LeaderboardsPanel extends JPanel {
         add(Box.createRigidArea(new Dimension(20, 50)));
         add(jLabel1);
         add(Box.createRigidArea(new Dimension(20, 0)));
+        
         add(drawPanel);
         //drawPanel.repaint();
         add(Box.createRigidArea(new Dimension(20, 0)));

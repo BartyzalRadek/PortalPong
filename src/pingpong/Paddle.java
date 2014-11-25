@@ -9,13 +9,14 @@ import static pingpong.MainForm.FRAME_HEIGHT;
  * @author Radek Bartyzal
  */
 public class Paddle implements Drawable {
+    
+    public static final int PADDLE_WIDTH = 20;
 
     private int length;
-    private int x;
+    private final int x;
     private int y;
     private int duration; ///< Power up effect duration
     private static final int V = 20; ///< Speed of movement
-    private static final int WIDTH = 20;
     private int center;
 
     public Paddle(int x) {
@@ -53,7 +54,7 @@ public class Paddle implements Drawable {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
-        g.fillOval(x, y, WIDTH, length);
+        g.fillOval(x, y, PADDLE_WIDTH, length);
     }
 
     public void lengthReturn() {

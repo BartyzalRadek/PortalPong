@@ -16,7 +16,6 @@ public class PowerUp implements Drawable {
     private int y;
     private double vx;
     private double vy;
-    private int v;
     private int type; //0 = T, 1 = +, 2 = -
     private int expire = 0;
     private boolean isExpired = false;
@@ -28,8 +27,6 @@ public class PowerUp implements Drawable {
         vy = (int) (Math.round(Math.random() * 7) + 1);
         x = 450;
         y = 250;
-        v = 1;
-
     }
 
     /*MATRIX BLOCK START*/

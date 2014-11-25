@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import static pingpong.MainForm.FRAME_HEIGHT;
 import static pingpong.MainForm.FRAME_WIDTH;
+import static pingpong.Paddle.PADDLE_WIDTH;
 
 /**
  *
@@ -57,14 +58,14 @@ public class Ball implements Drawable {
             if (vx > 0) {
                 if (x > teleport.getX1()) {
                     x = teleport.getX2();
-                    y = teleport.getY2() + 10;
+                    y = teleport.getY2() + 2*r;
                     changeDirection();
                 }
             }
             if (vx < 0) {
                 if (x < teleport.getX1()) {
                     x = teleport.getX2();
-                    y = teleport.getY2() + 10;
+                    y = teleport.getY2() + 2*r;
                     changeDirection();
                 }
             }
@@ -100,12 +101,12 @@ public class Ball implements Drawable {
 
     public void bounceOffPaddle(Paddle paddle, Player player) {
         if (vx < 0) {
-            if (x < (paddle.getX() + 20) && x > paddle.getX() && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY()) {
+            if (x < (paddle.getX() + PADDLE_WIDTH) && x > paddle.getX() && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY()) {
                 changeAngle(paddle);
                 player.ballReturned();
             }
         } else {
-            if (x > (paddle.getX() - 10) && x < (paddle.getX() + 10) && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY()) {
+            if (x > (paddle.getX() + PADDLE_WIDTH - 2*r) && x < (paddle.getX() + PADDLE_WIDTH - 2*r) && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY()) {
                 changeAngle(paddle);
                 player.ballReturned();
             }

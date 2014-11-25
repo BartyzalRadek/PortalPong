@@ -72,6 +72,7 @@ public class AboutPanel extends JPanel {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(240, 240, 240));
         jLabel5.setText("Known bug: If ball gets stuck in Y/X axis, mash A/Q to fix it.");
+        jLabel5.setVisible(false);
 
         jLabel6.setBackground(new java.awt.Color(0, 0, 0));
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N

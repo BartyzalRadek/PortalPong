@@ -257,9 +257,9 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
     protected void drawScore(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString(String.valueOf(player1.score), 420, 35);
+        g.drawString(String.valueOf(player1.getScore()), 420, 35);
         g.drawString(":", 452, 35);
-        g.drawString(String.valueOf(player2.score), 480, 35);
+        g.drawString(String.valueOf(player2.getScore()), 480, 35);
 
     }
 
@@ -271,8 +271,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
         //g.drawString("Q, A - Modify speed", 200, 15);
         g.drawString("W, S, Up, Down - Move paddles", 600, 15);
         g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString("T:" + String.valueOf(player1.teleports), 10, 440);
-        g.drawString("T:" + String.valueOf(player2.teleports), 940, 440);
+        g.drawString("T:" + String.valueOf(player1.getTeleports()), 10, 440);
+        g.drawString("T:" + String.valueOf(player2.getTeleports()), 940, 440);
 
         if (gamePaused) {
             g.setColor(Color.GRAY);
@@ -339,15 +339,13 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
                     paddle2.moveDown();
                     break;
                 case KeyEvent.VK_P:
-                    if (player2.teleports > 0) {
+                    if (player2.useTeleport()) {
                         createTeleport();
-                        player2.teleports -= 1;
                     }
                     break;
                 case KeyEvent.VK_E:
-                    if (player1.teleports > 0) {
+                    if (player1.useTeleport()) {
                         createTeleport();
-                        player1.teleports -= 1;
                     }
 
                     break;

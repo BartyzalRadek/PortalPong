@@ -141,15 +141,14 @@ public class EndlessPanel extends GraphicsPanel {
      prvni odraz preskoci pomoci: && tempBallReturned != 0 */
     private void AIteleport() {
         if (ball.getX() < 100 && ball.getVx() > 0) {
-            if (tempBallReturned + 1 == player1.ballReturned && tempBallReturned != 0) {
-                if (player2.teleports > 0) {
+            if (tempBallReturned + 1 == player1.getBallReturned() && tempBallReturned != 0) {
+                if (player2.useTeleport()) {
                     createTeleport();
-                    player2.teleports -= 1;
                     tempBallReturned = 0;
                 }
             }
         } else {
-            tempBallReturned = player1.ballReturned;
+            tempBallReturned = player1.getBallReturned();
         }
     }
 
@@ -160,7 +159,7 @@ public class EndlessPanel extends GraphicsPanel {
         g.drawString("Score:", 400, 35);
         g.drawString("Lives:", 500, 35);
         g.drawString(String.valueOf(player1.endlessScore()), 470, 35);
-        g.drawString(String.valueOf(player1.getLives() - player2.score), 560, 35);
+        g.drawString(String.valueOf(player1.getLives() - player2.getScore()), 560, 35);
     }
 
     @Override
@@ -171,8 +170,8 @@ public class EndlessPanel extends GraphicsPanel {
         g.drawString("Esc - Pause", 200, 15);
         g.drawString("W, S - Move paddles", 600, 15);
         g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString("T:" + String.valueOf(player1.teleports), 10, 440);
-        g.drawString("T:" + String.valueOf(player2.teleports), 940, 440);
+        g.drawString("T:" + String.valueOf(player1.getTeleports()), 10, 440);
+        g.drawString("T:" + String.valueOf(player2.getTeleports()), 940, 440);
 
         if (gamePaused) {
             g.setColor(Color.GRAY);
@@ -216,7 +215,7 @@ public class EndlessPanel extends GraphicsPanel {
         g.drawString(String.valueOf(player1.getPlusCount()), 410, 150);
         g.drawString(String.valueOf(player1.getMinusCount()), 410, 190);
         g.drawString(String.valueOf(player1.gettCount()), 410, 230);
-        g.drawString(String.valueOf(player1.ballReturned), 410, 270);
+        g.drawString(String.valueOf(player1.getBallReturned()), 410, 270);
         g.drawString(String.valueOf(player1.endlessScore()), 410, 310);
 
         /*if (!frame.isShowing() && nameNotSet) {

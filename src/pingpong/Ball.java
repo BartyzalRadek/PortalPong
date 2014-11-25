@@ -41,13 +41,13 @@ public class Ball implements Drawable {
     public void scorePoint(Player player1, Player player2, boolean isEndless) {
         if (!isEndless) {
             if (x > 970) {
-                player1.score += 1;
+                player1.score();
                 toCenter();
             }
         }
 
         if (x < 0) {
-            player2.score += 1;
+            player2.score();
             toCenter();
         }
     }
@@ -102,12 +102,12 @@ public class Ball implements Drawable {
         if (vx < 0) {
             if (x < (paddle.getX() + 20) && x > paddle.getX() && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY()) {
                 changeAngle(paddle);
-                player.ballReturned += 1;
+                player.ballReturned();
             }
         } else {
             if (x > (paddle.getX() - 10) && x < (paddle.getX() + 10) && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY()) {
                 changeAngle(paddle);
-                player.ballReturned += 1;
+                player.ballReturned();
             }
         }
     }

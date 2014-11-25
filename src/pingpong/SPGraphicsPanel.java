@@ -42,9 +42,8 @@ public class SPGraphicsPanel extends GraphicsPanel {
     private void AIteleport() {
         int difference = (ball.getY() > paddle2.getY() ? ball.getY() - paddle2.getY() : paddle2.getY() - ball.getY());
         if (ball.getX() > 900 && difference > 200) {
-            if (player2.teleports > 0) {
+            if (player2.useTeleport()) {
                 createTeleport();
-                player2.teleports -= 1;
             }
         }
     }

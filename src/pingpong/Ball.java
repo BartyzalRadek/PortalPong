@@ -11,13 +11,11 @@ import static pingpong.MainForm.FRAME_HEIGHT;
  */
 public class Ball implements Drawable {
 
-    public int x;
-    public int y;
-    public int r;
-    public double vx;
-    public double vy;
-    private int changeVy = 0;
-    private int changeVx = 0;
+    private int x;
+    private int y;
+    private int r;
+    private double vx;
+    private double vy;
 
     public Ball() {
         x = 450;
@@ -28,6 +26,19 @@ public class Ball implements Drawable {
 
     }
 
+    public void increaseSpeed(){
+        if (vx > 0) {
+                vx++;
+            } else {
+                vx--;
+            }
+            if (vy > 0) {
+                vy++;
+            } else {
+                vy--;
+            }
+    }
+    
     public void scorePoint(Player player1, Player player2, boolean isEndless) {
         if (!isEndless) {
             if (x > 970) {
@@ -74,16 +85,13 @@ public class Ball implements Drawable {
         if (isEndless) {
             if (y > (FRAME_HEIGHT - r - 50) || y < 0) {
                 vy = -vy;
-                changeVy++;
             }
             if (x > 970) {
                 vx = -vx;
-                changeVx++;
             }
         } else {
             if (y > (FRAME_HEIGHT - r - 50) || y < 0) {
                 vy = -vy;
-                changeVy++;
             }
         }
     }
@@ -131,11 +139,9 @@ public class Ball implements Drawable {
         vx = Math.cos(angle) * v;
         if (tempVx > 0 && vx > 0) {
             vx = vx * (-1);
-            changeVx++;
         }
         if (tempVx < 0 && vx < 0) {
             vx = vx * (-1);
-            changeVx++;
         }
 
     }
@@ -146,22 +152,18 @@ public class Ball implements Drawable {
         if (y < centerOfPaddleY) {
             if (tempVy > 0 && vy > 0) {
                 vy = -vy;
-                changeVy++;
             }
 
             if (tempVy < 0 && vy > 0) {
                 vy = -vy;
-                changeVy++;
             }
         } else {
             if (tempVy > 0 && vy < 0) {
                 vy = -vy;
-                changeVy++;
             }
 
             if (tempVy < 0 && vy < 0) {
                 vy = -vy;
-                changeVy++;
             }
         }
     }
@@ -176,7 +178,7 @@ public class Ball implements Drawable {
         }
     }
 
-    public void toCenter() {
+    private void toCenter() {
         reset();
         vx = vx * randomSwitchDirection();
         vy = vy * randomSwitchDirection();
@@ -190,27 +192,9 @@ public class Ball implements Drawable {
         vy = (int) Math.floor(Math.random() * 2 + 3);
     }
 
-    public void changeDirection() {
+    private void changeDirection() {
         vx = -vx;
-        changeVx++;
         vy = -vy;
-        changeVy++;
-    }
-
-    public int getChangeVy() {
-        return changeVy;
-    }
-
-    public int getChangeVx() {
-        return changeVx;
-    }
-
-    public void setChangeVx(int changeVx) {
-        this.changeVx = changeVx;
-    }
-
-    public void setChangeVy(int changeVy) {
-        this.changeVy = changeVy;
     }
 
     @Override
@@ -218,4 +202,24 @@ public class Ball implements Drawable {
         g.setColor(Color.WHITE);
         g.fillOval(x, y, 10, 10);
     }
+
+    public double getVx() {
+        return vx;
+    }
+
+    public double getVy() {
+        return vy;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+    
+    
+    
+    
 }

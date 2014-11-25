@@ -39,7 +39,7 @@ public class Paddle implements Drawable {
     public void AImove(Ball ball, int height) {
         center = (y + (length / 2));
 
-        if (center < ball.y) {
+        if (center < ball.getY()) {
             if ((y + length) < height) {
                 y += V;
             }

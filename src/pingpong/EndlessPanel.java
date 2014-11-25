@@ -23,12 +23,14 @@ public class EndlessPanel extends GraphicsPanel {
     /*leaderboards variables start*/
     private boolean newHighScore = false;
     private StringBuilder sb = new StringBuilder();
-    private String name = "Darmy";
+    public static String NAME = "Darmy";
     /*leaderboards variables end*/
     private boolean showFinalScore = false;
     private int tempBallReturned = 0;   //because of AITeleport()
     private boolean screenCleaned = false;
     private boolean nameNotSet = true;
+    
+    private InputFrame frame = new InputFrame();
 
     public EndlessPanel() {
         drawableList.add(ball);
@@ -108,13 +110,13 @@ public class EndlessPanel extends GraphicsPanel {
     @Override
     protected void somebodyWon() {
         super.somebodyWon();
-        
+
     }
 
     protected void submitNewScore() {
         for (Component p : getParent().getComponents()) {
             if (p instanceof LeaderboardsPanel) {
-                ((LeaderboardsPanel) p).addScore(name, player1.endlessScore());
+                ((LeaderboardsPanel) p).addScore(NAME, player1.endlessScore());
                 newHighScore = ((LeaderboardsPanel) p).isNewHighscore(player1.endlessScore());
             }
         }
@@ -138,7 +140,7 @@ public class EndlessPanel extends GraphicsPanel {
     /*Na zacatku, pred prvnim odrazem je vse 0 - tudiz nefunguje pojistka: tempBallReturned = 0; proto se
      prvni odraz preskoci pomoci: && tempBallReturned != 0 */
     private void AIteleport() {
-        if (ball.x < 100 && ball.vx > 0) {
+        if (ball.getX() < 100 && ball.getVx() > 0) {
             if (tempBallReturned + 1 == player1.ballReturned && tempBallReturned != 0) {
                 if (player2.teleports > 0) {
                     createTeleport();
@@ -217,17 +219,25 @@ public class EndlessPanel extends GraphicsPanel {
         g.drawString(String.valueOf(player1.ballReturned), 410, 270);
         g.drawString(String.valueOf(player1.endlessScore()), 410, 310);
 
+        /*if (!frame.isShowing() && nameNotSet) {
+            nameNotSet = false;
+            submitNewScore();
+
+        }*/
+        
         if (nameNotSet) {
-            JFrame frame = new JFrame();
-            frame.setVisible(true);
-            name = JOptionPane.showInputDialog("Enter your name:");
+            //frame.setLocation(FRAME_WIDTH/2, FRAME_HEIGHT/2);
+            //frame.setVisible(true);
+            NAME = JOptionPane.showInputDialog("Enter your name:");
             nameNotSet = false;
             submitNewScore();
         }
 
+        
+
         g.drawString("Your name:", 350, 350);
         //name = sb.toString();
-        g.drawString(name, 500, 350);
+        g.drawString(NAME, 500, 350);
         g.drawString("Press enter to go back to menu.", 350, 400);
         if (newHighScore) {
             g.setColor(gameOverColor);

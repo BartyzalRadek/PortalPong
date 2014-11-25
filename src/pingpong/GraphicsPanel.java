@@ -131,16 +131,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
         int type = (int) (Math.round(Math.random() + 1));
         powerUpList.add(new PowerUp(type));
         if (fixedSpeed == false) {
-            if (ball.vx > 0) {
-                ball.vx++;
-            } else {
-                ball.vx--;
-            }
-            if (ball.vy > 0) {
-                ball.vy++;
-            } else {
-                ball.vy--;
-            }
+            ball.increaseSpeed();
         }
     }
 
@@ -361,12 +352,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
 
                     break;
                 case KeyEvent.VK_Q:
-                    ball.vx += 1;
-                    ball.vy += 1;
-                    break;
                 case KeyEvent.VK_A:
-                    ball.vx -= 1;
-                    ball.vy -= 1;
+                    ball.increaseSpeed();
                     break;
 
                 case KeyEvent.VK_ENTER:

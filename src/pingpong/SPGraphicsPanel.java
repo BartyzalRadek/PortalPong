@@ -40,8 +40,8 @@ public class SPGraphicsPanel extends GraphicsPanel {
      * Different AI than the one in Endless Panel
      */
     private void AIteleport() {
-        int difference = (ball.y > paddle2.getY() ? ball.y - paddle2.getY() : paddle2.getY() - ball.y);
-        if (ball.x > 900 && difference > 200) {
+        int difference = (ball.getY() > paddle2.getY() ? ball.getY() - paddle2.getY() : paddle2.getY() - ball.getY());
+        if (ball.getX() > 900 && difference > 200) {
             if (player2.teleports > 0) {
                 createTeleport();
                 player2.teleports -= 1;

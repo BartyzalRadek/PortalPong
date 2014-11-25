@@ -71,6 +71,7 @@ public class LeaderboardsPanel extends JPanel {
             sortLeaderboards();
             drawPanel.repaint();
         }
+        saveStats();
     }
     
     public boolean isNewHighscore(int score){
@@ -156,13 +157,13 @@ public class LeaderboardsPanel extends JPanel {
     private void initLayout() {
         setBackground(Color.black);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(Box.createRigidArea(new Dimension(20, 50)));
+        add(Box.createRigidArea(new Dimension(100, 50)));
         add(jLabel1);
-        add(Box.createRigidArea(new Dimension(20, 0)));
+        add(Box.createRigidArea(new Dimension(100, 20)));
         
         add(drawPanel);
         //drawPanel.repaint();
-        add(Box.createRigidArea(new Dimension(20, 0)));
+        //add(Box.createRigidArea(new Dimension(20, 0)));
         add(jLabel2);
 
     }

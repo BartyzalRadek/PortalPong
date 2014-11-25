@@ -1,9 +1,9 @@
-
 package pingpong;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import static pingpong.MainForm.FRAME_HEIGHT;
+import static pingpong.MainForm.FRAME_WIDTH;
 
 /**
  *
@@ -13,32 +13,31 @@ public class Ball implements Drawable {
 
     private int x;
     private int y;
-    private int r;
+    private final int r = 5;
     private double vx;
     private double vy;
 
     public Ball() {
         x = 450;
         y = 250;
-        r = 5;
         vx = (int) Math.floor(Math.random() * 2 + 3);
         vy = (int) Math.floor(Math.random() * 2 + 3);
 
     }
 
-    public void increaseSpeed(){
+    public void increaseSpeed() {
         if (vx > 0) {
-                vx++;
-            } else {
-                vx--;
-            }
-            if (vy > 0) {
-                vy++;
-            } else {
-                vy--;
-            }
+            vx++;
+        } else {
+            vx--;
+        }
+        if (vy > 0) {
+            vy++;
+        } else {
+            vy--;
+        }
     }
-    
+
     public void scorePoint(Player player1, Player player2, boolean isEndless) {
         if (!isEndless) {
             if (x > 970) {
@@ -46,7 +45,7 @@ public class Ball implements Drawable {
                 toCenter();
             }
         }
-        
+
         if (x < 0) {
             player2.score += 1;
             toCenter();
@@ -83,16 +82,19 @@ public class Ball implements Drawable {
 
     public void bounceOffWalls(boolean isEndless) {
         if (isEndless) {
-            if (y > (FRAME_HEIGHT - r - 50) || y < 0) {
-                vy = -vy;
-            }
-            if (x > 970) {
+            if (x > (FRAME_WIDTH - 30)) {
                 vx = -vx;
+                x = (FRAME_WIDTH - 30);
             }
-        } else {
-            if (y > (FRAME_HEIGHT - r - 50) || y < 0) {
-                vy = -vy;
-            }
+        }
+
+        if (y > (FRAME_HEIGHT - r - 50)) {
+            vy = -vy;
+            y = (FRAME_HEIGHT - r - 50);
+        }
+        if (y < 0) {
+            vy = -vy;
+            y = 0;
         }
     }
 
@@ -143,6 +145,9 @@ public class Ball implements Drawable {
         if (tempVx < 0 && vx < 0) {
             vx = vx * (-1);
         }
+        if (vy == 0) {
+            vy += 0.3;
+        }
 
     }
 
@@ -150,21 +155,14 @@ public class Ball implements Drawable {
         int centerOfPaddleY = (int) (paddle.getY() + (paddle.getLength() / 2));
 
         if (y < centerOfPaddleY) {
-            if (tempVy > 0 && vy > 0) {
-                vy = -vy;
-            }
-
-            if (tempVy < 0 && vy > 0) {
+            if (vy > 0) {
                 vy = -vy;
             }
         } else {
-            if (tempVy > 0 && vy < 0) {
+            if (vy < 0) {
                 vy = -vy;
             }
 
-            if (tempVy < 0 && vy < 0) {
-                vy = -vy;
-            }
         }
     }
 
@@ -218,8 +216,5 @@ public class Ball implements Drawable {
     public int getY() {
         return y;
     }
-    
-    
-    
-    
+
 }

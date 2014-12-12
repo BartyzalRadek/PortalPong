@@ -21,14 +21,14 @@ import static pingpong.EndlessPanel.NAME;
 
 /**
  *
- * @author darmy
+ * @author Radek Bartyzal
  */
 public class InputFrame extends JDialog {
 
-    JLabel label;
-    JPanel panel;
-    StringBuilder sb;
-    EndlessPanel ePanel;
+    private JLabel label;
+    private JPanel panel;
+    private StringBuilder sb;
+    private final EndlessPanel ePanel;
 
     public InputFrame(EndlessPanel panel) {
         ePanel = panel;

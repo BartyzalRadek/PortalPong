@@ -13,7 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -23,13 +23,15 @@ import static pingpong.EndlessPanel.NAME;
  *
  * @author darmy
  */
-public class InputFrame extends JFrame {
+public class InputFrame extends JDialog {
 
     JLabel label;
     JPanel panel;
     StringBuilder sb;
+    EndlessPanel ePanel;
 
-    public InputFrame() {
+    public InputFrame(EndlessPanel panel) {
+        ePanel = panel;
         init();
     }
 
@@ -41,8 +43,7 @@ public class InputFrame extends JFrame {
         label.setAlignmentX(CENTER_ALIGNMENT);
         label.setPreferredSize(new Dimension(100, 30));
         sb = new StringBuilder();
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setName("Input name");
+        
         this.setBackground(Color.black);
         panel.setBackground(Color.black);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -68,6 +69,8 @@ public class InputFrame extends JFrame {
 
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     label.setText("BAF");
+                    //ePanel
+
                     quit();
                 }
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
@@ -88,14 +91,9 @@ public class InputFrame extends JFrame {
 
     private void quit() {
         NAME = sb.toString();
+        ePanel.drawNAME();
+        ePanel.submitNewScore();
         this.setVisible(false);
         this.dispose();
     }
-    
-    public String getName(){
-        String name;
-        name = sb.toString();
-        return name;
-    }
-
 }

@@ -8,8 +8,6 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 import static pingpong.MainForm.FRAME_HEIGHT;
 import static pingpong.MainForm.FRAME_WIDTH;
@@ -21,16 +19,14 @@ import static pingpong.MainForm.FRAME_WIDTH;
 public class EndlessPanel extends GraphicsPanel {
 
     /*leaderboards variables start*/
-    private boolean newHighScore = false;
-    private StringBuilder sb = new StringBuilder();
     public static String NAME = "Darmy";
+    private boolean newHighScore = false;
     /*leaderboards variables end*/
     private boolean showFinalScore = false;
     private int tempBallReturned = 0;   //because of AITeleport()
     private boolean screenCleaned = false;
-    private boolean nameNotSet = true;
-    
-    private InputFrame frame = new InputFrame();
+
+    private InputFrame frame;
 
     public EndlessPanel() {
         drawableList.add(ball);
@@ -58,7 +54,7 @@ public class EndlessPanel extends GraphicsPanel {
                 }
                 if (!showFinalScore && hasSomebodyWon()) {
                     showFinalScore = true;
-                    //drawFinalScore();
+                    drawFinalScore();
                     //repaint();
                 }
             }
@@ -96,7 +92,9 @@ public class EndlessPanel extends GraphicsPanel {
 
         Graphics g = this.getGraphics();
         if (showFinalScore) {
-            drawFinalScore(g);
+            if (newHighScore) {
+                drawNewHighScore(g);
+            }
         } else {
             drawSomebodyWon(g);
         }
@@ -113,7 +111,7 @@ public class EndlessPanel extends GraphicsPanel {
 
     }
 
-    protected void submitNewScore() {
+    public void submitNewScore() {
         for (Component p : getParent().getComponents()) {
             if (p instanceof LeaderboardsPanel) {
                 ((LeaderboardsPanel) p).addScore(NAME, player1.endlessScore());
@@ -190,7 +188,8 @@ public class EndlessPanel extends GraphicsPanel {
         }
     }
 
-    private void drawFinalScore(Graphics g) {
+    private void drawFinalScore() {
+        Graphics g = this.getGraphics();
         //Clean screen behind final score
         if (!screenCleaned) {
             g.setColor(Color.BLACK);
@@ -218,30 +217,26 @@ public class EndlessPanel extends GraphicsPanel {
         g.drawString(String.valueOf(player1.getBallReturned()), 410, 270);
         g.drawString(String.valueOf(player1.endlessScore()), 410, 310);
 
-        /*if (!frame.isShowing() && nameNotSet) {
-            nameNotSet = false;
-            submitNewScore();
-
-        }*/
-        
-        if (nameNotSet) {
-            //frame.setLocation(FRAME_WIDTH/2, FRAME_HEIGHT/2);
-            //frame.setVisible(true);
-            NAME = JOptionPane.showInputDialog("Enter your name:");
-            nameNotSet = false;
-            submitNewScore();
-        }
-
-        
+        frame = new InputFrame(this);
+        frame.setVisible(true);
+        frame.setLocation(this.getLocationOnScreen().x + frame.getWidth(), this.getLocationOnScreen().y + frame.getHeight());
 
         g.drawString("Your name:", 350, 350);
-        //name = sb.toString();
-        g.drawString(NAME, 500, 350);
         g.drawString("Press enter to go back to menu.", 350, 400);
-        if (newHighScore) {
-            g.setColor(gameOverColor);
-            g.drawString("NEW HIGHSCORE", 500, 310);
-        }
+        drawNewHighScore(g);
+    }
+
+    public void drawNAME() {
+        Graphics g = this.getGraphics();
+        g.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        g.setColor(Color.WHITE);
+        g.drawString(NAME, 500, 350);
+    }
+
+    private void drawNewHighScore(Graphics g) {
+        g.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        g.setColor(gameOverColor);
+        g.drawString("NEW HIGHSCORE", 500, 310);
     }
 
     @Override
@@ -249,7 +244,6 @@ public class EndlessPanel extends GraphicsPanel {
         showFinalScore = false;
         screenCleaned = false;
         newHighScore = false;
-        nameNotSet = false;
         super.reset();
     }
 }

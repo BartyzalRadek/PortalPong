@@ -38,13 +38,25 @@ public class InputFrame extends JDialog {
     private void init() {
         label = new JLabel("Enter your name:");
         panel = new JPanel();
+        sb = new StringBuilder();
+        
+        initLabel();
+        initPanel();
+        
+        this.setBackground(Color.black);
+        this.add(panel);
+        this.setPreferredSize(new Dimension(300, 150));
+        this.pack();
+    }
+    
+    private void initLabel(){
         label.setForeground(Color.gray);
         label.setFont(new Font("asf", Font.PLAIN, 20));
         label.setAlignmentX(CENTER_ALIGNMENT);
         label.setPreferredSize(new Dimension(100, 30));
-        sb = new StringBuilder();
-        
-        this.setBackground(Color.black);
+    }
+    
+    private void initPanel(){
         panel.setBackground(Color.black);
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(Box.createRigidArea(new Dimension(30, 50)));
@@ -84,9 +96,6 @@ public class InputFrame extends JDialog {
             }
         });
         panel.setFocusable(true);
-        this.add(panel);
-        this.setPreferredSize(new Dimension(300, 150));
-        this.pack();
     }
 
     private void quit() {

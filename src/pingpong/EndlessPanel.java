@@ -44,6 +44,7 @@ public class EndlessPanel extends GraphicsPanel {
         super.setKeyBindings();
 
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), KeyEvent.VK_ENTER);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), KeyEvent.VK_SPACE);
 
         am.put(KeyEvent.VK_ENTER, new AbstractAction() {
 
@@ -56,6 +57,16 @@ public class EndlessPanel extends GraphicsPanel {
                     showFinalScore = true;
                     drawFinalScore();
                     //repaint();
+                }
+            }
+        });
+
+        am.put(KeyEvent.VK_SPACE, new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                if (!gamePaused && !hasSomebodyWon() && !showFinalScore) {
+                    startGame();
                 }
             }
         });
@@ -103,12 +114,6 @@ public class EndlessPanel extends GraphicsPanel {
     @Override
     protected boolean hasSomebodyWon() {
         return player2.endlessWin();
-    }
-
-    @Override
-    protected void somebodyWon() {
-        super.somebodyWon();
-
     }
 
     public void submitNewScore() {

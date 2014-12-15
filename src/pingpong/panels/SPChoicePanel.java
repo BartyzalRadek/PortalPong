@@ -149,11 +149,6 @@ public class SPChoicePanel extends JPanel {
                 repaint();
             }
 
-            /*public void mouseExited(java.awt.event.MouseEvent evt) {
-                activeLeftPanel = false;
-                repaint();
-            }*/
-
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CardLayout cl = (CardLayout) (getParent().getLayout());
                 cl.show(getParent(), CLASSIC_PANEL);
@@ -167,11 +162,6 @@ public class SPChoicePanel extends JPanel {
                 activeLeftPanel = false;
                 repaint();
             }
-
-            /*public void mouseExited(java.awt.event.MouseEvent evt) {
-                activeLeftPanel = true;
-                repaint();
-            }*/
 
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CardLayout cl = (CardLayout) (getParent().getLayout());

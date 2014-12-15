@@ -12,7 +12,7 @@ import static pingpong.MainForm.MENU_PANEL;
 
 /**
  *
- * @author darmy
+ * @author Radek Bartyzal
  */
 public class AboutPanel extends JPanel {
 

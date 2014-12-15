@@ -11,9 +11,6 @@ import static pingpong.MainForm.FRAME_WIDTH;
  */
 public class GameFrame extends JFrame {
     
-    /*public MPGraphicsPanel mpgp;
-    public SPGraphicsPanel spgp;
-    public EndlessPanel endlessgp;*/
     public GraphicsPanel gp;
     public boolean visible;
 
@@ -39,15 +36,7 @@ public class GameFrame extends JFrame {
 
         this.add(gp);
         this.gp.powerUpTimer.start();
-        //this.addKeyListener(gp);
 
     }
 
-    /*public void checkVisible() {
-        if (gp.isClosePanel()) {
-            visible = false;
-            gp.reset();
-        }
-
-    }*/
 }

@@ -1,5 +1,5 @@
 
-package pingpong;
+package pingpong.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;

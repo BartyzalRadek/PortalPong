@@ -1,4 +1,4 @@
-package pingpong;
+package pingpong.panels;
 
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -17,6 +17,13 @@ import javax.swing.InputMap;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
+import pingpong.AbleToGetOptions;
+import pingpong.Ball;
+import pingpong.Drawable;
+import pingpong.Paddle;
+import pingpong.Player;
+import pingpong.PowerUp;
+import pingpong.Teleport;
 import static pingpong.MainForm.FRAME_HEIGHT;
 import static pingpong.MainForm.FRAME_WIDTH;
 import static pingpong.MainForm.MENU_PANEL;

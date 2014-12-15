@@ -1,4 +1,4 @@
-package pingpong;
+package pingpong.panels;
 
 import java.awt.GridLayout;
 import javax.swing.JFrame;

@@ -1,5 +1,13 @@
 package pingpong;
 
+import pingpong.panels.MPGraphicsPanel;
+import pingpong.panels.AboutPanel;
+import pingpong.panels.SPChoicePanel;
+import pingpong.panels.EndlessPanel;
+import pingpong.panels.LeaderboardsPanel;
+import pingpong.panels.SPGraphicsPanel;
+import pingpong.panels.OptionsPanel;
+import pingpong.panels.MatrixPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;

@@ -1,4 +1,4 @@
-package pingpong;
+package pingpong.panels;
 
 import java.awt.event.KeyEvent;
 import javax.swing.KeyStroke;

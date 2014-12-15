@@ -5,6 +5,7 @@
  */
 package pingpong;
 
+import pingpong.panels.EndlessPanel;
 import java.awt.Color;
 import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Dimension;
@@ -17,7 +18,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import static pingpong.EndlessPanel.NAME;
+import static pingpong.panels.EndlessPanel.NAME;
 
 /**
  *

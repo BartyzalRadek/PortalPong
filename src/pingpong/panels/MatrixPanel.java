@@ -1,4 +1,4 @@
-package pingpong;
+package pingpong.panels;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import pingpong.AbleToGetOptions;
+import pingpong.PowerUp;
 
 /**
  *

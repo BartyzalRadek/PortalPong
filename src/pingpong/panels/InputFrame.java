@@ -5,7 +5,6 @@
  */
 package pingpong.panels;
 
-import pingpong.panels.EndlessPanel;
 import java.awt.Color;
 import static java.awt.Component.CENTER_ALIGNMENT;
 import java.awt.Dimension;
@@ -26,6 +25,8 @@ import static pingpong.panels.EndlessPanel.NAME;
  */
 public class InputFrame extends JDialog {
 
+    private static final int MAX_LENGTH = 7;
+    
     private JLabel label;
     private JPanel panel;
     private StringBuilder sb;
@@ -65,15 +66,18 @@ public class InputFrame extends JDialog {
         panel.add(Box.createRigidArea(new Dimension(30, 50)));
         panel.addKeyListener(new KeyListener() {
 
+            @Override
             public void keyTyped(KeyEvent e) {
             }
 
+            @Override
             public void keyReleased(KeyEvent e) {
             }
 
+            @Override
             public void keyPressed(KeyEvent e) {
 
-                if (sb.length() <= 8) {
+                if (sb.length() <= MAX_LENGTH) {
                     if (String.valueOf(e.getKeyChar()).matches("[a-zA-Z0-9]")) {
                         sb.append(e.getKeyChar());
                     }
@@ -81,9 +85,6 @@ public class InputFrame extends JDialog {
                 label.setText(sb.toString());
 
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    label.setText("BAF");
-                    //ePanel
-
                     quit();
                 }
                 if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {

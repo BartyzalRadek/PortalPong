@@ -48,8 +48,8 @@ public class LeaderboardsDrawPanel extends JPanel {
                 g.drawString(String.valueOf(i + 1) + ".", 140, 30 * i + TOP_OFFSET);
             }
             g.drawString(leaderboard[i][0], 180, 30 * i + TOP_OFFSET);
-            g.drawString(leaderboard[i][1], 280, 30 * i + TOP_OFFSET);
-            g.drawString(leaderboard[i][2], 350, 30 * i + TOP_OFFSET);
+            g.drawString(leaderboard[i][1], 320, 30 * i + TOP_OFFSET);
+            g.drawString(leaderboard[i][2], 390, 30 * i + TOP_OFFSET);
         }
     }
     

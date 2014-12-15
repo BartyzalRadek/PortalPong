@@ -318,11 +318,11 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
     }
 
     /**
-     * Nested class, to be able to access internal varibles player1, paddle1 etc
+     * Nested class, to be able to access internal variables player1, paddle1 etc
      */
     public class Action extends AbstractAction {
 
-        private int keyCode;
+        private final int keyCode;
 
         public Action(int keyCode) {
             this.keyCode = keyCode;

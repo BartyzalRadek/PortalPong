@@ -5,18 +5,22 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import pingpong.AbleToGetOptions;
+import static pingpong.MainForm.FRAME_HEIGHT;
+import static pingpong.MainForm.FRAME_WIDTH;
 import pingpong.PowerUp;
 
 /**
  *
  * @author Radek Bartyzal
  */
-public class MatrixPanel extends JPanel implements AbleToGetOptions {
+public class MatrixPanel extends JPanel implements AbleToGetOptions, ComponentListener {
 
     private List<PowerUp> powerUpList = new ArrayList<PowerUp>();
     private boolean matrixOn = true;
@@ -59,6 +63,7 @@ public class MatrixPanel extends JPanel implements AbleToGetOptions {
     public MatrixPanel() {
         timer1.start();
         timer2.start();
+        //addComponentListener(this);
     }
 
     @Override
@@ -100,6 +105,7 @@ public class MatrixPanel extends JPanel implements AbleToGetOptions {
         }
     }
 
+    @Override
     public void getOptions() {
         for (Component p : getParent().getComponents()) {
             if (p instanceof OptionsPanel) {
@@ -113,5 +119,25 @@ public class MatrixPanel extends JPanel implements AbleToGetOptions {
         } else {
             stopMatrix();
         }
+    }
+
+    @Override
+    public void componentResized(ComponentEvent ce) {
+        /*FRAME_HEIGHT = this.getHeight();
+        FRAME_WIDTH = this.getWidth();
+        System.out.println("Height= " + FRAME_HEIGHT);
+        System.out.println("Width= " + FRAME_WIDTH);*/
+    }
+
+    @Override
+    public void componentMoved(ComponentEvent ce) {
+    }
+
+    @Override
+    public void componentShown(ComponentEvent ce) {
+    }
+
+    @Override
+    public void componentHidden(ComponentEvent ce) {
     }
 }

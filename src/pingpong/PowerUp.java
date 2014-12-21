@@ -46,7 +46,7 @@ public class PowerUp implements Drawable {
 
     public void expire() {
         expire++;
-        if (expire == 20) {
+        if (expire == 20 || y > FRAME_HEIGHT) {
             isExpired = true;
         }
     }

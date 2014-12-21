@@ -10,6 +10,7 @@ import pingpong.panels.OptionsPanel;
 import pingpong.panels.MatrixPanel;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -19,6 +20,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import pingpong.panels.CardsPanel;
 
 /**
  *
@@ -26,9 +28,8 @@ import javax.swing.JPanel;
  */
 public class MainForm {
 
-    private JPanel cards; ///< A panel that uses CardLayout
-    public final static int FRAME_HEIGHT = 500;
-    public final static int FRAME_WIDTH = 1000;
+    public static int FRAME_HEIGHT = 500;
+    public static int FRAME_WIDTH = 1000;
     public final static String MENU_PANEL = "Card with menu";
     public final static String OPTIONS_PANEL = "Card with options";
     public final static String ABOUT_PANEL = "Card with about";
@@ -43,8 +44,9 @@ public class MainForm {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private JPanel optionsCard;
-    private JPanel aboutCard;
+    private OptionsPanel optionsCard;
+    private AboutPanel aboutCard;
+    private CardsPanel cards; ///< A panel that uses CardLayout
     private LeaderboardsPanel leaderCard;
     private SPChoicePanel spCard;
     private MPGraphicsPanel mpCard;
@@ -113,6 +115,7 @@ public class MainForm {
     }
 
     private void setLabelParam(final JLabel label) {
+        label.setAlignmentX(Component.LEFT_ALIGNMENT);
         label.setFont(new java.awt.Font("Tahoma", 0, 20));
         label.setForeground(new java.awt.Color(240, 240, 240));
         label.setMaximumSize(new java.awt.Dimension(200, 25));
@@ -145,15 +148,12 @@ public class MainForm {
         jLabel6 = new javax.swing.JLabel("Exit");
 
         JLabel labels[] = {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6};
-        for (final JLabel label : labels) {
-            label.setAlignmentX(Component.LEFT_ALIGNMENT);
-            setLabelParam(label);
-        }
 
         labelActions();
 
         menuCard.add(Box.createRigidArea(new Dimension(20, 100)));
         for (JLabel label : labels) {
+            setLabelParam(label);
             menuCard.add(label);
             menuCard.add(Box.createRigidArea(new Dimension(20, 20)));
         }
@@ -167,7 +167,7 @@ public class MainForm {
         endlessCard = new EndlessPanel();
 
         //Create the panel that contains the "cards".
-        cards = new JPanel(new CardLayout());
+        cards = new CardsPanel(new CardLayout());
         cards.add(spCard, SP_PANEL);
         cards.add(mpCard, MP_PANEL);
         cards.add(classicCard, CLASSIC_PANEL);
@@ -177,7 +177,11 @@ public class MainForm {
         cards.add(leaderCard, LEADERBOARDS_PANEL);
         cards.add(aboutCard, ABOUT_PANEL);
 
+        pane.setLayout(new BorderLayout());
         pane.add(cards, BorderLayout.CENTER);
+        pane.setBackground(Color.yellow);
+        cards.setBackground(Color.red);
+        
 
         //Show specific card
         CardLayout cl = (CardLayout) (cards.getLayout());
@@ -191,7 +195,7 @@ public class MainForm {
         JFrame frame = new JFrame("Portal Pong");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setBounds(100, 100, FRAME_WIDTH, FRAME_HEIGHT);
-        frame.setResizable(false);
+        frame.setResizable(true);
 
         //Create and set up the content pane.
         MainForm mainFrame = new MainForm();

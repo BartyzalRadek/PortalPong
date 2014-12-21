@@ -28,6 +28,7 @@ public class CardsPanel extends JPanel implements ComponentListener{
     public void componentResized(ComponentEvent ce) {
         FRAME_HEIGHT = this.getHeight();
         FRAME_WIDTH = this.getWidth();
+        
         System.out.println("Height= " + FRAME_HEIGHT);
         System.out.println("Width= " + FRAME_WIDTH);
     }

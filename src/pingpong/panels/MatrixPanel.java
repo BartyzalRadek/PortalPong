@@ -12,15 +12,13 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import pingpong.AbleToGetOptions;
-import static pingpong.MainForm.FRAME_HEIGHT;
-import static pingpong.MainForm.FRAME_WIDTH;
 import pingpong.PowerUp;
 
 /**
  *
  * @author Radek Bartyzal
  */
-public class MatrixPanel extends JPanel implements AbleToGetOptions, ComponentListener {
+public class MatrixPanel extends JPanel implements AbleToGetOptions {
 
     private List<PowerUp> powerUpList = new ArrayList<PowerUp>();
     private boolean matrixOn = true;
@@ -69,6 +67,7 @@ public class MatrixPanel extends JPanel implements AbleToGetOptions, ComponentLi
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        this.setDoubleBuffered(true);
         this.setBackground(Color.BLACK);
 
         if (matrixOn) {
@@ -119,25 +118,5 @@ public class MatrixPanel extends JPanel implements AbleToGetOptions, ComponentLi
         } else {
             stopMatrix();
         }
-    }
-
-    @Override
-    public void componentResized(ComponentEvent ce) {
-        /*FRAME_HEIGHT = this.getHeight();
-        FRAME_WIDTH = this.getWidth();
-        System.out.println("Height= " + FRAME_HEIGHT);
-        System.out.println("Width= " + FRAME_WIDTH);*/
-    }
-
-    @Override
-    public void componentMoved(ComponentEvent ce) {
-    }
-
-    @Override
-    public void componentShown(ComponentEvent ce) {
-    }
-
-    @Override
-    public void componentHidden(ComponentEvent ce) {
     }
 }

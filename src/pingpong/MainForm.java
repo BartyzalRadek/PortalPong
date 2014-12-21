@@ -44,9 +44,9 @@ public class MainForm {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private CardsPanel cards; //** A panel that uses CardLayout*/
     private OptionsPanel optionsCard;
     private AboutPanel aboutCard;
-    private CardsPanel cards; ///< A panel that uses CardLayout
     private LeaderboardsPanel leaderCard;
     private SPChoicePanel spCard;
     private MPGraphicsPanel mpCard;

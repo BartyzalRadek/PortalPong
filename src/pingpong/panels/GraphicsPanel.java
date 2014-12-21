@@ -158,6 +158,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
     public void paint(Graphics g) {
         super.paint(g);
         this.setBackground(Color.BLACK);
+        this.setDoubleBuffered(true);
         g.setColor(gameOverColor);
 
         drawLists(g);

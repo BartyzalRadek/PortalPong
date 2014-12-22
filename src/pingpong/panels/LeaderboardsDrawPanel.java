@@ -6,8 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JPanel;
-import static pingpong.MainForm.FRAME_HEIGHT;
-import static pingpong.MainForm.FRAME_WIDTH;
+import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
+import static pingpong.panels.CardsPanel.FRAME_WIDTH;
 
 /**
  *

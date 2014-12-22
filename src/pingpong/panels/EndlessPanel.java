@@ -9,8 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
-import static pingpong.MainForm.FRAME_HEIGHT;
-import static pingpong.MainForm.FRAME_WIDTH;
+import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
+import static pingpong.panels.CardsPanel.FRAME_WIDTH;
 
 /**
  *

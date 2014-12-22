@@ -2,8 +2,8 @@ package pingpong.panels;
 
 import java.awt.GridLayout;
 import javax.swing.JFrame;
-import static pingpong.MainForm.FRAME_HEIGHT;
-import static pingpong.MainForm.FRAME_WIDTH;
+import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
+import static pingpong.panels.CardsPanel.FRAME_WIDTH;
 
 /**
  *

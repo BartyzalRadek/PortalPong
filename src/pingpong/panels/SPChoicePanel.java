@@ -18,9 +18,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import static pingpong.MainForm.CLASSIC_PANEL;
 import static pingpong.MainForm.ENDLESS_PANEL;
-import static pingpong.MainForm.FRAME_HEIGHT;
-import static pingpong.MainForm.FRAME_WIDTH;
 import static pingpong.MainForm.MENU_PANEL;
+import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
+import static pingpong.panels.CardsPanel.FRAME_WIDTH;
 
 /**
  *

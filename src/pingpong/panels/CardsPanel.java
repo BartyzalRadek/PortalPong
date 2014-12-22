@@ -12,17 +12,17 @@ import java.awt.LayoutManager;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import javax.swing.JPanel;
-import static pingpong.MainForm.FONT_SIZE;
-import static pingpong.MainForm.FRAME_HEIGHT;
-import static pingpong.MainForm.FRAME_WIDTH;
-import static pingpong.MainForm.LABEL_SIZE;
-
 /**
  *
  * @author Radek Bartyzal
  */
 public class CardsPanel extends JPanel implements ComponentListener{
 
+    public static int FRAME_HEIGHT = 500;
+    public static int FRAME_WIDTH = 1000;
+    public static int FONT_SIZE = 20;
+    public static Dimension LABEL_SIZE = new Dimension(FRAME_WIDTH/5 + FONT_SIZE*2, FONT_SIZE + FONT_SIZE/4);
+    
     public CardsPanel(LayoutManager lm) {
         super(lm);
         addComponentListener(this);

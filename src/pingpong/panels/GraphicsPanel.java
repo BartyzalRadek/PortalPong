@@ -24,9 +24,9 @@ import pingpong.Paddle;
 import pingpong.Player;
 import pingpong.PowerUp;
 import pingpong.Teleport;
-import static pingpong.MainForm.FRAME_HEIGHT;
-import static pingpong.MainForm.FRAME_WIDTH;
 import static pingpong.MainForm.MENU_PANEL;
+import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
+import static pingpong.panels.CardsPanel.FRAME_WIDTH;
 
 /**
  *

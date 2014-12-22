@@ -61,7 +61,6 @@ public class MatrixPanel extends JPanel implements AbleToGetOptions {
     public MatrixPanel() {
         timer1.start();
         timer2.start();
-        //addComponentListener(this);
     }
 
     @Override

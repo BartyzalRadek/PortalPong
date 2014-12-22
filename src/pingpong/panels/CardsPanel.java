@@ -6,12 +6,14 @@
 
 package pingpong.panels;
 
+import java.awt.Component;
 import java.awt.LayoutManager;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import javax.swing.JPanel;
 import static pingpong.MainForm.FRAME_HEIGHT;
 import static pingpong.MainForm.FRAME_WIDTH;
+import static pingpong.MainForm.FONT_SIZE;
 
 /**
  *
@@ -28,9 +30,13 @@ public class CardsPanel extends JPanel implements ComponentListener{
     public void componentResized(ComponentEvent ce) {
         FRAME_HEIGHT = this.getHeight();
         FRAME_WIDTH = this.getWidth();
+        FONT_SIZE = (FRAME_HEIGHT / 100) * 4;
         
-        System.out.println("Height= " + FRAME_HEIGHT);
-        System.out.println("Width= " + FRAME_WIDTH);
+        for (Component p : getComponents()) {
+            if (p instanceof MenuPanel) {
+                ((MenuPanel) p).resetLabels();
+            }
+        }
     }
 
     @Override

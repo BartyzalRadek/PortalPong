@@ -74,7 +74,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
         am.put(KeyEvent.VK_Q, new Action(KeyEvent.VK_Q));
     }
 
-    //Main timer
+    //Moving the ball, powerUps, calculating collisions etc.
     protected Timer mainTimer = new Timer(20, new ActionListener() {
 
         @Override

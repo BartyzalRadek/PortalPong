@@ -60,24 +60,20 @@ public class MenuPanel extends MatrixPanel {
         labels.add(jLabel4);
         labels.add(jLabel5);
         labels.add(jLabel6);
-        
+
         labelActions();
 
         initLayout();
     }
 
     private void initLayout() {
-        //JLabel labels[] = {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6};
-
-        
-        
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH/100) * 2, MainForm.FRAME_HEIGHT / 5)));
+        this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH / 100) * 2, MainForm.FRAME_HEIGHT / 5)));
         for (JLabel label : labels) {
             setLabelParam(label);
             this.add(label);
-            this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH/100) * 2, (MainForm.FRAME_HEIGHT/100) * 4)));
+            this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH / 100) * 2, (MainForm.FRAME_HEIGHT / 100) * 4)));
         }
     }
 
@@ -146,9 +142,9 @@ public class MenuPanel extends MatrixPanel {
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
         label.setFont(new java.awt.Font("Tahoma", 0, FONT_SIZE));
         label.setForeground(new java.awt.Color(240, 240, 240));
-        label.setMaximumSize(new java.awt.Dimension(200, 25));
-        label.setMinimumSize(new java.awt.Dimension(200, 25));
-        label.setPreferredSize(new java.awt.Dimension(200, 25));
+        label.setMaximumSize(LABEL_SIZE);
+        label.setMinimumSize(LABEL_SIZE);
+        label.setPreferredSize(LABEL_SIZE);
         label.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -172,14 +168,14 @@ public class MenuPanel extends MatrixPanel {
             label.setPreferredSize(LABEL_SIZE);
         }
     }
-    
-    public void resetLayout(){
+
+    public void resetLayout() {
         this.removeAll();
-        
-        this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH/100) * 2, MainForm.FRAME_HEIGHT / 5)));
+
+        this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH / 100) * 2, MainForm.FRAME_HEIGHT / 5)));
         for (JLabel label : labels) {
             this.add(label);
-            this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH/100) * 2, (MainForm.FRAME_HEIGHT/100) * 4)));
+            this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH / 100) * 2, (MainForm.FRAME_HEIGHT / 100) * 4)));
         }
     }
 }

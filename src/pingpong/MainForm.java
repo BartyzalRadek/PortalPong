@@ -24,7 +24,7 @@ public class MainForm {
     public static int FRAME_HEIGHT = 500;
     public static int FRAME_WIDTH = 1000;
     public static int FONT_SIZE = 20;
-    public static Dimension LABEL_SIZE = new Dimension(FRAME_WIDTH/5, FONT_SIZE + FONT_SIZE/4);
+    public static Dimension LABEL_SIZE = new Dimension(FRAME_WIDTH/5 + FONT_SIZE*2, FONT_SIZE + FONT_SIZE/4);
     public final static String MENU_PANEL = "Card with menu";
     public final static String OPTIONS_PANEL = "Card with options";
     public final static String ABOUT_PANEL = "Card with about";

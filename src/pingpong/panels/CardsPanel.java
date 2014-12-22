@@ -33,7 +33,7 @@ public class CardsPanel extends JPanel implements ComponentListener{
         FRAME_HEIGHT = this.getHeight();
         FRAME_WIDTH = this.getWidth();
         FONT_SIZE = (FRAME_HEIGHT / 100) * 4;
-        LABEL_SIZE = new Dimension(FRAME_WIDTH/5, FONT_SIZE + FONT_SIZE/4);
+        LABEL_SIZE = new Dimension(FRAME_WIDTH/5 + FONT_SIZE*2, FONT_SIZE + FONT_SIZE/4);
         
         for (Component p : getComponents()) {
             if (p instanceof MenuPanel) {

@@ -6,16 +6,20 @@
 package pingpong.panels;
 
 import java.awt.CardLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import pingpong.MainForm;
 import static pingpong.MainForm.ABOUT_PANEL;
 import static pingpong.MainForm.FONT_SIZE;
+import static pingpong.MainForm.LABEL_SIZE;
 import static pingpong.MainForm.LEADERBOARDS_PANEL;
 import static pingpong.MainForm.MP_PANEL;
 import static pingpong.MainForm.OPTIONS_PANEL;
@@ -65,13 +69,15 @@ public class MenuPanel extends MatrixPanel {
     private void initLayout() {
         //JLabel labels[] = {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6};
 
+        
+        
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(Box.createRigidArea(new Dimension(20, 100)));
+        this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH/100) * 2, MainForm.FRAME_HEIGHT / 5)));
         for (JLabel label : labels) {
             setLabelParam(label);
             this.add(label);
-            this.add(Box.createRigidArea(new Dimension(20, 20)));
+            this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH/100) * 2, (MainForm.FRAME_HEIGHT/100) * 4)));
         }
     }
 
@@ -159,10 +165,21 @@ public class MenuPanel extends MatrixPanel {
     public void resetLabels() {
         //JLabel labels[] = {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6};
         for (JLabel label : labels) {
+            label.setBorder(BorderFactory.createLineBorder(Color.white));
             label.setFont(new java.awt.Font("Tahoma", 0, FONT_SIZE));
-            label.setMaximumSize(new java.awt.Dimension(200, 25));
-            label.setMinimumSize(new java.awt.Dimension(200, 25));
-            label.setPreferredSize(new java.awt.Dimension(200, 25));
+            label.setMaximumSize(LABEL_SIZE);
+            label.setMinimumSize(LABEL_SIZE);
+            label.setPreferredSize(LABEL_SIZE);
+        }
+    }
+    
+    public void resetLayout(){
+        this.removeAll();
+        
+        this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH/100) * 2, MainForm.FRAME_HEIGHT / 5)));
+        for (JLabel label : labels) {
+            this.add(label);
+            this.add(Box.createRigidArea(new Dimension((MainForm.FRAME_WIDTH/100) * 2, (MainForm.FRAME_HEIGHT/100) * 4)));
         }
     }
 }

@@ -16,7 +16,7 @@ import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-import pingpong.MainForm;
+import pingpong.AbleToResizeGUI;
 import static pingpong.MainForm.ABOUT_PANEL;
 import static pingpong.MainForm.LEADERBOARDS_PANEL;
 import static pingpong.MainForm.MP_PANEL;
@@ -31,7 +31,7 @@ import static pingpong.panels.CardsPanel.LABEL_SIZE;
  *
  * @author Radek Bartyzal
  */
-public class MenuPanel extends MatrixPanel {
+public class MenuPanel extends MatrixPanel implements AbleToResizeGUI {
 
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -79,11 +79,15 @@ public class MenuPanel extends MatrixPanel {
         }
     }
 
+    /**
+     * Assignes a specific Mouse Clicked action to labels.
+     */
     private void labelActions() {
         //Singleplayer
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
                 CardLayout cl = (CardLayout) (getParent().getLayout());
                 cl.show(getParent(), SP_PANEL);
             }
@@ -92,8 +96,9 @@ public class MenuPanel extends MatrixPanel {
 
         //Multiplayer
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel2.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel2.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
                 CardLayout cl = (CardLayout) (getParent().getLayout());
                 cl.show(getParent(), MP_PANEL);
             }
@@ -102,8 +107,9 @@ public class MenuPanel extends MatrixPanel {
 
         //Options
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel3.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
                 CardLayout cl = (CardLayout) (getParent().getLayout());
                 cl.show(getParent(), OPTIONS_PANEL);
             }
@@ -112,8 +118,9 @@ public class MenuPanel extends MatrixPanel {
 
         //Leaderboards
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel4.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
                 CardLayout cl = (CardLayout) (getParent().getLayout());
                 cl.show(getParent(), LEADERBOARDS_PANEL);
             }
@@ -122,8 +129,9 @@ public class MenuPanel extends MatrixPanel {
 
         //About
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel5.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
                 CardLayout cl = (CardLayout) (getParent().getLayout());
                 cl.show(getParent(), ABOUT_PANEL);
             }
@@ -132,6 +140,7 @@ public class MenuPanel extends MatrixPanel {
 
         //Exit
         jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 System.exit(1);
             }
@@ -160,10 +169,12 @@ public class MenuPanel extends MatrixPanel {
         });
     }
 
-    public void resetLabels() {
-        //JLabel labels[] = {jLabel1, jLabel2, jLabel3, jLabel4, jLabel5, jLabel6};
+    /**
+     * Recalculates the size and font size of labels in panel.
+     */
+    private void resetLabels() {
         for (JLabel label : labels) {
-            label.setBorder(BorderFactory.createLineBorder(Color.white));
+            //label.setBorder(BorderFactory.createLineBorder(Color.white));
             label.setFont(new java.awt.Font("Tahoma", 0, FONT_SIZE));
             label.setMaximumSize(LABEL_SIZE);
             label.setMinimumSize(LABEL_SIZE);
@@ -171,7 +182,10 @@ public class MenuPanel extends MatrixPanel {
         }
     }
 
-    public void resetLayout() {
+    /**
+     * Recalculates the position of labels and size of rigid areas around them.
+     */
+    private void resetLayout() {
         this.removeAll();
 
         this.add(Box.createRigidArea(new Dimension((FRAME_WIDTH / 100) * 2, FRAME_HEIGHT / 5)));
@@ -179,5 +193,11 @@ public class MenuPanel extends MatrixPanel {
             this.add(label);
             this.add(Box.createRigidArea(new Dimension((FRAME_WIDTH / 100) * 2, (FRAME_HEIGHT / 100) * 4)));
         }
+    }
+    
+    @Override
+    public void resizeGUI(){
+        resetLabels();
+        resetLayout();
     }
 }

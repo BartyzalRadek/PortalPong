@@ -12,6 +12,7 @@ import java.awt.LayoutManager;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import javax.swing.JPanel;
+import pingpong.AbleToResizeGUI;
 /**
  *
  * @author Radek Bartyzal
@@ -36,9 +37,8 @@ public class CardsPanel extends JPanel implements ComponentListener{
         LABEL_SIZE = new Dimension(FRAME_WIDTH/5 + FONT_SIZE*2, FONT_SIZE + FONT_SIZE/4);
         
         for (Component p : getComponents()) {
-            if (p instanceof MenuPanel) {
-                ((MenuPanel) p).resetLabels();
-                ((MenuPanel) p).resetLayout();
+            if (p instanceof AbleToResizeGUI) {
+                ((AbleToResizeGUI) p).resizeGUI();
             }
         }
     }

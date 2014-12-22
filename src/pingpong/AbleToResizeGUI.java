@@ -9,7 +9,7 @@ package pingpong;
  *
  * @author Radek Bartyzal
  */
-public interface AbleToGetOptions {
+public interface AbleToResizeGUI {
 
-    public void getOptions();
+    public void resizeGUI();
 }

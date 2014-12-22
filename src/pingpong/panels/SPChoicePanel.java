@@ -16,24 +16,27 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import pingpong.AbleToResizeGUI;
 import static pingpong.MainForm.CLASSIC_PANEL;
 import static pingpong.MainForm.ENDLESS_PANEL;
 import static pingpong.MainForm.MENU_PANEL;
+import static pingpong.panels.CardsPanel.FONT_SIZE;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
 import static pingpong.panels.CardsPanel.FRAME_WIDTH;
+import static pingpong.panels.CardsPanel.LABEL_SIZE;
 
 /**
  *
- * @author darmy
+ * @author Radek Bartyzal
  */
-public class SPChoicePanel extends JPanel {
+public class SPChoicePanel extends JPanel implements AbleToResizeGUI {
 
     private static final int BORDER_THICKNESS = 1;
     //private final String CLASSIC_DESCRIPTION = "Classic singleplayer mode."You are playing <br>against a computer.</html>";
     //private final String ENDLESS_DESCRIPTION = "<html>Endless singleplayer mode.<br>Get the highest <br>score possible before you lose.</html>";
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private boolean activeLeftPanel = false;
+    private boolean activeLeftPanel = true;
     private javax.swing.JLabel jLabel1;
 
     public SPChoicePanel() {
@@ -54,7 +57,7 @@ public class SPChoicePanel extends JPanel {
             drawLeftPanel(g);
             g.setColor(Color.gray);
             drawRightPanel(g);
-        }else{
+        } else {
             g.setColor(Color.gray);
             drawLeftPanel(g);
             g.setColor(new java.awt.Color(240, 240, 240));
@@ -64,25 +67,31 @@ public class SPChoicePanel extends JPanel {
     }
 
     private void drawLeftPanel(Graphics g) {
-        g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString("Classic mode", 200, 50);
-        g.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        g.drawString("You are playing", 210, 125);
-        g.drawString("against a computer.", 200, 150);
+
+        g.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE));
+        g.drawString("Classic mode", getStringLocation(g, "Classic mode", jPanel1.getWidth()), 50);
+        g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE - FONT_SIZE / 5));
+        g.drawString("You are playing", getStringLocation(g, "You are playing", jPanel1.getWidth()), 125);
+        g.drawString("against a computer.", getStringLocation(g, "against a computer.", jPanel1.getWidth()), 150);
 
     }
 
+    private int getStringLocation(Graphics g, String s, int widthOfComponent) {
+        int strlen = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+        return widthOfComponent / 2 - strlen / 2;
+    }
+
     private void drawRightPanel(Graphics g) {
-        g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString("Endless mode", 590, 50);
-        g.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        g.drawString("Get the highest", 610, 125);
-        g.drawString("score possible before you lose.", 570, 150);
+        g.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE));
+        g.drawString("Endless mode", jPanel1.getWidth() + getStringLocation(g, "Endless mode", jPanel1.getWidth()), 50);
+        g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE - FONT_SIZE / 5));
+        g.drawString("Get the highest", jPanel1.getWidth() + getStringLocation(g, "Get the highest", jPanel1.getWidth()), 125);
+        g.drawString("score possible before you lose.", jPanel1.getWidth() + getStringLocation(g, "score possible before you lose.", jPanel1.getWidth()), 150);
 
     }
 
     private void initComponents() {
-        this.setBackground(Color.white);
+        this.setBackground(Color.black);
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
         jLabel1 = new JLabel();
@@ -96,9 +105,9 @@ public class SPChoicePanel extends JPanel {
         initPanel1();
         initPanel2();
 
-        //Addind BACK label
+        //Adding BACK label
         jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS));
-        jPanel1.add(Box.createRigidArea(new Dimension(10, 390)));
+        jPanel1.add(Box.createRigidArea(new Dimension(FRAME_WIDTH / 100, FRAME_HEIGHT - 110)));
         jPanel1.add(jLabel1);
 
         add(jPanel1);
@@ -114,19 +123,25 @@ public class SPChoicePanel extends JPanel {
      }
      }*/
     private void setBackLabel() {
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20));
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, FONT_SIZE));
+        jLabel1.setMaximumSize(LABEL_SIZE);
+        jLabel1.setMinimumSize(LABEL_SIZE);
+        jLabel1.setPreferredSize(LABEL_SIZE);
         jLabel1.setAlignmentX(LEFT_ALIGNMENT);
         jLabel1.setText("Back");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel1.setFont(new Font("Tahoma", Font.BOLD, 22));
+                jLabel1.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE + (FONT_SIZE / 10)));
             }
 
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
             }
 
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CardLayout cl = (CardLayout) (getParent().getLayout());
                 cl.show(getParent(), MENU_PANEL);
@@ -168,6 +183,30 @@ public class SPChoicePanel extends JPanel {
                 cl.show(getParent(), ENDLESS_PANEL);
             }
         });
+    }
+
+    private void resetPanels() {
+        setPanelSettings(jPanel1);
+        jPanel1.removeAll();
+        jPanel1.setLayout(new BoxLayout(jPanel1, BoxLayout.Y_AXIS));
+        jPanel1.add(Box.createRigidArea(new Dimension(50, FRAME_HEIGHT - 60)));
+        jPanel1.add(jLabel1);
+
+        setPanelSettings(jPanel2);
+    }
+
+    private void resetLabels() {
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, FONT_SIZE));
+        jLabel1.setMaximumSize(LABEL_SIZE);
+        jLabel1.setMinimumSize(LABEL_SIZE);
+        jLabel1.setPreferredSize(LABEL_SIZE);
+    }
+
+    @Override
+    public void resizeGUI() {
+        resetPanels();
+        resetLabels();
+        repaint();
     }
 
 }

@@ -6,127 +6,125 @@
 package pingpong.panels;
 
 import java.awt.CardLayout;
+import java.awt.Color;
+import static java.awt.Component.LEFT_ALIGNMENT;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import pingpong.AbleToResizeGUI;
 import static pingpong.MainForm.MENU_PANEL;
+import static pingpong.panels.CardsPanel.FONT_SIZE;
+import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
+import static pingpong.panels.CardsPanel.FRAME_WIDTH;
+import static pingpong.panels.CardsPanel.LABEL_SIZE;
 
 /**
  *
  * @author Radek Bartyzal
  */
-public class AboutPanel extends JPanel {
+public class AboutPanel extends JPanel implements AbleToResizeGUI{
 
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JPanel jPanel1;
+    
 
     public AboutPanel() {
         initComponents();
     }
 
     private void initComponents() {
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        this.setBackground(Color.black);
 
-        jPanel1.setBackground(new java.awt.Color(0, 0, 0));
+        jLabel1 = new JLabel();
+        setBackLabel();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
+        //Adding BACK label
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(Box.createRigidArea(new Dimension(FRAME_WIDTH / 100, FRAME_HEIGHT - 110)));
+        this.add(jLabel1);
+
+    }
+    
+    @Override
+    public void paint(Graphics g) {
+        super.paint(g);
+        Graphics2D g2;
+        g2 = (Graphics2D) g;
+        g2.setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
+
+        drawText(g2);
+        
+        
+        g.dispose();
+    }
+    
+    private void drawText(Graphics2D g){
+        g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
+        g.setColor(new Color(240,240,240));
+        int x = getStringLocation(g, "Author: Radek Bartyzal", this.getWidth());
+        g.drawString("Author: Radek Bartyzal", x, this.getHeight()/2 - FONT_SIZE);
+        g.drawString("Created: December 2014", x, this.getHeight()/2 + FONT_SIZE);
+        g.drawString("Email: rbartyzal1@gmail.com", x, this.getHeight()/2 + 3*FONT_SIZE);
+        
+    }
+    
+    private int getStringLocation(Graphics g, String s, int widthOfComponent) {
+        int strlen = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+        return (widthOfComponent / 2) - (strlen / 2);
+    }
+    
+    private void setBackLabel() {
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, FONT_SIZE));
+        jLabel1.setMaximumSize(LABEL_SIZE);
+        jLabel1.setMinimumSize(LABEL_SIZE);
+        jLabel1.setPreferredSize(LABEL_SIZE);
+        jLabel1.setAlignmentX(LEFT_ALIGNMENT);
         jLabel1.setText("Back");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel1.setFont(new Font("Tahoma", Font.BOLD, 22));
+                jLabel1.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE + (FONT_SIZE / 10)));
             }
 
+            @Override
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, 20));
+                jLabel1.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
             }
 
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 CardLayout cl = (CardLayout) (getParent().getLayout());
                 cl.show(getParent(), MENU_PANEL);
             }
         });
+    }
+    
+    private void resetLayout(){
+        this.removeAll();
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(Box.createRigidArea(new Dimension(FRAME_WIDTH / 50, FRAME_HEIGHT - 60)));
+        this.add(jLabel1);
+    }
+    
+    private void resetLabels() {
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, FONT_SIZE));
+        jLabel1.setMaximumSize(LABEL_SIZE);
+        jLabel1.setMinimumSize(LABEL_SIZE);
+        jLabel1.setPreferredSize(LABEL_SIZE);
+    }
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel2.setText("Autor: Radek Bartyzal");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel3.setText("Created: November 2014");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel4.setText("Email: rbartyzal1@gmail.com");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel5.setText("Known bug: If ball gets stuck in Y/X axis, mash A/Q to fix it.");
-        jLabel5.setVisible(false);
-
-        jLabel6.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(240, 240, 240));
-        jLabel6.setText("About");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(206, 206, 206)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel3)
-                                                .addComponent(jLabel2)
-                                                .addComponent(jLabel4)
-                                                .addComponent(jLabel5)))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(50, 50, 50)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(259, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-                jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(43, 43, 43)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(91, 91, 91)
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(41, 41, 41))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
+    @Override
+    public void resizeGUI() {
+        resetLabels();
+        resetLayout();
+        repaint();
     }
 }

@@ -32,8 +32,6 @@ import static pingpong.panels.CardsPanel.LABEL_SIZE;
 public class SPChoicePanel extends JPanel implements AbleToResizeGUI {
 
     private static final int BORDER_THICKNESS = 1;
-    //private final String CLASSIC_DESCRIPTION = "Classic singleplayer mode."You are playing <br>against a computer.</html>";
-    //private final String ENDLESS_DESCRIPTION = "<html>Endless singleplayer mode.<br>Get the highest <br>score possible before you lose.</html>";
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private boolean activeLeftPanel = true;
@@ -53,21 +51,20 @@ public class SPChoicePanel extends JPanel implements AbleToResizeGUI {
                 RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
 
         if (activeLeftPanel) {
-            g.setColor(new java.awt.Color(240, 240, 240));
-            drawLeftPanel(g);
-            g.setColor(Color.gray);
-            drawRightPanel(g);
+            g2.setColor(new java.awt.Color(240, 240, 240));
+            drawLeftPanel(g2);
+            g2.setColor(Color.gray);
+            drawRightPanel(g2);
         } else {
-            g.setColor(Color.gray);
-            drawLeftPanel(g);
-            g.setColor(new java.awt.Color(240, 240, 240));
-            drawRightPanel(g);
+            g2.setColor(Color.gray);
+            drawLeftPanel(g2);
+            g2.setColor(new java.awt.Color(240, 240, 240));
+            drawRightPanel(g2);
         }
         g.dispose();
     }
 
     private void drawLeftPanel(Graphics g) {
-
         g.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE));
         g.drawString("Classic mode", getStringLocation(g, "Classic mode", jPanel1.getWidth()), 50);
         g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE - FONT_SIZE / 5));
@@ -115,13 +112,6 @@ public class SPChoicePanel extends JPanel implements AbleToResizeGUI {
 
     }
 
-    /*private void setLabelsFont(JLabel[] labels) {
-     for (JLabel label : labels) {
-     label.setFont(new java.awt.Font("Tahoma", 0, 20));
-     label.setForeground(new java.awt.Color(240, 240, 240));
-     label.setAlignmentX(CENTER_ALIGNMENT);
-     }
-     }*/
     private void setBackLabel() {
         jLabel1.setForeground(new java.awt.Color(240, 240, 240));
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, FONT_SIZE));

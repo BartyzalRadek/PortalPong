@@ -120,6 +120,7 @@ public class MainForm {
         //</editor-fold>
 
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 createAndShowGUI();
             }

@@ -94,7 +94,7 @@ public class LeaderboardsPanel extends JPanel implements AbleToResizeGUI {
         int x_offset = FRAME_WIDTH/4;
         int numbers_offset = x_offset - g.getFontMetrics().stringWidth("9. ");
         int number10_offset = x_offset - g.getFontMetrics().stringWidth("10. ");
-        int collumn1_offset = x_offset + g.getFontMetrics().stringWidth("ABCDEFGH");
+        int collumn1_offset = x_offset + g.getFontMetrics().stringWidth("AAAAAAAAAA");
         int collumn2_offset = collumn1_offset + g.getFontMetrics().stringWidth("999999");
         
         for (int i = 0; i < leaderboard.length; i++) {

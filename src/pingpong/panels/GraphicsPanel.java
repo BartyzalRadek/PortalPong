@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
 import pingpong.AbleToGetOptions;
+import pingpong.AbleToResizeGUI;
 import pingpong.Ball;
 import pingpong.Drawable;
 import pingpong.Paddle;
@@ -32,7 +33,7 @@ import static pingpong.panels.CardsPanel.FRAME_WIDTH;
  *
  * @author Radek Bartyzal
  */
-public class GraphicsPanel extends JPanel implements AbleToGetOptions {
+public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToResizeGUI {
 
     protected boolean isEndless = false; ///< Whether the game mode is endless - for ball bouncing etc
     private boolean isTeleport = false;
@@ -316,6 +317,13 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions {
         reset();
         CardLayout cl = (CardLayout) (getParent().getLayout());
         cl.show(getParent(), MENU_PANEL);
+    }
+
+    @Override
+    public void resizeGUI() {
+        paddle1.resize();
+        paddle2.resize();
+        ball.resize();
     }
 
     /**

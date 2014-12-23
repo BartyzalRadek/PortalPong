@@ -3,6 +3,7 @@ package pingpong;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import static pingpong.panels.CardsPanel.FONT_SIZE;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
 import static pingpong.panels.CardsPanel.FRAME_WIDTH;
 
@@ -39,6 +40,7 @@ public class PowerUp implements Drawable {
     }
 
     public void drawMatrix(Graphics g, String s) {
+        g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE - FONT_SIZE/4));
         g.setColor(Color.green);
         g.drawString(Character.toString(s.charAt((int)(rnd * (s.length() - 1)))), x, y);
         g.setColor(Color.WHITE);

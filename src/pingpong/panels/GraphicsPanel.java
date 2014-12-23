@@ -324,6 +324,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         paddle1.resize();
         paddle2.resize();
         ball.resize();
+        
+        repaint();
     }
 
     /**

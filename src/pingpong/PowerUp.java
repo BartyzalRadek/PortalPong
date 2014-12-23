@@ -3,6 +3,7 @@ package pingpong;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import static pingpong.Paddle.PADDLE_WIDTH;
 import static pingpong.panels.CardsPanel.FONT_SIZE;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
 import static pingpong.panels.CardsPanel.FRAME_WIDTH;
@@ -24,12 +25,12 @@ public class PowerUp implements Drawable {
 
     public PowerUp(int type) {
         this.type = type;
-        vx = (int) (Math.round(Math.random() * 6) + 2);
-        vy = (int) (Math.round(Math.random() * 7) + 1);
-        x = 450;
-        y = 250;
+        vx = (int) (Math.round(Math.random() * FRAME_WIDTH/200) + FRAME_WIDTH/300);
+        vy = (int) (Math.round(Math.random() * FRAME_WIDTH/150) + FRAME_WIDTH/1000);
+        x = FRAME_WIDTH/2;
+        y = FRAME_HEIGHT/2;
     }
-
+    
     /*MATRIX BLOCK START*/
     public PowerUp() { 
         x = (int) (Math.round(Math.random() * FRAME_WIDTH));
@@ -55,11 +56,11 @@ public class PowerUp implements Drawable {
     /*MATRIX BLOCK END*/
 
     public void toCenter() {
-        x = 450;
-        y = 250;
-        vx = (int) (Math.round(Math.random() * 6) + 2);
+        x = FRAME_WIDTH/2;
+        y = FRAME_HEIGHT/2;
+        vx = (int) (Math.round(Math.random() * FRAME_WIDTH/200) + FRAME_WIDTH/300);
+        vy = (int) (Math.round(Math.random() * FRAME_WIDTH/150) + FRAME_WIDTH/1000);
         vx = vx * randomSwitchDirection();
-        vy = (int) (Math.round(Math.random() * 7) + 1);
         vy = vy * randomSwitchDirection();
     }
 
@@ -69,10 +70,10 @@ public class PowerUp implements Drawable {
     }
 
     public void bounceOffWalls() {
-        if (y > (445) || y < 0) {
+        if (y > FRAME_HEIGHT - FONT_SIZE || y < 0) {
             vy = -vy;
         }
-        if (x > (970) || x < 0) {
+        if (x + FONT_SIZE/2 > FRAME_WIDTH || x < 0) {
             vx = -vx;
         }
     }
@@ -96,7 +97,7 @@ public class PowerUp implements Drawable {
     @Override
     public void draw(Graphics g) {
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE - FONT_SIZE/4));
 
         switch (type) {
             case 0:
@@ -114,7 +115,8 @@ public class PowerUp implements Drawable {
     }
 
     public boolean collision(Paddle paddle) {
-        return (x < (paddle.getX() + 20) && x > paddle.getX() && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY());
+        return (x < (paddle.getX() + PADDLE_WIDTH) && x > paddle.getX() 
+                && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY());
     }
 
     private int randomSwitchDirection() {

@@ -45,7 +45,7 @@ public class AboutPanel extends JPanel implements AbleToResizeGUI{
 
         //Adding BACK label
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(Box.createRigidArea(new Dimension(FRAME_WIDTH / 100, FRAME_HEIGHT - 110)));
+        this.add(Box.createRigidArea(new Dimension(20, FRAME_HEIGHT - 60)));
         this.add(jLabel1);
 
     }
@@ -58,16 +58,16 @@ public class AboutPanel extends JPanel implements AbleToResizeGUI{
         g2.setRenderingHint(
                 RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_GASP);
-
+        g2.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
+        g2.setColor(new Color(240,240,240));
+        
+        g2.drawString("About", 50, 60);
         drawText(g2);
         
-        
-        g.dispose();
+        g2.dispose();
     }
     
     private void drawText(Graphics2D g){
-        g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
-        g.setColor(new Color(240,240,240));
         int x = getStringLocation(g, "Author: Radek Bartyzal", this.getWidth());
         g.drawString("Author: Radek Bartyzal", x, this.getHeight()/2 - FONT_SIZE);
         g.drawString("Created: December 2014", x, this.getHeight()/2 + FONT_SIZE);
@@ -110,7 +110,7 @@ public class AboutPanel extends JPanel implements AbleToResizeGUI{
     private void resetLayout(){
         this.removeAll();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(Box.createRigidArea(new Dimension(FRAME_WIDTH / 50, FRAME_HEIGHT - 60)));
+        this.add(Box.createRigidArea(new Dimension(20, FRAME_HEIGHT - 60)));
         this.add(jLabel1);
     }
     

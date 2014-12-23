@@ -22,7 +22,6 @@ import pingpong.panels.MenuPanel;
  * @author Radek Bartyzal
  */
 public class MainForm {
-
     
     public final static String MENU_PANEL = "Card with menu";
     public final static String OPTIONS_PANEL = "Card with options";

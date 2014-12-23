@@ -22,7 +22,7 @@ public class MatrixPanel extends JPanel implements AbleToGetOptions {
 
     private List<PowerUp> powerUpList = new ArrayList<PowerUp>();
     private boolean matrixOn = true;
-    private int type = 0;
+    private int type = 2;
     private final String chinese = "あたアカサザジズゼゾシスセソキクケコイウエオジャな";
     private final String latin = "QWERTYUIOPASDFGHJKLZXCVBNM";
     private final String numbers = "0123456789";

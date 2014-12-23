@@ -69,7 +69,7 @@ public class SPChoicePanel extends JPanel implements AbleToResizeGUI {
         g.drawString("Classic mode", getStringLocation(g, "Classic mode", jPanel1.getWidth()), 50);
         g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE - FONT_SIZE / 5));
         g.drawString("You are playing", getStringLocation(g, "You are playing", jPanel1.getWidth()), 125);
-        g.drawString("against a computer.", getStringLocation(g, "against a computer.", jPanel1.getWidth()), 150);
+        g.drawString("against a computer.", getStringLocation(g, "against a computer.", jPanel1.getWidth()), 125 + FONT_SIZE + FONT_SIZE/2);
 
     }
 
@@ -83,7 +83,7 @@ public class SPChoicePanel extends JPanel implements AbleToResizeGUI {
         g.drawString("Endless mode", jPanel1.getWidth() + getStringLocation(g, "Endless mode", jPanel1.getWidth()), 50);
         g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE - FONT_SIZE / 5));
         g.drawString("Get the highest", jPanel1.getWidth() + getStringLocation(g, "Get the highest", jPanel1.getWidth()), 125);
-        g.drawString("score possible before you lose.", jPanel1.getWidth() + getStringLocation(g, "score possible before you lose.", jPanel1.getWidth()), 150);
+        g.drawString("score possible before you lose.", jPanel1.getWidth() + getStringLocation(g, "score possible before you lose.", jPanel1.getWidth()), 125 + FONT_SIZE + FONT_SIZE/2);
 
     }
 

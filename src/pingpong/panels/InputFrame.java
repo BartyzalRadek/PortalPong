@@ -102,9 +102,11 @@ public class InputFrame extends JDialog {
 
     private void quit() {
         NAME = sb.toString();
+        ePanel.nameNotSet = false;
         ePanel.drawNAME();
         ePanel.submitNewScore();
         this.setVisible(false);
+        ePanel.drawFinalScore();
         this.dispose();
     }
 }

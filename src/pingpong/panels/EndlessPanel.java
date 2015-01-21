@@ -21,6 +21,7 @@ public class EndlessPanel extends GraphicsPanel {
     /*leaderboards variables start*/
     public static String NAME = "Darmy";
     private boolean newHighScore = false;
+    public boolean nameNotSet = true;
     /*leaderboards variables end*/
     private boolean showFinalScore = false;
     private int tempBallReturned = 0;   //because of AITeleport()
@@ -193,14 +194,15 @@ public class EndlessPanel extends GraphicsPanel {
         }
     }
 
-    private void drawFinalScore() {
+    public void drawFinalScore() {
         Graphics g = this.getGraphics();
         //Clean screen behind final score
-        if (!screenCleaned) {
+        //if (!screenCleaned) {
             g.setColor(Color.BLACK);
             g.fillRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-            screenCleaned = true;
-        }
+            
+        //    screenCleaned = true;
+        //}
         //Draw final score
         g.setColor(Color.WHITE);
         g.setFont(new Font("Tahoma", Font.BOLD, 20));
@@ -221,10 +223,12 @@ public class EndlessPanel extends GraphicsPanel {
         g.drawString(String.valueOf(player1.gettCount()), 410, 230);
         g.drawString(String.valueOf(player1.getBallReturned()), 410, 270);
         g.drawString(String.valueOf(player1.endlessScore()), 410, 310);
-
+        
+        if(nameNotSet){
         frame = new InputFrame(this);
         frame.setVisible(true);
-        frame.setLocation(this.getLocationOnScreen().x + frame.getWidth(), this.getLocationOnScreen().y + frame.getHeight());
+        frame.setLocation(this.getLocationOnScreen().x + this.getWidth()/2 - frame.getWidth()/2, 
+                this.getLocationOnScreen().y + this.getHeight()/2 - frame.getHeight()/2);}
 
         g.drawString("Your name:", 350, 350);
         g.drawString("Press enter to go back to menu.", 350, 400);
@@ -249,6 +253,7 @@ public class EndlessPanel extends GraphicsPanel {
         showFinalScore = false;
         screenCleaned = false;
         newHighScore = false;
+        nameNotSet = true;
         super.reset();
     }
 }

@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import pingpong.panels.CardsPanel;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
 import static pingpong.panels.CardsPanel.FRAME_WIDTH;
+import pingpong.panels.HowToPanel;
 import pingpong.panels.MenuPanel;
 
 /**
@@ -23,14 +24,15 @@ import pingpong.panels.MenuPanel;
  */
 public class MainForm {
     
-    public final static String MENU_PANEL = "Card with menu";
+    public final static String MENU_PANEL = "Card with main menu";
     public final static String OPTIONS_PANEL = "Card with options";
-    public final static String ABOUT_PANEL = "Card with about";
+    public final static String ABOUT_PANEL = "Card with about information";
     public final static String LEADERBOARDS_PANEL = "Card with leaderboards";
     public final static String SP_PANEL = "Card with singleplayer mode choice";
     public final static String CLASSIC_PANEL = "Card with classic singleplayer";
     public final static String ENDLESS_PANEL = "Card with endless singleplayer";
     public final static String MP_PANEL = "Card with multiplayer";
+    public final static String HOW_TO_PANEL = "Card with info about how to play";
 
     private CardsPanel cards; //** A panel that uses CardLayout*/
     private MenuPanel menuCard;
@@ -41,6 +43,7 @@ public class MainForm {
     private MPGraphicsPanel mpCard;
     private SPGraphicsPanel classicCard;
     private EndlessPanel endlessCard;
+    private HowToPanel howToCard;
 
     //private JLabel labels[];
     private void addComponentsToPane(Container pane) {
@@ -53,6 +56,7 @@ public class MainForm {
         mpCard = new MPGraphicsPanel();
         classicCard = new SPGraphicsPanel();
         endlessCard = new EndlessPanel();
+        howToCard = new HowToPanel();
 
         //Create the panel that contains the "cards".
         cards = new CardsPanel(new CardLayout());
@@ -64,6 +68,7 @@ public class MainForm {
         cards.add(optionsCard, OPTIONS_PANEL);
         cards.add(leaderCard, LEADERBOARDS_PANEL);
         cards.add(aboutCard, ABOUT_PANEL);
+        cards.add(howToCard, HOW_TO_PANEL);
 
         //Add panel containing the cards to the container pane (frame)
         pane.setLayout(new BorderLayout());

@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package pingpong.panels;
 
 import java.awt.CardLayout;
@@ -27,12 +28,11 @@ import static pingpong.panels.CardsPanel.LABEL_SIZE;
  *
  * @author Radek Bartyzal
  */
-public class AboutPanel extends JPanel implements AbleToResizeGUI{
-
+public class HowToPanel extends JPanel implements AbleToResizeGUI {
     private javax.swing.JLabel jLabel1;
     
 
-    public AboutPanel() {
+    public HowToPanel() {
         initComponents();
     }
 
@@ -60,7 +60,7 @@ public class AboutPanel extends JPanel implements AbleToResizeGUI{
         g2.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
         g2.setColor(new Color(240,240,240));
         
-        g2.drawString("About", 50, 60);
+        g2.drawString("How to play", 50, 60);
         drawText(g2);
         
         g2.dispose();

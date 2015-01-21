@@ -6,18 +6,17 @@
 package pingpong.panels;
 
 import java.awt.CardLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.LinkedList;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import pingpong.AbleToResizeGUI;
 import static pingpong.MainForm.ABOUT_PANEL;
+import static pingpong.MainForm.HOW_TO_PANEL;
 import static pingpong.MainForm.LEADERBOARDS_PANEL;
 import static pingpong.MainForm.MP_PANEL;
 import static pingpong.MainForm.OPTIONS_PANEL;
@@ -39,6 +38,8 @@ public class MenuPanel extends MatrixPanel implements AbleToResizeGUI {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    
     private List<JLabel> labels;
 
     public MenuPanel() {
@@ -55,11 +56,13 @@ public class MenuPanel extends MatrixPanel implements AbleToResizeGUI {
         jLabel4 = new javax.swing.JLabel("Leaderboards");
         jLabel5 = new javax.swing.JLabel("About");
         jLabel6 = new javax.swing.JLabel("Exit");
+        jLabel7 = new javax.swing.JLabel("How to play");
 
         labels.add(jLabel1);
         labels.add(jLabel2);
-        labels.add(jLabel3);
+        //labels.add(jLabel3);
         labels.add(jLabel4);
+        labels.add(jLabel7);
         labels.add(jLabel5);
         labels.add(jLabel6);
 
@@ -143,6 +146,17 @@ public class MenuPanel extends MatrixPanel implements AbleToResizeGUI {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 System.exit(1);
+            }
+
+        });
+        
+        //How to Play
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
+                CardLayout cl = (CardLayout) (getParent().getLayout());
+                cl.show(getParent(), HOW_TO_PANEL);
             }
 
         });

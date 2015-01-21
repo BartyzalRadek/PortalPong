@@ -26,6 +26,7 @@ import pingpong.Player;
 import pingpong.PowerUp;
 import pingpong.Teleport;
 import static pingpong.MainForm.MENU_PANEL;
+import static pingpong.panels.CardsPanel.FONT_SIZE;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
 import static pingpong.panels.CardsPanel.FRAME_WIDTH;
 
@@ -38,10 +39,15 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
     protected boolean isEndless = false; ///< Whether the game mode is endless - for ball bouncing etc
     private boolean isTeleport = false;
 
+    private final String gamePausedText = "GAME PAUSED";
+    private final String pressEnterText = "Press enter to go back to menu.";
+    private final String pressEscapeText = "Press escape to continue playing.";
+    private final String pressSpaceText = "PRESS SPACE TO START";
+
     protected Ball ball = new Ball();
     protected Teleport teleport = new Teleport();
-    protected Paddle paddle1 = new Paddle(10);
-    protected Paddle paddle2 = new Paddle(FRAME_WIDTH - 50);
+    protected Paddle paddle1 = new Paddle(true);
+    protected Paddle paddle2 = new Paddle(false);
     protected Player player1 = new Player();
     protected Player player2 = new Player();
     protected List<Drawable> drawableList = new ArrayList<Drawable>();
@@ -168,7 +174,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         if (isTeleport) {
             drawTeleport(g);
         }
-        
+
         g.dispose(); //If paint() is overriden, g must be disposed in overriding method
     }
 
@@ -219,21 +225,19 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
     protected void drawSomebodyWon(Graphics g) {
         g.setColor(gameOverColor);
         somebodyWon();
-        g.setFont(new Font("Tahoma", Font.BOLD, 50));
-        
+        g.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE * 2 + FONT_SIZE / 2));
+
         if (player1.win()) {
-            g.drawString("PLAYER 1 WON !!!", 250, 230);
+            g.drawString("PLAYER 1 WON !!!", getStringLocation(g, "PLAYER 1 WON !!!", this.getWidth()), FRAME_HEIGHT / 3 - FONT_SIZE * 2);
         }
         if (player2.win()) {
-            g.drawString("PLAYER 2 WON !!!", 250, 230);
+            g.drawString("PLAYER 2 WON !!!", getStringLocation(g, "PLAYER 2 WON !!!", this.getWidth()), FRAME_HEIGHT / 3 - FONT_SIZE * 2);
         }
-        
+
         g.setColor(Color.GRAY);
-        g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        
-        FontMetrics fontMetrics = g.getFontMetrics();
-        int strL = fontMetrics.stringWidth("Press enter to go back to menu.");
-        g.drawString("Press enter to go back to menu.", FRAME_WIDTH / 2 - strL / 2, FRAME_HEIGHT/2 + 100);
+        g.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE));
+
+        g.drawString(pressEnterText, getStringLocation(g, pressEnterText, this.getWidth()), FRAME_HEIGHT / 2);
 
     }
 
@@ -265,38 +269,44 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
 
     protected void drawScore(Graphics g) {
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString(String.valueOf(player1.getScore()), 420, 35);
-        g.drawString(":", 452, 35);
-        g.drawString(String.valueOf(player2.getScore()), 480, 35);
+        g.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE));
+        g.drawString(String.valueOf(player1.getScore()), FRAME_WIDTH / 2 - 4 * FONT_SIZE, FONT_SIZE + FONT_SIZE / 2);
+        g.drawString(":", FRAME_WIDTH / 2 - 2 * FONT_SIZE, FONT_SIZE + FONT_SIZE / 2);
+        g.drawString(String.valueOf(player2.getScore()), FRAME_WIDTH / 2 - 0 * FONT_SIZE, FONT_SIZE + FONT_SIZE / 2);
 
     }
 
     protected void drawHints(Graphics g) {
         g.setColor(Color.WHITE);
-        g.setFont(new Font("Tahoma", Font.PLAIN, 12));
-        g.drawString("Press E,P to teleport", 410, 15);
-        g.drawString("Esc - Pause", 200, 15);
-        //g.drawString("Q, A - Modify speed", 200, 15);
-        g.drawString("W, S, Up, Down - Move paddles", 600, 15);
-        g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString("T:" + String.valueOf(player1.getTeleports()), 10, 440);
-        g.drawString("T:" + String.valueOf(player2.getTeleports()), 940, 440);
+        g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
+        /*g.drawString("Press E,P to teleport", 410, 15);
+         g.drawString("Esc - Pause", 200, 15);
+         g.drawString("Q, A - Modify speed", 200, 15);
+         g.drawString("W, S, Up, Down - Move paddles", 600, 15);
+         g.setFont(new Font("Tahoma", Font.BOLD, 20));*/
+        g.drawString("T:" + String.valueOf(player1.getTeleports()), 10, FRAME_HEIGHT - 60);
+        g.drawString("T:" + String.valueOf(player2.getTeleports()), FRAME_WIDTH - (FONT_SIZE * 3), FRAME_HEIGHT - 60);
 
         if (gamePaused) {
             g.setColor(Color.GRAY);
-            g.setFont(new Font("Tahoma", Font.BOLD, 40));
-            g.drawString("GAME PAUSED", 350, 150);
-            g.setFont(new Font("Tahoma", Font.PLAIN, 20));
-            g.drawString("Press enter to go back to menu.", 355, 250);
-            g.drawString("Press escape to continue playing.", 355, 280);
+
+            g.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE * 2));
+            g.drawString(gamePausedText, getStringLocation(g, gamePausedText, this.getWidth()), FRAME_HEIGHT / 3 - FONT_SIZE * 2);
+            g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
+            g.drawString(pressEnterText, getStringLocation(g, pressEnterText, this.getWidth()), FRAME_HEIGHT / 2);
+            g.drawString(pressEscapeText, getStringLocation(g, pressEnterText, this.getWidth()), FRAME_HEIGHT / 2 + 2 * FONT_SIZE);
         }
 
         if (!hasStarted) {
             g.setColor(Color.GRAY);
-            g.setFont(new Font("Tahoma", Font.BOLD, 40));
-            g.drawString("PRESS SPACE TO START", 250, 150);
+            g.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE * 2));
+            g.drawString(pressSpaceText, getStringLocation(g, pressSpaceText, this.getWidth()), FRAME_HEIGHT / 3 - FONT_SIZE * 2);
         }
+    }
+    
+    protected int getStringLocation(Graphics g, String s, int widthOfComponent) {
+        int strlen = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
+        return (widthOfComponent / 2) - (strlen / 2);
     }
 
     protected void reset() {
@@ -324,12 +334,14 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         paddle1.resize();
         paddle2.resize();
         ball.resize();
-        
+
         repaint();
+
     }
 
     /**
-     * Nested class, to be able to access internal variables player1, paddle1 etc
+     * Nested class, to be able to access internal variables player1, paddle1
+     * etc
      */
     public class Action extends AbstractAction {
 

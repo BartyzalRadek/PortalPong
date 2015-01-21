@@ -225,8 +225,8 @@ public class Ball implements Drawable {
     public void resize(){
         r = FRAME_HEIGHT/100 + 1;
         /**Set speed to 1, but keep the direction */
-        vx = vx/vx;
-        vy = vy/vy;
+        vx = vx/Math.abs(vx);
+        vy = vy/Math.abs(vy);
         vx *= (int) Math.floor(Math.random() * FRAME_WIDTH/500 + FRAME_WIDTH/250);
         vy *= (int) Math.floor(Math.random() * FRAME_WIDTH/500 + FRAME_WIDTH/250);
     }

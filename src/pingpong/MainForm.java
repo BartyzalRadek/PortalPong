@@ -15,6 +15,7 @@ import javax.swing.JFrame;
 import pingpong.panels.CardsPanel;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
 import static pingpong.panels.CardsPanel.FRAME_WIDTH;
+import pingpong.panels.FinalScorePanel;
 import pingpong.panels.HowToPanel;
 import pingpong.panels.MenuPanel;
 
@@ -33,6 +34,7 @@ public class MainForm {
     public final static String ENDLESS_PANEL = "Card with endless singleplayer";
     public final static String MP_PANEL = "Card with multiplayer";
     public final static String HOW_TO_PANEL = "Card with info about how to play";
+    public final static String FINAL_SCORE_PANEL = "Card drawing final score of endless mode";
 
     private CardsPanel cards; //** A panel that uses CardLayout*/
     private MenuPanel menuCard;
@@ -44,6 +46,7 @@ public class MainForm {
     private SPGraphicsPanel classicCard;
     private EndlessPanel endlessCard;
     private HowToPanel howToCard;
+    private FinalScorePanel finalScoreCard;
 
     //private JLabel labels[];
     private void addComponentsToPane(Container pane) {
@@ -57,6 +60,7 @@ public class MainForm {
         classicCard = new SPGraphicsPanel();
         endlessCard = new EndlessPanel();
         howToCard = new HowToPanel();
+        finalScoreCard = new FinalScorePanel();
 
         //Create the panel that contains the "cards".
         cards = new CardsPanel(new CardLayout());
@@ -65,10 +69,11 @@ public class MainForm {
         cards.add(classicCard, CLASSIC_PANEL);
         cards.add(endlessCard, ENDLESS_PANEL);
         cards.add(menuCard, MENU_PANEL);
-        cards.add(optionsCard, OPTIONS_PANEL);
+        //cards.add(optionsCard, OPTIONS_PANEL);
         cards.add(leaderCard, LEADERBOARDS_PANEL);
         cards.add(aboutCard, ABOUT_PANEL);
         cards.add(howToCard, HOW_TO_PANEL);
+        cards.add(finalScoreCard, FINAL_SCORE_PANEL);
 
         //Add panel containing the cards to the container pane (frame)
         pane.setLayout(new BorderLayout());

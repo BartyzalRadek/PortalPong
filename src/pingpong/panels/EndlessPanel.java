@@ -1,5 +1,6 @@
 package pingpong.panels;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
@@ -9,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
+import static pingpong.MainForm.FINAL_SCORE_PANEL;
+import static pingpong.panels.CardsPanel.FONT_SIZE;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
 import static pingpong.panels.CardsPanel.FRAME_WIDTH;
 
@@ -18,12 +21,14 @@ import static pingpong.panels.CardsPanel.FRAME_WIDTH;
  */
 public class EndlessPanel extends GraphicsPanel {
 
+    private final String pressEnterText = "Press enter to see your score";
+
     /*leaderboards variables start*/
     public static String NAME = "Darmy";
     private boolean newHighScore = false;
     public boolean nameNotSet = true;
     /*leaderboards variables end*/
-    private boolean showFinalScore = false;
+    //private boolean showFinalScore = false;
     private int tempBallReturned = 0;   //because of AITeleport()
     private boolean screenCleaned = false;
 
@@ -51,12 +56,13 @@ public class EndlessPanel extends GraphicsPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (showFinalScore || gamePaused) {
+                if (gamePaused) {
                     backToMenu();
                 }
-                if (!showFinalScore && hasSomebodyWon()) {
-                    showFinalScore = true;
-                    drawFinalScore();
+                if (hasSomebodyWon()) {
+                    CardLayout cl = (CardLayout) (getParent().getLayout());
+                    cl.show(getParent(), FINAL_SCORE_PANEL);
+                    //drawFinalScore();
                     //repaint();
                 }
             }
@@ -66,7 +72,7 @@ public class EndlessPanel extends GraphicsPanel {
 
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if (!gamePaused && !hasSomebodyWon() && !showFinalScore) {
+                if (!gamePaused && !hasSomebodyWon()) {
                     startGame();
                 }
             }
@@ -93,26 +99,6 @@ public class EndlessPanel extends GraphicsPanel {
     }
 
     @Override
-    protected void endGameTimer() {
-        if (colorChanged == true) {
-            gameOverColor = Color.BLUE;
-            colorChanged = false;
-        } else {
-            gameOverColor = Color.RED;
-            colorChanged = true;
-        }
-
-        Graphics g = this.getGraphics();
-        if (showFinalScore) {
-            if (newHighScore) {
-                drawNewHighScore(g);
-            }
-        } else {
-            drawSomebodyWon(g);
-        }
-    }
-
-    @Override
     protected boolean hasSomebodyWon() {
         return player2.endlessWin();
     }
@@ -129,15 +115,15 @@ public class EndlessPanel extends GraphicsPanel {
     @Override
     protected void drawSomebodyWon(Graphics g) {
         g.setColor(gameOverColor);
-        g.setFont(new Font("Tahoma", Font.BOLD, 50));
-        g.drawString("GAME OVER !!!", 320, 230);
+        somebodyWon();
+        g.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE * 2 + FONT_SIZE / 2));
+
+        g.drawString("GAME OVER !!!", getStringLocation(g, "GAME OVER !!!", this.getWidth()), FRAME_HEIGHT / 3 - FONT_SIZE * 2);
 
         g.setColor(Color.GRAY);
-        g.setFont(new Font("Tahoma", Font.BOLD, 20));
+        g.setFont(new Font("Tahoma", Font.BOLD, FONT_SIZE));
 
-        FontMetrics fontMetrics = g.getFontMetrics();
-        int strL = fontMetrics.stringWidth("Press enter to see your score.");
-        g.drawString("Press enter to see your score.", FRAME_WIDTH / 2 - strL / 2, FRAME_HEIGHT / 2 + 50);
+        g.drawString(pressEnterText, getStringLocation(g, pressEnterText, this.getWidth()), FRAME_HEIGHT / 2);
     }
 
     /*Tesne po odrazu probehne vetev createTeleport() misto aktualizace tempBallReturned, proto tempB. +1*/
@@ -158,86 +144,35 @@ public class EndlessPanel extends GraphicsPanel {
 
     @Override
     protected void drawScore(Graphics g) {
-        g.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
         g.setColor(Color.WHITE);
-        g.drawString("Score:", 400, 35);
-        g.drawString("Lives:", 500, 35);
-        g.drawString(String.valueOf(player1.endlessScore()), 470, 35);
-        g.drawString(String.valueOf(player1.getLives() - player2.getScore()), 560, 35);
-    }
-
-    @Override
-    protected void drawHints(Graphics g) {
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Tahoma", Font.PLAIN, 15));
-        g.drawString("Press E to teleport", 410, 15);
-        g.drawString("Esc - Pause", 200, 15);
-        g.drawString("W, S - Move paddles", 600, 15);
-        g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString("T:" + String.valueOf(player1.getTeleports()), 10, 440);
-        g.drawString("T:" + String.valueOf(player2.getTeleports()), 940, 440);
-
-        if (gamePaused) {
-            g.setColor(Color.GRAY);
-            g.setFont(new Font("Tahoma", Font.BOLD, 40));
-            g.drawString("GAME PAUSED", 350, 150);
-            g.setFont(new Font("Tahoma", Font.PLAIN, 20));
-            g.drawString("Press enter to go back to menu.", 355, 250);
-            g.drawString("Press escape to continue playing.", 355, 280);
-
-        }
-
-        if (!hasStarted) {
-            g.setColor(Color.GRAY);
-            g.setFont(new Font("Tahoma", Font.BOLD, 40));
-            g.drawString("PRESS SPACE TO START", 250, 150);
-        }
+        int x = getStringLocation(g, "Score: 999 Lives: 999", this.getWidth());
+        int wordLength = (int) g.getFontMetrics().getStringBounds("Score:", g).getWidth();
+        int y = FONT_SIZE + FONT_SIZE / 2;
+        g.drawString("Score:", x, y);
+        g.drawString(String.valueOf(player1.endlessScore()), x + wordLength + FONT_SIZE / 2, y);
+        g.drawString("Lives:", x + 2 * wordLength, y);
+        g.drawString(String.valueOf(player1.getLives() - player2.getScore()), x + 3 * wordLength, y);
     }
 
     public void drawFinalScore() {
         Graphics g = this.getGraphics();
-        //Clean screen behind final score
-        //if (!screenCleaned) {
-            g.setColor(Color.BLACK);
-            g.fillRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT);
-            
-        //    screenCleaned = true;
-        //}
-        //Draw final score
-        g.setColor(Color.WHITE);
-        g.setFont(new Font("Tahoma", Font.BOLD, 20));
-        g.drawString("FINAL SCORE", 350, 100);
-        g.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        g.drawString("+", 350, 150);
-        g.drawString("-", 350, 190);
-        g.drawString("T", 350, 230);
-        g.drawString("pings", 350, 270);
-        g.drawString("Total", 350, 310);
-        g.drawString("+ = +3 points", 500, 150);
-        g.drawString("-  = - 3 points", 500, 190); /*mezery jsou tam naschval*/
-
-        g.drawString("T = +3 points", 500, 230);
-        g.drawString("1 ping = +1 point", 500, 270);
-        g.drawString(String.valueOf(player1.getPlusCount()), 410, 150);
-        g.drawString(String.valueOf(player1.getMinusCount()), 410, 190);
-        g.drawString(String.valueOf(player1.gettCount()), 410, 230);
-        g.drawString(String.valueOf(player1.getBallReturned()), 410, 270);
-        g.drawString(String.valueOf(player1.endlessScore()), 410, 310);
         
-        if(nameNotSet){
-        frame = new InputFrame(this);
-        frame.setVisible(true);
-        frame.setLocation(this.getLocationOnScreen().x + this.getWidth()/2 - frame.getWidth()/2, 
-                this.getLocationOnScreen().y + this.getHeight()/2 - frame.getHeight()/2);}
-
-        g.drawString("Your name:", 350, 350);
+        /*
+         if (nameNotSet) {
+         frame = new InputFrame(this);
+         frame.setVisible(true);
+         frame.setLocation(this.getLocationOnScreen().x + this.getWidth() / 2 - frame.getWidth() / 2,
+         this.getLocationOnScreen().y + this.getHeight() / 2 - frame.getHeight() / 2);
+         }*/
+        /*g.drawString("Your name:", 350, 350);
         g.drawString("Press enter to go back to menu.", 350, 400);
-        drawNewHighScore(g);
+        drawNewHighScore(g);*/
     }
 
     public void drawNAME() {
         Graphics g = this.getGraphics();
-        g.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
         g.setColor(Color.WHITE);
         g.drawString(NAME, 500, 350);
     }
@@ -250,7 +185,6 @@ public class EndlessPanel extends GraphicsPanel {
 
     @Override
     protected void reset() {
-        showFinalScore = false;
         screenCleaned = false;
         newHighScore = false;
         nameNotSet = true;

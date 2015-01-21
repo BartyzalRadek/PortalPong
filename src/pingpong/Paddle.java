@@ -2,6 +2,7 @@ package pingpong;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import pingpong.panels.CardsPanel;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
 
 /**
@@ -13,29 +14,37 @@ public class Paddle implements Drawable {
     public static final int PADDLE_WIDTH = 20;
 
     private int length;
-    private final int x;
+    private int x;
     private int y;
     private int duration; ///< Power up effect duration
-    private static int V = FRAME_HEIGHT / 25; ///< Speed of movement
+    private int v; ///< Speed of movement
     private int center;
+    private final boolean isLeftPaddle; ///< Whether is the paddle on the left side of the screen
 
-    public Paddle(int x) {
-        this.x = x;
+    public Paddle(boolean isLeft) {
+        isLeftPaddle = isLeft;
+        
+        if (isLeftPaddle) {
+            x = 10;
+        } else {
+            x = CardsPanel.FRAME_WIDTH - 50;
+        }
         y = 10;
+        v = FRAME_HEIGHT / 25;
         length = FRAME_HEIGHT / 5;
     }
 
     public void moveUp() {
-        if (y - V > 0) {
-            y -= V;
+        if (y - v > 0) {
+            y -= v;
         } else {
             y = 0;
         }
     }
 
     public void moveDown() {
-        if ((y + length + V) < FRAME_HEIGHT) {
-            y += V;
+        if ((y + length + v) < FRAME_HEIGHT) {
+            y += v;
         } else {
             y = FRAME_HEIGHT - length;
         }
@@ -93,8 +102,11 @@ public class Paddle implements Drawable {
     }
 
     public void resize() {
+        if (!isLeftPaddle) {
+            x = CardsPanel.FRAME_WIDTH - 50;
+        }
         length = FRAME_HEIGHT / 5;
-        V = FRAME_HEIGHT / 25;
+        v = FRAME_HEIGHT / 25;
         duration = 0;
 
         if (y + length > FRAME_HEIGHT) {

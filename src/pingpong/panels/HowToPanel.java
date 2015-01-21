@@ -31,6 +31,13 @@ import static pingpong.panels.CardsPanel.LABEL_SIZE;
 public class HowToPanel extends JPanel implements AbleToResizeGUI {
     private javax.swing.JLabel jLabel1;
     
+    private final String teleports= "Pickup T to get teleports";
+    private final String plus= "Pickup + to get bigger paddle";
+    private final String minus= "Pickup - to get smaller paddle";
+    private final String pressEP= "Press E,P to teleport";
+    private final String pressESC= "Esc - Pause";
+    private final String pressWSUD= "W, S, Up, Down - Move paddles";
+    
 
     public HowToPanel() {
         initComponents();
@@ -67,10 +74,15 @@ public class HowToPanel extends JPanel implements AbleToResizeGUI {
     }
     
     private void drawText(Graphics2D g){
-        int x = getStringLocation(g, "Author: Radek Bartyzal", this.getWidth());
-        g.drawString("Author: Radek Bartyzal", x, this.getHeight()/2 - FONT_SIZE);
-        g.drawString("Created: December 2014", x, this.getHeight()/2 + FONT_SIZE);
-        g.drawString("Email: rbartyzal1@gmail.com", x, this.getHeight()/2 + 3*FONT_SIZE);
+        int x = getStringLocation(g, teleports, this.getWidth());
+        int y = getHeight() / 2 - 4*FONT_SIZE;
+        int offsetY = 2*FONT_SIZE;
+         g.drawString(plus, x, y);
+         g.drawString(minus, x, y + offsetY);
+         g.drawString(teleports, x, y + 2*offsetY);
+         g.drawString(pressEP, x, y + 3*offsetY);
+         g.drawString(pressESC, x, y + 4*offsetY);
+         g.drawString(pressWSUD, x, y + 5*offsetY);
         
     }
     

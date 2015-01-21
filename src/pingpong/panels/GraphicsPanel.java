@@ -284,8 +284,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
          g.drawString("Q, A - Modify speed", 200, 15);
          g.drawString("W, S, Up, Down - Move paddles", 600, 15);
          g.setFont(new Font("Tahoma", Font.BOLD, 20));*/
-        g.drawString("T:" + String.valueOf(player1.getTeleports()), 10, FRAME_HEIGHT - 60);
-        g.drawString("T:" + String.valueOf(player2.getTeleports()), FRAME_WIDTH - (FONT_SIZE * 3), FRAME_HEIGHT - 60);
+        g.drawString("T:" + String.valueOf(player1.getTeleports()), FONT_SIZE*2, FRAME_HEIGHT - 30);
+        g.drawString("T:" + String.valueOf(player2.getTeleports()), FRAME_WIDTH - (FONT_SIZE * 3), FRAME_HEIGHT - 30);
 
         if (gamePaused) {
             g.setColor(Color.GRAY);

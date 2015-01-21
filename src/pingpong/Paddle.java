@@ -20,10 +20,11 @@ public class Paddle implements Drawable {
     private int v; ///< Speed of movement
     private int center;
     private final boolean isLeftPaddle; ///< Whether is the paddle on the left side of the screen
+    private int cnt = 0;
 
     public Paddle(boolean isLeft) {
         isLeftPaddle = isLeft;
-        
+
         if (isLeftPaddle) {
             x = 10;
         } else {
@@ -51,12 +52,17 @@ public class Paddle implements Drawable {
     }
 
     public void AImove(Ball ball, int height) {
-        center = (y + (length / 2));
+        cnt++;
+        if (cnt == 6) {
+            cnt = 0;
 
-        if (center < ball.getY()) {
-            moveDown();
-        } else {
-            moveUp();
+            center = (y + (length / 2));
+
+            if (center < ball.getY()) {
+                moveDown();
+            } else {
+                moveUp();
+            }
         }
     }
 

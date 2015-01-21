@@ -4,7 +4,6 @@ import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -13,7 +12,6 @@ import javax.swing.KeyStroke;
 import static pingpong.MainForm.FINAL_SCORE_PANEL;
 import static pingpong.panels.CardsPanel.FONT_SIZE;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
-import static pingpong.panels.CardsPanel.FRAME_WIDTH;
 
 /**
  *
@@ -23,16 +21,8 @@ public class EndlessPanel extends GraphicsPanel {
 
     private final String pressEnterText = "Press enter to see your score";
 
-    /*leaderboards variables start*/
-    public static String NAME = "Darmy";
-    private boolean newHighScore = false;
-    public boolean nameNotSet = true;
-    /*leaderboards variables end*/
     //private boolean showFinalScore = false;
     private int tempBallReturned = 0;   //because of AITeleport()
-    private boolean screenCleaned = false;
-
-    private InputFrame frame;
 
     public EndlessPanel() {
         drawableList.add(ball);
@@ -60,8 +50,8 @@ public class EndlessPanel extends GraphicsPanel {
                     backToMenu();
                 }
                 if (hasSomebodyWon()) {
-                    CardLayout cl = (CardLayout) (getParent().getLayout());
-                    cl.show(getParent(), FINAL_SCORE_PANEL);
+                    reset();
+                    showFinalScore();
                     //drawFinalScore();
                     //repaint();
                 }
@@ -101,15 +91,6 @@ public class EndlessPanel extends GraphicsPanel {
     @Override
     protected boolean hasSomebodyWon() {
         return player2.endlessWin();
-    }
-
-    public void submitNewScore() {
-        for (Component p : getParent().getComponents()) {
-            if (p instanceof LeaderboardsPanel) {
-                ((LeaderboardsPanel) p).addScore(NAME, player1.endlessScore());
-                newHighScore = ((LeaderboardsPanel) p).isNewHighscore(player1.endlessScore());
-            }
-        }
     }
 
     @Override
@@ -155,39 +136,15 @@ public class EndlessPanel extends GraphicsPanel {
         g.drawString(String.valueOf(player1.getLives() - player2.getScore()), x + 3 * wordLength, y);
     }
 
-    public void drawFinalScore() {
-        Graphics g = this.getGraphics();
+    private void showFinalScore() {
+        CardLayout cl = (CardLayout) (getParent().getLayout());
+        cl.show(getParent(), FINAL_SCORE_PANEL);
         
-        /*
-         if (nameNotSet) {
-         frame = new InputFrame(this);
-         frame.setVisible(true);
-         frame.setLocation(this.getLocationOnScreen().x + this.getWidth() / 2 - frame.getWidth() / 2,
-         this.getLocationOnScreen().y + this.getHeight() / 2 - frame.getHeight() / 2);
-         }*/
-        /*g.drawString("Your name:", 350, 350);
-        g.drawString("Press enter to go back to menu.", 350, 400);
-        drawNewHighScore(g);*/
+        for(Component p: this.getParent().getComponents()){
+            if (p instanceof FinalScorePanel){
+                ((FinalScorePanel) (p)).showInputFrame();
+            }
+        }
     }
 
-    public void drawNAME() {
-        Graphics g = this.getGraphics();
-        g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
-        g.setColor(Color.WHITE);
-        g.drawString(NAME, 500, 350);
-    }
-
-    private void drawNewHighScore(Graphics g) {
-        g.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        g.setColor(gameOverColor);
-        g.drawString("NEW HIGHSCORE", 500, 310);
-    }
-
-    @Override
-    protected void reset() {
-        screenCleaned = false;
-        newHighScore = false;
-        nameNotSet = true;
-        super.reset();
-    }
 }

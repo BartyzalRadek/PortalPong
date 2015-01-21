@@ -17,8 +17,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import static pingpong.panels.EndlessPanel.NAME;
-
 /**
  *
  * @author Radek Bartyzal
@@ -30,9 +28,9 @@ public class InputFrame extends JDialog {
     private JLabel label;
     private JPanel panel;
     private StringBuilder sb;
-    private final EndlessPanel ePanel;
+    private final FinalScorePanel ePanel;
 
-    public InputFrame(EndlessPanel panel) {
+    public InputFrame(FinalScorePanel panel) {
         ePanel = panel;
         init();
     }
@@ -101,12 +99,11 @@ public class InputFrame extends JDialog {
     }
 
     private void quit() {
-        NAME = sb.toString();
-        ePanel.nameNotSet = false;
-        ePanel.drawNAME();
+        ePanel.name = sb.toString();
+        ePanel.nameSet = true;
         ePanel.submitNewScore();
         this.setVisible(false);
-        ePanel.drawFinalScore();
+        ePanel.repaint();
         this.dispose();
     }
 }

@@ -50,10 +50,9 @@ public class EndlessPanel extends GraphicsPanel {
                     backToMenu();
                 }
                 if (hasSomebodyWon()) {
+                    exportFinalScore();
                     reset();
                     showFinalScore();
-                    //drawFinalScore();
-                    //repaint();
                 }
             }
         });
@@ -146,5 +145,20 @@ public class EndlessPanel extends GraphicsPanel {
             }
         }
     }
-
+    
+    private void exportFinalScore(){
+        int[] finalScore = new int[5];
+        finalScore[0] = player1.getPlusCount();
+        finalScore[1] = player1.getMinusCount();
+        finalScore[2] = player1.gettCount();
+        finalScore[3] = player1.getBallReturned();
+        finalScore[4] = player1.endlessScore();
+        
+        for (Component p : getParent().getComponents()) {
+            if (p instanceof FinalScorePanel) {
+                ((FinalScorePanel) p).setFinalScore(finalScore);
+            }
+        }
+    }
+    
 }

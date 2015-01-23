@@ -60,6 +60,7 @@ public class MenuPanel extends MatrixPanel implements AbleToResizeGUI {
 
         labels.add(jLabel1);
         labels.add(jLabel2);
+        //Options label
         //labels.add(jLabel3);
         labels.add(jLabel4);
         labels.add(jLabel7);

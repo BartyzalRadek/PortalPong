@@ -142,7 +142,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
     }
 
     protected void powerUpTimer() {
-        int type = (int) (Math.round(Math.random() + 1));
+        int type = (int) (Math.round(Math.random()*2));
         powerUpList.add(new PowerUp(type));
         if (fixedSpeed == false) {
             ball.increaseSpeed();
@@ -285,7 +285,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
          g.drawString("W, S, Up, Down - Move paddles", 600, 15);
          g.setFont(new Font("Tahoma", Font.BOLD, 20));*/
         g.drawString("T:" + String.valueOf(player1.getTeleports()), FONT_SIZE*2, FRAME_HEIGHT - 30);
-        g.drawString("T:" + String.valueOf(player2.getTeleports()), FRAME_WIDTH - (FONT_SIZE * 3), FRAME_HEIGHT - 30);
+        g.drawString("T:" + String.valueOf(player2.getTeleports()), FRAME_WIDTH - (FONT_SIZE * 4), FRAME_HEIGHT - 30);
 
         if (gamePaused) {
             g.setColor(Color.GRAY);
@@ -313,6 +313,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         player1.reset();
         player2.reset();
         ball.reset();
+        paddle1.reset();
+        paddle2.reset();
         powerUpList.clear();
         colorChanged = false;
         hasStarted = false;

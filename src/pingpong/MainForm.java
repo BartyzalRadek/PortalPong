@@ -69,7 +69,7 @@ public class MainForm {
         cards.add(classicCard, CLASSIC_PANEL);
         cards.add(endlessCard, ENDLESS_PANEL);
         cards.add(menuCard, MENU_PANEL);
-        //cards.add(optionsCard, OPTIONS_PANEL);
+        cards.add(optionsCard, OPTIONS_PANEL);
         cards.add(leaderCard, LEADERBOARDS_PANEL);
         cards.add(aboutCard, ABOUT_PANEL);
         cards.add(howToCard, HOW_TO_PANEL);

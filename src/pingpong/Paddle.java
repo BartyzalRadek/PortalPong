@@ -109,7 +109,7 @@ public class Paddle implements Drawable {
 
     public void resize() {
         if (!isLeftPaddle) {
-            x = CardsPanel.FRAME_WIDTH - 50;
+            x = CardsPanel.FRAME_WIDTH - 30;
         }
         length = FRAME_HEIGHT / 5;
         v = FRAME_HEIGHT / 25;
@@ -119,6 +119,12 @@ public class Paddle implements Drawable {
             y = FRAME_HEIGHT - length;
         }
 
+    }
+
+    public void reset() {
+        length = FRAME_HEIGHT / 5;
+        duration = 0;
+        y = FRAME_HEIGHT/2 - length;
     }
 
 }

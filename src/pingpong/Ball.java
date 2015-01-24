@@ -14,13 +14,14 @@ public class Ball implements Drawable {
 
     private int x;
     private int y;
-    private int r = 5;
+    private int r;
     private double vx;
     private double vy;
 
     public Ball() {
         x = FRAME_WIDTH / 2;
         y = FRAME_HEIGHT / 2;
+        r = FRAME_HEIGHT/100 + 1;
         vx = (int) Math.floor(Math.random() * FRAME_WIDTH / 500 + FRAME_WIDTH / 250);
         vy = (int) Math.floor(Math.random() * FRAME_WIDTH / 500 + FRAME_WIDTH / 250);
 
@@ -41,7 +42,7 @@ public class Ball implements Drawable {
 
     public void scorePoint(Player player1, Player player2, boolean isEndless) {
         if (!isEndless) {
-            if (x > FRAME_WIDTH - 3 * r) {
+            if (x > FRAME_WIDTH - 2 * r) {
                 player1.score();
                 toCenter();
             }
@@ -56,20 +57,20 @@ public class Ball implements Drawable {
     public void teleport(boolean isTeleport, Teleport teleport) {
         if (isTeleport == true) {
             if (vx > 0) {
-                if (x > teleport.getX1()) {
-                    x = teleport.getX2();
-                    y = teleport.getY2() + 2 * r;
+                if (x >= teleport.getX1() && y+r >= teleport.getY1() && y <= teleport.getY1() + teleport.getHeight()) {
                     vx *= randomSwitchDirection();
                     vy *= randomSwitchDirection();
+                    x = teleport.getX2();
+                    y = teleport.getY2() + 2 * r;
                     //changeDirection();
                 }
             }
             if (vx < 0) {
-                if (x < teleport.getX1()) {
-                    x = teleport.getX2();
-                    y = teleport.getY2() + 2 * r;
+                if (x <= teleport.getX1()+teleport.getWidth() && y+r >= teleport.getY1() && y <= teleport.getY1() + teleport.getHeight()) {
                     vx *= randomSwitchDirection();
                     vy *= randomSwitchDirection();
+                    x = teleport.getX2();
+                    y = teleport.getY2() + 2 * r;
                     //changeDirection();
                 }
             }

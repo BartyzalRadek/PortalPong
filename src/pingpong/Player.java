@@ -10,6 +10,7 @@ public class Player {
     private int score;
     private int winningScore = 10;
     private int lives = 1; //A starting number of lives, its not changed after starting the game
+    private static final int DEFAULT_TELEPORTS = 30; //default number of teleports
 
     //--Endless score variables start
     private int plusCount;
@@ -20,7 +21,7 @@ public class Player {
 
     public Player() {
         score = 0;
-        teleports = 3;
+        teleports = DEFAULT_TELEPORTS;
     }
 
     public boolean useTeleport() {
@@ -59,7 +60,7 @@ public class Player {
         minusCount = 0;
         tCount = 0;
         ballReturned = 0;
-        teleports = 3;
+        teleports = DEFAULT_TELEPORTS;
     }
 
     public void catchPowerUp(int type) {

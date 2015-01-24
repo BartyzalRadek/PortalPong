@@ -142,7 +142,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
     }
 
     protected void powerUpTimer() {
-        int type = (int) (Math.round(Math.random()*2));
+        int type = (int) (Math.round(Math.random() * 2));
         //type = 2;
         powerUpList.add(new PowerUp(type));
         if (fixedSpeed == false) {
@@ -243,6 +243,9 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
     }
 
     protected void createTeleport() {
+        if (isTeleport) {
+            teleport.resetDuration();
+        }
         isTeleport = true;
         teleport.setLocations(ball);
     }
@@ -285,7 +288,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
          g.drawString("Q, A - Modify speed", 200, 15);
          g.drawString("W, S, Up, Down - Move paddles", 600, 15);
          g.setFont(new Font("Tahoma", Font.BOLD, 20));*/
-        g.drawString("T:" + String.valueOf(player1.getTeleports()), FONT_SIZE*2, FRAME_HEIGHT - 30);
+        g.drawString("T:" + String.valueOf(player1.getTeleports()), FONT_SIZE * 2, FRAME_HEIGHT - 30);
         g.drawString("T:" + String.valueOf(player2.getTeleports()), FRAME_WIDTH - (FONT_SIZE * 4), FRAME_HEIGHT - 30);
 
         if (gamePaused) {
@@ -304,7 +307,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
             g.drawString(pressSpaceText, getStringLocation(g, pressSpaceText, this.getWidth()), FRAME_HEIGHT / 3 - FONT_SIZE * 2);
         }
     }
-    
+
     protected int getStringLocation(Graphics g, String s, int widthOfComponent) {
         int strlen = (int) g.getFontMetrics().getStringBounds(s, g).getWidth();
         return (widthOfComponent / 2) - (strlen / 2);
@@ -337,6 +340,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         paddle1.resize();
         paddle2.resize();
         ball.resize();
+        teleport.resize();
 
         repaint();
 

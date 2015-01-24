@@ -132,11 +132,10 @@ public class LeaderboardsPanel extends JPanel implements AbleToResizeGUI {
         Arrays.sort(leaderboard, new Comparator<String[]>() {
             @Override
             public int compare(final String[] entry1, final String[] entry2) {
-                if (entry1[1].compareTo(entry2[1]) == 0) {
+                if (Integer.parseInt(entry1[1]) == Integer.parseInt(entry2[1])) {
                     return entry1[0].compareToIgnoreCase(entry2[0]);
                 } else {
-                    //Numbers need to be sorted in reverse, because they are sorted as a string
-                    return entry1[1].compareToIgnoreCase(entry2[1]) * (-1);
+                    return Integer.compare(Integer.parseInt(entry1[1]),Integer.parseInt(entry2[1])) * (-1);
                 }
             }
         });

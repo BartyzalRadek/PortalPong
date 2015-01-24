@@ -5,8 +5,6 @@ import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
@@ -20,7 +18,7 @@ import pingpong.PowerUp;
  */
 public class MatrixPanel extends JPanel implements AbleToGetOptions {
 
-    private List<PowerUp> powerUpList = new ArrayList<PowerUp>();
+    private List<PowerUp> particleList = new ArrayList<PowerUp>();
     private boolean matrixOn = true;
     private int type = 2;
     private final String chinese = "あたアカサザジズゼゾシスセソキクケコイウエオジャな";
@@ -33,13 +31,13 @@ public class MatrixPanel extends JPanel implements AbleToGetOptions {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            for (int i = 0; i < powerUpList.size(); i++) {
-                if (powerUpList.get(i).isExpired()) {
-                    powerUpList.remove(i);
+            for (int i = 0; i < particleList.size(); i++) {
+                if (particleList.get(i).isExpired()) {
+                    particleList.remove(i);
                 }
             }
 
-            for (PowerUp p : powerUpList) {
+            for (PowerUp p : particleList) {
                 p.move();
                 p.expire();
             }
@@ -53,7 +51,7 @@ public class MatrixPanel extends JPanel implements AbleToGetOptions {
         @Override
         public void actionPerformed(ActionEvent e) {
             for (int i = 0; i < 10; i++) {
-                powerUpList.add(new PowerUp());
+                particleList.add(new PowerUp());
             }
         }
     });
@@ -70,7 +68,7 @@ public class MatrixPanel extends JPanel implements AbleToGetOptions {
         this.setBackground(Color.BLACK);
 
         if (matrixOn) {
-            for (PowerUp p : powerUpList) {
+            for (PowerUp p : particleList) {
                 switch (type) {
                     case 0:
                         p.drawMatrix(g, chinese);

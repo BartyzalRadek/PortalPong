@@ -38,6 +38,7 @@ public class PowerUp implements Drawable {
         vx = 0;
         vy = (int) (Math.round(Math.random() * 3) + 2);
         rnd = Math.random();
+        type = -1;
     }
 
     public void drawMatrix(Graphics g, String s) {

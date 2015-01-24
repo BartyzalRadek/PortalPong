@@ -90,17 +90,17 @@ public class Ball implements Drawable {
         if (isEndless) {
             if (x > (FRAME_WIDTH - 2 * r)) {
                 vx = -vx;
-                x = (FRAME_WIDTH - 2 * r);
+                x = (FRAME_WIDTH - 2 * r - 1);
             }
         }
 
         if (y > (FRAME_HEIGHT - 2 * r)) {
             vy = -vy;
-            y = (FRAME_HEIGHT - 2 * r);
+            y = (FRAME_HEIGHT - 2 * r - 1);
         }
         if (y < 0) {
             vy = -vy;
-            y = 0;
+            y = 1;
         }
     }
 

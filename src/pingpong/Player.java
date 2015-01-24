@@ -10,7 +10,7 @@ public class Player {
     private int score;
     private int winningScore = 10;
     private int lives = 1; //A starting number of lives, its not changed after starting the game
-    private static final int DEFAULT_TELEPORTS = 30; //default number of teleports
+    private static final int DEFAULT_TELEPORTS = 3; //default number of teleports
 
     //--Endless score variables start
     private int plusCount;

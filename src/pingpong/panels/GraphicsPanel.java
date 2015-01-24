@@ -128,8 +128,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
 
         ball.move();
         ball.bounceOffWalls(isEndless);
-        ball.scorePoint(player1, player2, isEndless);
         ball.bounceOffPaddle(paddle1, player1);
+        ball.scorePoint(player1, player2, isEndless);
         if (!isEndless) {
             ball.bounceOffPaddle(paddle2, player2);
         }
@@ -143,6 +143,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
 
     protected void powerUpTimer() {
         int type = (int) (Math.round(Math.random()*2));
+        //type = 2;
         powerUpList.add(new PowerUp(type));
         if (fixedSpeed == false) {
             ball.increaseSpeed();

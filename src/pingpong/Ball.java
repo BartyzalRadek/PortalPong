@@ -19,10 +19,10 @@ public class Ball implements Drawable {
     private double vy;
 
     public Ball() {
-        x = FRAME_WIDTH/2;
-        y = FRAME_HEIGHT/2;
-        vx = (int) Math.floor(Math.random() * FRAME_WIDTH/500 + FRAME_WIDTH/250);
-        vy = (int) Math.floor(Math.random() * FRAME_WIDTH/500 + FRAME_WIDTH/250);
+        x = FRAME_WIDTH / 2;
+        y = FRAME_HEIGHT / 2;
+        vx = (int) Math.floor(Math.random() * FRAME_WIDTH / 500 + FRAME_WIDTH / 250);
+        vy = (int) Math.floor(Math.random() * FRAME_WIDTH / 500 + FRAME_WIDTH / 250);
 
     }
 
@@ -41,7 +41,7 @@ public class Ball implements Drawable {
 
     public void scorePoint(Player player1, Player player2, boolean isEndless) {
         if (!isEndless) {
-            if (x > FRAME_WIDTH - 3*r) {
+            if (x > FRAME_WIDTH - 3 * r) {
                 player1.score();
                 toCenter();
             }
@@ -59,14 +59,18 @@ public class Ball implements Drawable {
                 if (x > teleport.getX1()) {
                     x = teleport.getX2();
                     y = teleport.getY2() + 2 * r;
-                    changeDirection();
+                    vx *= randomSwitchDirection();
+                    vy *= randomSwitchDirection();
+                    //changeDirection();
                 }
             }
             if (vx < 0) {
                 if (x < teleport.getX1()) {
                     x = teleport.getX2();
                     y = teleport.getY2() + 2 * r;
-                    changeDirection();
+                    vx *= randomSwitchDirection();
+                    vy *= randomSwitchDirection();
+                    //changeDirection();
                 }
             }
         }
@@ -83,15 +87,15 @@ public class Ball implements Drawable {
 
     public void bounceOffWalls(boolean isEndless) {
         if (isEndless) {
-            if (x > (FRAME_WIDTH - 2*r)) {
+            if (x > (FRAME_WIDTH - 2 * r)) {
                 vx = -vx;
-                x = (FRAME_WIDTH - 2*r);
+                x = (FRAME_WIDTH - 2 * r);
             }
         }
 
-        if (y > (FRAME_HEIGHT - 2*r)) {
+        if (y > (FRAME_HEIGHT - 2 * r)) {
             vy = -vy;
-            y = (FRAME_HEIGHT - 2*r);
+            y = (FRAME_HEIGHT - 2 * r);
         }
         if (y < 0) {
             vy = -vy;
@@ -108,7 +112,7 @@ public class Ball implements Drawable {
                 player.ballReturned();
             }
         } else {
-            if (x + 2*r > (paddle.getX()) && x < (paddle.getX() + PADDLE_WIDTH)
+            if (x + 2 * r > (paddle.getX()) && x < (paddle.getX() + PADDLE_WIDTH)
                     && y < (paddle.getY() + paddle.getLength()) && y > paddle.getY()) {
 
                 changeAngle(paddle);
@@ -135,11 +139,11 @@ public class Ball implements Drawable {
         if (y > centerOfPaddleY) {
             angle += (difference / sizeOfBlock) * (90 / (numberOfBlocks / 2));
             vy = Math.sin(angle) * v;
-            repairVy(tempVy, paddle);
+            repairVy(paddle);
         } else {
             angle -= (difference / sizeOfBlock) * (90 / (numberOfBlocks / 2));
             vy = Math.sin(angle) * v;
-            repairVy(tempVy, paddle);
+            repairVy(paddle);
         }
 
         //vy = Math.sin(angle) * v;
@@ -153,10 +157,16 @@ public class Ball implements Drawable {
         if (vy == 0) {
             vy += 0.3;
         }
-
+        
+        if(tempVx < 0){
+            x = paddle.getX() + PADDLE_WIDTH + r;
+        } else{
+            x = paddle.getX() - 3*r;
+        }
+        
     }
 
-    private void repairVy(double tempVy, Paddle paddle) {
+    private void repairVy(Paddle paddle) {
         int centerOfPaddleY = (int) (paddle.getY() + (paddle.getLength() / 2));
 
         if (y < centerOfPaddleY) {
@@ -189,15 +199,10 @@ public class Ball implements Drawable {
     }
 
     public void reset() {
-        x = FRAME_WIDTH/2;
-        y = FRAME_HEIGHT/2;
-        vx = (int) Math.floor(Math.random() * FRAME_WIDTH/500 + FRAME_WIDTH/250);
-        vy = (int) Math.floor(Math.random() * FRAME_WIDTH/500 + FRAME_WIDTH/250);
-    }
-
-    private void changeDirection() {
-        vx = -vx;
-        vy = -vy;
+        x = FRAME_WIDTH / 2;
+        y = FRAME_HEIGHT / 2;
+        vx = (int) Math.floor(Math.random() * FRAME_WIDTH / 500 + FRAME_WIDTH / 250);
+        vy = (int) Math.floor(Math.random() * FRAME_WIDTH / 500 + FRAME_WIDTH / 250);
     }
 
     @Override
@@ -221,14 +226,16 @@ public class Ball implements Drawable {
     public int getY() {
         return y;
     }
-    
-    public void resize(){
-        r = FRAME_HEIGHT/100 + 1;
-        /**Set speed to 1, but keep the direction */
-        vx = vx/Math.abs(vx);
-        vy = vy/Math.abs(vy);
-        vx *= (int) Math.floor(Math.random() * FRAME_WIDTH/500 + FRAME_WIDTH/250);
-        vy *= (int) Math.floor(Math.random() * FRAME_WIDTH/500 + FRAME_WIDTH/250);
+
+    public void resize() {
+        r = FRAME_HEIGHT / 100 + 1;
+        /**
+         * Set speed to 1, but keep the direction
+         */
+        vx = vx / Math.abs(vx);
+        vy = vy / Math.abs(vy);
+        vx *= (int) Math.floor(Math.random() * FRAME_WIDTH / 500 + FRAME_WIDTH / 250);
+        vy *= (int) Math.floor(Math.random() * FRAME_WIDTH / 500 + FRAME_WIDTH / 250);
     }
 
 }

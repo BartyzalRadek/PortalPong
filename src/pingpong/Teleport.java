@@ -21,8 +21,9 @@ public class Teleport implements Drawable {
     }
     
     public void setLocations(Ball ball){
-        x1 = (ball.getVx() > 0 ? ball.getX() + 20 : ball.getX() - 30);
-        y1 = (ball.getVy() > 0 ? ball.getY() - 5 : ball.getY() - 35);
+        x1 = ball.getX() + (int)(5*ball.getVx());
+        y1 = ball.getY() + (int)(5*ball.getVy());
+        
         x2 = (int) (Math.floor(Math.random() * 900 + 100));
         y2 = (int) (Math.floor(Math.random() * 420));
     }

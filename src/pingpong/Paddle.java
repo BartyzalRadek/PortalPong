@@ -88,7 +88,7 @@ public class Paddle implements Drawable {
                 length += FRAME_HEIGHT / 10;
                 break;
             case 2:
-                if (length > FRAME_HEIGHT / 10) {
+                if (length > FRAME_HEIGHT / 10 + FRAME_HEIGHT/50) {
                     length -= FRAME_HEIGHT / 10;
                 }
                 break;

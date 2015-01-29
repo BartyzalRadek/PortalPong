@@ -9,7 +9,7 @@ public class Player {
     private int teleports;
     private int score;
     private int winningScore = 10;
-    private int lives = 1; //A starting number of lives, its not changed after starting the game
+    private int lives = 1; //A starting number of lives
     private static final int DEFAULT_TELEPORTS = 3; //default number of teleports
 
     //--Endless score variables start
@@ -30,6 +30,13 @@ public class Player {
             return true;
         } else {
             return false;
+        }
+    }
+    
+    public void sacrificeT(){
+        if(teleports >= 10){
+            teleports -= 10;
+            lives += 1;
         }
     }
 

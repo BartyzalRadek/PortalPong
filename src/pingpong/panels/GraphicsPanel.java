@@ -174,7 +174,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
             drawTeleport(g);
         }
 
-        g.dispose(); //If paint() is overriden, g must be disposed in overriding method
+        //g.dispose(); //If paint() is overriden, g must be disposed in overriding method
     }
 
     protected void pauseGame() {

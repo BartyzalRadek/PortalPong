@@ -12,7 +12,6 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
-import pingpong.panels.CardsPanel;
 
 /**
  *
@@ -26,8 +25,8 @@ public class BlackHole implements Drawable {
     private int height;
     private int origWidth;
     private int origHeight;
-    private int duration; //How long has been the teleport on screen
-    private static final int MAX_DURATION = 60; //How many SECONDS should be Black hole on screen
+    private int duration; //How long has been the black hole on screen
+    private static final int MAX_DURATION = 20; //How many SECONDS should be Black hole on screen
 
     //Pulsing variables
     private final int pulseSize = 5;
@@ -177,7 +176,7 @@ public class BlackHole implements Drawable {
     }
     
     public boolean isExpired() {
-        return duration >= MAX_DURATION;
+        return duration >= MAX_DURATION*1000/20;
     }
 
     /**
@@ -187,14 +186,10 @@ public class BlackHole implements Drawable {
     public void extendDuration(int x) {
         duration += x;
     }
-
-    public void resetDuration() {
-        duration = 0;
-    }
     
-    public void reset(){
-        x = (int) Math.round(Math.random() * FRAME_WIDTH - FRAME_WIDTH/5 + FRAME_WIDTH/10);
-        y = (int) Math.round(Math.random() * FRAME_HEIGHT - FRAME_HEIGHT/5 + FRAME_HEIGHT/10);
+    public final void reset(){
+        x = (int) (Math.round(Math.random() * FRAME_WIDTH - (FRAME_WIDTH/5) + (FRAME_WIDTH/10)));
+        y = (int) Math.round(Math.random() * FRAME_HEIGHT - (FRAME_HEIGHT/5) + (FRAME_HEIGHT/10));
         width = FRAME_WIDTH/100;
         height = width;
         origWidth = width;

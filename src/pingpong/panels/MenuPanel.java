@@ -54,14 +54,14 @@ public class MenuPanel extends MatrixPanel implements AbleToResizeGUI {
         jLabel2 = new javax.swing.JLabel("Multiplayer");
         jLabel3 = new javax.swing.JLabel("Options");
         jLabel4 = new javax.swing.JLabel("Leaderboards");
+        jLabel7 = new javax.swing.JLabel("How to play");
         jLabel5 = new javax.swing.JLabel("About");
         jLabel6 = new javax.swing.JLabel("Exit");
-        jLabel7 = new javax.swing.JLabel("How to play");
 
         labels.add(jLabel1);
         labels.add(jLabel2);
         //Options label
-        //labels.add(jLabel3);
+        labels.add(jLabel3);
         labels.add(jLabel4);
         labels.add(jLabel7);
         labels.add(jLabel5);

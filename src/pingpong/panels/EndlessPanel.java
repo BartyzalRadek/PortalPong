@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
+import pingpong.BlackHole;
 import static pingpong.MainForm.FINAL_SCORE_PANEL;
 import static pingpong.panels.CardsPanel.FONT_SIZE;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
@@ -19,6 +20,9 @@ import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
  */
 public class EndlessPanel extends GraphicsPanel {
 
+    private boolean isBlackHole = false;
+    protected BlackHole blackHole = new BlackHole();
+    
     private final String pressEnterText = "Press enter to see your score";
 
     //private boolean showFinalScore = false;

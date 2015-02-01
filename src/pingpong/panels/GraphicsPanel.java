@@ -142,7 +142,6 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
 
     protected void powerUpTimer() {
         int type = (int) (Math.round(Math.random() * 2));
-        //type = 2;
         powerUpList.add(new PowerUp(type));
         if (fixedSpeed == false) {
             ball.increaseSpeed();
@@ -179,7 +178,6 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
     }
 
     protected void pauseGame() {
-
         if (gamePaused == false) {
             mainTimer.stop();
             powerUpTimer.stop();
@@ -267,7 +265,6 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         for (PowerUp p : powerUpList) {
             p.draw(g);
         }
-
     }
 
     protected void drawScore(Graphics g) {
@@ -282,11 +279,6 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
     protected void drawHints(Graphics g) {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Tahoma", Font.PLAIN, FONT_SIZE));
-        /*g.drawString("Press E,P to teleport", 410, 15);
-         g.drawString("Esc - Pause", 200, 15);
-         g.drawString("Q, A - Modify speed", 200, 15);
-         g.drawString("W, S, Up, Down - Move paddles", 600, 15);
-         g.setFont(new Font("Tahoma", Font.BOLD, 20));*/
         g.drawString("T:" + String.valueOf(player1.getTeleports()), FONT_SIZE * 2, FRAME_HEIGHT - 30);
         g.drawString("T:" + String.valueOf(player2.getTeleports()), FRAME_WIDTH - (FONT_SIZE * 4), FRAME_HEIGHT - 30);
 

@@ -35,6 +35,7 @@ public class HowToPanel extends JPanel implements AbleToResizeGUI {
     private final String plus= "Pickup + to get bigger paddle";
     private final String minus= "Pickup - to get smaller paddle";
     private final String pressEP= "Press E,P to teleport";
+    private final String pressD= "Press D to exchange 10xT for 1 life in Endless mode";
     private final String pressESC= "Esc - Pause";
     private final String pressWSUD= "W, S, Up, Down - Move paddles";
     
@@ -74,7 +75,7 @@ public class HowToPanel extends JPanel implements AbleToResizeGUI {
     }
     
     private void drawText(Graphics2D g){
-        int x = getStringLocation(g, teleports, this.getWidth());
+        int x = getStringLocation(g, pressD, this.getWidth());
         int y = getHeight() / 2 - 4*FONT_SIZE;
         int offsetY = 2*FONT_SIZE;
          g.drawString(plus, x, y);
@@ -83,6 +84,7 @@ public class HowToPanel extends JPanel implements AbleToResizeGUI {
          g.drawString(pressEP, x, y + 3*offsetY);
          g.drawString(pressESC, x, y + 4*offsetY);
          g.drawString(pressWSUD, x, y + 5*offsetY);
+         g.drawString(pressD, x, y + 6*offsetY);
         
     }
     

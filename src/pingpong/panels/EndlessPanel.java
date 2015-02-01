@@ -82,6 +82,13 @@ public class EndlessPanel extends GraphicsPanel {
         super.mainTimer();
         AIteleport();
     }
+    
+    @Override
+    protected void powerUpTimer() {
+        super.powerUpTimer();
+        
+        player2.catchPowerUp((int) Math.round(Math.random()*2)); //Add one Teleport to the AI
+    }
 
     /**
      * Different fixedSpeed than the one updating in Graphics Panel

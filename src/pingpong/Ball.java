@@ -17,11 +17,13 @@ public class Ball implements Drawable {
     private int r;
     private double vx;
     private double vy;
+    private double gravity = 0.3;
+    //private boolean useGravity = true;
 
     public Ball() {
         x = FRAME_WIDTH / 2;
         y = FRAME_HEIGHT / 2;
-        r = FRAME_HEIGHT/100 + 1;
+        r = FRAME_HEIGHT / 100 + 1;
         vx = (int) Math.floor(Math.random() * FRAME_WIDTH / 500 + FRAME_WIDTH / 250);
         vy = (int) Math.floor(Math.random() * FRAME_WIDTH / 500 + FRAME_WIDTH / 250);
 
@@ -57,7 +59,7 @@ public class Ball implements Drawable {
     public void teleport(boolean isTeleport, Teleport teleport) {
         if (isTeleport == true) {
             if (vx > 0) {
-                if (x >= teleport.getX1() && y+r >= teleport.getY1() && y <= teleport.getY1() + teleport.getHeight()) {
+                if (x >= teleport.getX1() && y + r >= teleport.getY1() && y <= teleport.getY1() + teleport.getHeight()) {
                     vx *= randomSwitchDirection();
                     vy *= randomSwitchDirection();
                     x = teleport.getX2();
@@ -66,7 +68,7 @@ public class Ball implements Drawable {
                 }
             }
             if (vx < 0) {
-                if (x <= teleport.getX1()+teleport.getWidth() && y+r >= teleport.getY1() && y <= teleport.getY1() + teleport.getHeight()) {
+                if (x <= teleport.getX1() + teleport.getWidth() && y + r >= teleport.getY1() && y <= teleport.getY1() + teleport.getHeight()) {
                     vx *= randomSwitchDirection();
                     vy *= randomSwitchDirection();
                     x = teleport.getX2();
@@ -83,7 +85,36 @@ public class Ball implements Drawable {
         if (vx == 0) {
             toCenter();
         }
+    }
 
+    public void useGravity(BlackHole bh) {
+        calculateGravity(bh);
+
+        if (x + r < bh.getX() + bh.getWidth() / 2) {
+            vx += gravity;
+        }
+
+        if (x + r > bh.getX() + bh.getWidth() / 2) {
+            vx -= gravity;
+        }
+
+        if (y + r < bh.getY() + bh.getHeight() / 2) {
+            vy += gravity;
+        }
+
+        if (y + r > bh.getY() + bh.getHeight() / 2) {
+            vy -= gravity;
+        }
+    }
+
+    private void calculateGravity(BlackHole bh) {
+        double dx = x - bh.getX();
+        double dy = y - bh.getY();
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance != 0) {
+            gravity = (FRAME_WIDTH * 1.0 / 20) / distance;
+        }
+        //System.out.println("dist: " + distance + " grav: " + gravity);
     }
 
     public void bounceOffWalls(boolean isEndless) {
@@ -158,13 +189,13 @@ public class Ball implements Drawable {
         if (vy == 0) {
             vy += 0.3;
         }
-        
-        if(tempVx < 0){
+
+        if (tempVx < 0) {
             x = paddle.getX() + PADDLE_WIDTH + r;
-        } else{
-            x = paddle.getX() - 3*r;
+        } else {
+            x = paddle.getX() - 3 * r;
         }
-        
+
     }
 
     private void repairVy(Paddle paddle) {

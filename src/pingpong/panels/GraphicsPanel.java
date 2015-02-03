@@ -35,6 +35,8 @@ import static pingpong.panels.CardsPanel.FRAME_WIDTH;
  * @author Radek Bartyzal
  */
 public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToResizeGUI {
+    
+    public static final int MAIN_TIMER_TICK_RATE = 20; ///< Tick rate in milliseconds
 
     protected boolean isEndless = false; ///< Whether the game mode is endless - for ball bouncing etc
     private boolean isTeleport = false;
@@ -83,8 +85,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         am.put(KeyEvent.VK_Q, new Action(KeyEvent.VK_Q));
     }
 
-    //Moving the ball, powerUps, calculating collisions etc.
-    protected Timer mainTimer = new Timer(20, new ActionListener() {
+    /**Moving the ball, powerUps, calculating collisions etc.*/
+    protected Timer mainTimer = new Timer(MAIN_TIMER_TICK_RATE, new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -113,29 +115,9 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
             somebodyWon();
         }
 
-        for (int i = 0; i < powerUpList.size(); i++) {
-            if (powerUpList.get(i).isExpired()) {
-                powerUpList.remove(i);
-            }
-        }
-
-        for (PowerUp p : powerUpList) {
-            p.move();
-            p.bounceOffWalls();
-            p.score(paddle1, player1);
-            if (!isEndless) {
-                p.score(paddle2, player2);
-            }
-        }
-
-        ball.move();
-        ball.bounceOffWalls(isEndless);
-        ball.bounceOffPaddle(paddle1, player1);
-        ball.scorePoint(player1, player2, isEndless);
-        if (!isEndless) {
-            ball.bounceOffPaddle(paddle2, player2);
-        }
-        ball.teleport(isTeleport, teleport);
+        updatePowerUps();
+        
+        updateBall();
 
         paddle1.lengthReturn();
         paddle2.lengthReturn();
@@ -156,6 +138,11 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         powerUpList.add(new PowerUp(type));
         if (fixedSpeed == false) {
             ball.increaseSpeed();
+        }
+        
+        //A chance to create a black hole is 1/3 
+        if(type == 0){
+            isBlackHole = true;
         }
     }
 
@@ -190,6 +177,34 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         }
 
         g.dispose(); //If paint() is overriden, g must be disposed in overriding method
+    }
+    
+    protected void updatePowerUps(){
+        for (int i = 0; i < powerUpList.size(); i++) {
+            if (powerUpList.get(i).isExpired()) {
+                powerUpList.remove(i);
+            }
+        }
+
+        for (PowerUp p : powerUpList) {
+            p.move();
+            p.bounceOffWalls();
+            p.score(paddle1, player1);
+            if (!isEndless) {
+                p.score(paddle2, player2);
+            }
+        }
+    }
+    
+    protected void updateBall(){
+        ball.move();
+        ball.bounceOffWalls(isEndless);
+        ball.bounceOffPaddle(paddle1, player1);
+        ball.scorePoint(player1, player2, isEndless);
+        if (!isEndless) {
+            ball.bounceOffPaddle(paddle2, player2);
+        }
+        ball.teleport(isTeleport, teleport);
     }
     
     protected void updateBlackHole(){

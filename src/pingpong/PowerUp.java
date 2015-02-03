@@ -57,13 +57,14 @@ public class PowerUp implements Drawable {
     }
     /*MATRIX BLOCK END*/
 
-    public void toCenter() {
+    private void toCenter() {
         x = FRAME_WIDTH/2;
         y = FRAME_HEIGHT/2;
         vx = (int) (Math.round(Math.random() * FRAME_WIDTH/200) + FRAME_WIDTH/300);
         vy = (int) (Math.round(Math.random() * FRAME_WIDTH/150) + FRAME_WIDTH/1000);
         vx = vx * randomSwitchDirection();
         vy = vy * randomSwitchDirection();
+        type = (int) Math.round(Math.random()*2);
     }
 
     public void move() {

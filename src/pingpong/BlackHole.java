@@ -12,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
+import static pingpong.panels.GraphicsPanel.MAIN_TIMER_TICK_RATE;
 
 /**
  *
@@ -57,7 +58,6 @@ public class BlackHole implements Drawable {
     private void animateCreation(Graphics g) {
         if (creating == false) {
             creating = true;
-            //particles = new ArrayList<Particle>();
 
             for (int i = 0; i < 100; i++) {
                 particles.add(new Particle((int) (Math.round(Math.random() * FRAME_WIDTH)),
@@ -120,7 +120,7 @@ public class BlackHole implements Drawable {
      * milliseconds.
      */
     public void pulse() {
-        if (cnt == 5) {
+        if (cnt == 100/MAIN_TIMER_TICK_RATE) {
             cnt = 0;
             if (enlarging) {
                 tmp++;
@@ -175,9 +175,13 @@ public class BlackHole implements Drawable {
             height--;
         }
     }
+    
+    public void useGravityOn(int x, int y, int r){
+        
+    }
 
     public boolean isExpired() {
-        return duration >= MAX_DURATION * 1000 / 20;
+        return duration >= MAX_DURATION * 1000 / MAIN_TIMER_TICK_RATE;
     }
 
     /**
@@ -201,9 +205,8 @@ public class BlackHole implements Drawable {
         creating = false;
         curStateOfAnim = 0;
         particles.clear();
-
     }
-    
+
     public void resize() {
         width = FRAME_WIDTH / 100;
         height = width;

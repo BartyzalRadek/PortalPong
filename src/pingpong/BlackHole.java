@@ -203,7 +203,7 @@ public class BlackHole implements Drawable {
         particles.clear();
 
     }
-
+    
     public void resize() {
         width = FRAME_WIDTH / 100;
         height = width;

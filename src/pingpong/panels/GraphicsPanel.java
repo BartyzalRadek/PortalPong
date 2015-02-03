@@ -35,7 +35,7 @@ import static pingpong.panels.CardsPanel.FRAME_WIDTH;
  * @author Radek Bartyzal
  */
 public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToResizeGUI {
-    
+
     public static final int MAIN_TIMER_TICK_RATE = 20; ///< Tick rate in milliseconds
 
     protected boolean isEndless = false; ///< Whether the game mode is endless - for ball bouncing etc
@@ -66,11 +66,18 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
 
     protected InputMap im = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
     protected ActionMap am = this.getActionMap();
+    protected boolean wPressed = false; ///<Whether key W is pressed - moving left paddle up
+    protected boolean sPressed = false; ///<Whether key S is pressed - moving left paddle down
+    protected boolean upPressed = false; ///<Whether key UP is pressed - moving right paddle up
+    protected boolean downPressed = false; ///<Whether key DOWN is pressed - moving right paddle down
+    private int cnt = 0; ///< To slow down the movement of paddles
 
     protected void setKeyBindings() {
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), KeyEvent.VK_SPACE);
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0), KeyEvent.VK_W);
-        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0), KeyEvent.VK_S);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, false), KeyEvent.VK_W); // On Key Release = false = start moving paddle 
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_W, 0, true), KeyEvent.VK_W + 100); // On Key Release = true = stop moving paddle 
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, false), KeyEvent.VK_S);
+        im.put(KeyStroke.getKeyStroke(KeyEvent.VK_S, 0, true), KeyEvent.VK_S + 100);
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0), KeyEvent.VK_E);
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), KeyEvent.VK_ESCAPE);
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_A, 0), KeyEvent.VK_A);
@@ -78,14 +85,18 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
 
         am.put(KeyEvent.VK_SPACE, new Action(KeyEvent.VK_SPACE));
         am.put(KeyEvent.VK_W, new Action(KeyEvent.VK_W));
+        am.put(KeyEvent.VK_W + 100, new Action(KeyEvent.VK_W + 100));
         am.put(KeyEvent.VK_S, new Action(KeyEvent.VK_S));
+        am.put(KeyEvent.VK_S + 100, new Action(KeyEvent.VK_S + 100));
         am.put(KeyEvent.VK_E, new Action(KeyEvent.VK_E));
         am.put(KeyEvent.VK_ESCAPE, new Action(KeyEvent.VK_ESCAPE));
         am.put(KeyEvent.VK_A, new Action(KeyEvent.VK_A));
         am.put(KeyEvent.VK_Q, new Action(KeyEvent.VK_Q));
     }
 
-    /**Moving the ball, powerUps, calculating collisions etc.*/
+    /**
+     * Moving the ball, powerUps, calculating collisions etc.
+     */
     protected Timer mainTimer = new Timer(MAIN_TIMER_TICK_RATE, new ActionListener() {
 
         @Override
@@ -116,21 +127,18 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         }
 
         updatePowerUps();
-        
         updateBall();
+        updatePaddles();
 
-        paddle1.lengthReturn();
-        paddle2.lengthReturn();
-        
-        if(isBlackHole){
+        if (isBlackHole) {
             ball.useGravity(blackHole);
-            for(PowerUp p : powerUpList){
+            for (PowerUp p : powerUpList) {
                 p.useGravity(blackHole);
             }
             updateBlackHole();
         }
-        
-        if(isTeleport){
+
+        if (isTeleport) {
             updateTeleport();
         }
 
@@ -143,9 +151,9 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         if (fixedSpeed == false) {
             ball.increaseSpeed();
         }
-        
+
         //A chance to create a black hole is 1/3 
-        if(type == 0){
+        if (type == 0) {
             isBlackHole = true;
         }
     }
@@ -175,15 +183,15 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         if (isTeleport) {
             teleport.draw(g);
         }
-        
-        if(isBlackHole){
+
+        if (isBlackHole) {
             blackHole.draw(g);
         }
 
         g.dispose(); //If paint() is overriden, g must be disposed in overriding method
     }
-    
-    protected void updatePowerUps(){
+
+    protected void updatePowerUps() {
         for (int i = 0; i < powerUpList.size(); i++) {
             if (powerUpList.get(i).isExpired()) {
                 powerUpList.remove(i);
@@ -199,8 +207,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
             }
         }
     }
-    
-    protected void updateBall(){
+
+    protected void updateBall() {
         ball.move();
         ball.bounceOffWalls(isEndless);
         ball.bounceOffPaddle(paddle1, player1);
@@ -210,22 +218,48 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         }
         ball.teleport(isTeleport, teleport);
     }
-    
-    protected void updateBlackHole(){
+
+    protected void updateBlackHole() {
         blackHole.extendDuration(1);
-        
-        if(blackHole.isExpired()){
+
+        if (blackHole.isExpired()) {
             isBlackHole = false;
             blackHole.reset();
         }
     }
-    
-    protected void updateTeleport(){
+
+    protected void updateTeleport() {
         teleport.extendDuration(1);
         if (teleport.isExpired()) {
             isTeleport = false;
             teleport.resetDuration();
         }
+    }
+    
+
+    protected void updatePaddles() {
+        if (cnt == 3) {
+            cnt = 0;
+            if (wPressed) {
+                paddle1.moveUp();
+            }
+
+            if (sPressed) {
+                paddle1.moveDown();
+            }
+
+            if (upPressed) {
+                paddle2.moveUp();
+            }
+
+            if (downPressed) {
+                paddle2.moveDown();
+            }
+        }
+        cnt++;
+
+        paddle1.lengthReturn();
+        paddle2.lengthReturn();
     }
 
     protected void pauseGame() {
@@ -374,7 +408,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         ball.resize();
         teleport.resize();
         blackHole.resize();
-        
+
         repaint();
 
     }
@@ -395,18 +429,34 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         public void actionPerformed(ActionEvent ae) {
             switch (keyCode) {
                 case KeyEvent.VK_W:
-                    paddle1.moveUp();
+                    //paddle1.moveUp();
+                    wPressed = true;
+
+                    break;
+                case KeyEvent.VK_W + 100:
+                    wPressed = false;
 
                     break;
                 case KeyEvent.VK_S:
-                    paddle1.moveDown();
-
+                    //paddle1.moveDown();
+                    sPressed = true;
+                    break;
+                case KeyEvent.VK_S + 100:
+                    sPressed = false;
                     break;
                 case KeyEvent.VK_UP:
-                    paddle2.moveUp();
+                    //paddle2.moveUp();
+                    upPressed = true;
+                    break;
+                case KeyEvent.VK_UP + 100:
+                    upPressed = false;
                     break;
                 case KeyEvent.VK_DOWN:
-                    paddle2.moveDown();
+                    //paddle2.moveDown();
+                    downPressed = true;
+                    break;
+                case KeyEvent.VK_DOWN + 100:
+                    downPressed = false;
                     break;
                 case KeyEvent.VK_P:
                     if (player2.useTeleport()) {

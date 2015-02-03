@@ -31,7 +31,7 @@ public class Paddle implements Drawable {
             x = CardsPanel.FRAME_WIDTH - 50;
         }
         y = 10;
-        v = FRAME_HEIGHT / 25;
+        v = FRAME_HEIGHT / 400;
         length = FRAME_HEIGHT / 5;
     }
 
@@ -53,7 +53,7 @@ public class Paddle implements Drawable {
 
     public void AImove(Ball ball, int height) {
         cnt++;
-        if (cnt == 6) {
+        if (cnt == 2) {
             cnt = 0;
 
             center = (y + (length / 2));

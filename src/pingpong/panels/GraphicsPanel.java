@@ -19,6 +19,7 @@ import javax.swing.Timer;
 import pingpong.AbleToGetOptions;
 import pingpong.AbleToResizeGUI;
 import pingpong.Ball;
+import pingpong.BlackHole;
 import pingpong.Drawable;
 import pingpong.Paddle;
 import pingpong.Player;
@@ -37,6 +38,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
 
     protected boolean isEndless = false; ///< Whether the game mode is endless - for ball bouncing etc
     private boolean isTeleport = false;
+    private boolean isBlackHole = false;
 
     private final String gamePausedText = "GAME PAUSED";
     private final String pressEnterText = "Press enter to go back to menu.";
@@ -45,6 +47,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
 
     protected Ball ball = new Ball();
     protected Teleport teleport = new Teleport();
+    protected BlackHole blackHole = new BlackHole();
     protected Paddle paddle1 = new Paddle(true);
     protected Paddle paddle2 = new Paddle(false);
     protected Player player1 = new Player();
@@ -136,6 +139,14 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
 
         paddle1.lengthReturn();
         paddle2.lengthReturn();
+        
+        if(isBlackHole){
+            ball.useGravity(blackHole);
+            for(PowerUp p : powerUpList){
+                p.useGravity(blackHole);
+            }
+            updateBlackHole();
+        }
 
         repaint();
     }
@@ -173,8 +184,21 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         if (isTeleport) {
             drawTeleport(g);
         }
+        
+        if(isBlackHole){
+            blackHole.draw(g);
+        }
 
-        //g.dispose(); //If paint() is overriden, g must be disposed in overriding method
+        g.dispose(); //If paint() is overriden, g must be disposed in overriding method
+    }
+    
+    protected void updateBlackHole(){
+        blackHole.extendDuration(1);
+        
+        if(blackHole.isExpired()){
+            isBlackHole = false;
+            blackHole.reset();
+        }
     }
 
     protected void pauseGame() {
@@ -332,7 +356,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         paddle2.resize();
         ball.resize();
         teleport.resize();
-
+        blackHole.resize();
+        
         repaint();
 
     }
@@ -378,6 +403,8 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
 
                     break;
                 case KeyEvent.VK_Q:
+                    isBlackHole = true;
+                    break;
                 case KeyEvent.VK_A:
                     ball.increaseSpeed();
                     break;

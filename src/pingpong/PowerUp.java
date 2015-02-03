@@ -22,6 +22,7 @@ public class PowerUp implements Drawable {
     private int expire = 0;
     private boolean isExpired = false;
     private double rnd; // For matrix effect
+    private double gravity;
 
     public PowerUp(int type) {
         this.type = type;
@@ -132,5 +133,35 @@ public class PowerUp implements Drawable {
     
     public boolean isExpired(){
         return isExpired;
+    }
+    
+    public void useGravity(BlackHole bh) {
+        calculateGravity(bh);
+
+        if (x + FONT_SIZE/2 < bh.getX() + bh.getWidth() / 2) {
+            vx += gravity;
+        }
+
+        if (x + FONT_SIZE/2 > bh.getX() + bh.getWidth() / 2) {
+            vx -= gravity;
+        }
+
+        if (y + FONT_SIZE/2 < bh.getY() + bh.getHeight() / 2) {
+            vy += gravity;
+        }
+
+        if (y + FONT_SIZE/2 > bh.getY() + bh.getHeight() / 2) {
+            vy -= gravity;
+        }
+    }
+    
+    private void calculateGravity(BlackHole bh) {
+        double dx = x - bh.getX();
+        double dy = y - bh.getY();
+        double distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance != 0) {
+            gravity = (FRAME_WIDTH * 1.0 / 20) / distance;
+        }
+        //System.out.println("dist: " + distance + " grav: " + gravity);
     }
 }

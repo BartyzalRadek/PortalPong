@@ -39,9 +39,8 @@ public class BlackHole implements Drawable {
     private boolean creating = false;
     private int curStateOfAnim = 0;
     private final int finalStateOfAnim = 20; //How long is the animation going to last
-    private List<Particle> particles;
+    private List<Particle> particles = new ArrayList<Particle>();
 
-    
     public BlackHole() {
         reset();
     }
@@ -58,7 +57,7 @@ public class BlackHole implements Drawable {
     private void animateCreation(Graphics g) {
         if (creating == false) {
             creating = true;
-            particles = new ArrayList<Particle>();
+            //particles = new ArrayList<Particle>();
 
             for (int i = 0; i < 100; i++) {
                 particles.add(new Particle((int) (Math.round(Math.random() * FRAME_WIDTH)),
@@ -80,6 +79,7 @@ public class BlackHole implements Drawable {
     }
 
     class Particle {
+
         private final Point p;
         private final int r;
         private final double dx;
@@ -107,16 +107,17 @@ public class BlackHole implements Drawable {
         pulse();
 
         float alpha;
-        int auraSize = FRAME_WIDTH/100;
+        int auraSize = FRAME_WIDTH / 100;
         for (int i = 0; i < auraSize; i++) {
-            alpha = (float) ((auraSize - i)*1.0 / auraSize);
+            alpha = (float) ((auraSize - i) * 1.0 / auraSize);
             g.setColor(new Color(1, 1, 1, alpha));
             g.drawOval(x - i, y - i, width + 2 * i, height + 2 * i);
         }
     }
 
     /**
-     * Makes the black hole pulsate. Recommended timer tick rate is 20 milliseconds.
+     * Makes the black hole pulsate. Recommended timer tick rate is 20
+     * milliseconds.
      */
     public void pulse() {
         if (cnt == 5) {
@@ -174,30 +175,37 @@ public class BlackHole implements Drawable {
             height--;
         }
     }
-    
+
     public boolean isExpired() {
-        return duration >= MAX_DURATION*1000/20;
+        return duration >= MAX_DURATION * 1000 / 20;
     }
 
     /**
      * Extends duration by x
+     *
      * @param x Is added to duration
      */
     public void extendDuration(int x) {
         duration += x;
     }
-    
-    public final void reset(){
-        x = (int) (Math.round(Math.random() * FRAME_WIDTH - (FRAME_WIDTH/5) + (FRAME_WIDTH/10)));
-        y = (int) Math.round(Math.random() * FRAME_HEIGHT - (FRAME_HEIGHT/5) + (FRAME_HEIGHT/10));
-        width = FRAME_WIDTH/100;
+
+    public final void reset() {
+        x = (int) (Math.round(Math.random() * (FRAME_WIDTH - (FRAME_WIDTH / 5)) + (FRAME_WIDTH / 10)));
+        y = (int) Math.round(Math.random() * (FRAME_HEIGHT - (FRAME_HEIGHT / 5)) + (FRAME_HEIGHT / 10));
+        width = FRAME_WIDTH / 100;
         height = width;
         origWidth = width;
         origHeight = height;
+        duration = 0;
+        created = false;
+        creating = false;
+        curStateOfAnim = 0;
+        particles.clear();
+
     }
 
     public void resize() {
-        width = FRAME_WIDTH/100;
+        width = FRAME_WIDTH / 100;
         height = width;
     }
 
@@ -216,7 +224,5 @@ public class BlackHole implements Drawable {
     public int getHeight() {
         return height;
     }
-    
-    
 
 }

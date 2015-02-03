@@ -11,6 +11,7 @@ import javax.swing.AbstractAction;
 import javax.swing.KeyStroke;
 import pingpong.BlackHole;
 import static pingpong.MainForm.FINAL_SCORE_PANEL;
+import pingpong.PowerUp;
 import static pingpong.panels.CardsPanel.FONT_SIZE;
 import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
 
@@ -19,9 +20,6 @@ import static pingpong.panels.CardsPanel.FRAME_HEIGHT;
  * @author Radek Bartyzal
  */
 public class EndlessPanel extends GraphicsPanel {
-
-    private boolean isBlackHole = false;
-    protected BlackHole blackHole = new BlackHole();
     
     private final String pressEnterText = "Press enter to see your score";
 
@@ -77,43 +75,15 @@ public class EndlessPanel extends GraphicsPanel {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 player1.sacrificeT();
-                isBlackHole = true;
+                
             }
         });
     }
 
     @Override
-    public void paint(Graphics g){
-        super.paint(g);
-        if(isBlackHole){
-            blackHole.draw(g);
-        }
-    }
-    
-    private void updateBlackHole(){
-        blackHole.extendDuration(1);
-        
-        if(blackHole.isExpired()){
-            isBlackHole = false;
-            blackHole.reset();
-        }
-    }
-    
-    @Override
     protected void mainTimer() {
         super.mainTimer();
         AIteleport();
-        if(isBlackHole){
-            ball.useGravity(blackHole);
-            updateBlackHole();
-        }
-    }
-    
-    @Override
-    public void resizeGUI(){
-        super.resizeGUI();
-        blackHole.resize();
-        repaint();
     }
     
     @Override

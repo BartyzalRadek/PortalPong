@@ -129,6 +129,10 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
             }
             updateBlackHole();
         }
+        
+        if(isTeleport){
+            updateTeleport();
+        }
 
         repaint();
     }
@@ -169,7 +173,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         drawHints(g);
         drawScore(g);
         if (isTeleport) {
-            drawTeleport(g);
+            teleport.draw(g);
         }
         
         if(isBlackHole){
@@ -213,6 +217,14 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         if(blackHole.isExpired()){
             isBlackHole = false;
             blackHole.reset();
+        }
+    }
+    
+    protected void updateTeleport(){
+        teleport.extendDuration(1);
+        if (teleport.isExpired()) {
+            isTeleport = false;
+            teleport.resetDuration();
         }
     }
 
@@ -284,16 +296,6 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         }
         isTeleport = true;
         teleport.setLocations(ball);
-    }
-
-    protected void drawTeleport(Graphics g) {
-        teleport.draw(g);
-
-        teleport.extendDuration(1);
-        if (teleport.isExpired()) {
-            isTeleport = false;
-            teleport.resetDuration();
-        }
     }
 
     protected void drawLists(Graphics g) {

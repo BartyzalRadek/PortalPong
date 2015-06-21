@@ -56,18 +56,21 @@ public class Paddle implements Drawable {
         if (cnt == 2) {
             cnt = 0;
 
-            center = (y + (length / 2));
-
-            if (center < ball.getY()) {
+            //center = (y + (length / 2));
+            if (y + length < ball.getY() + ball.getRadius()) {
                 moveDown();
-            } else {
+            }
+
+            if (y > ball.getY()) {
                 moveUp();
             }
+
         }
     }
 
     @Override
-    public void draw(Graphics g) {
+    public void draw(Graphics g
+    ) {
         g.setColor(Color.WHITE);
         g.fillOval(x, y, PADDLE_WIDTH, length);
     }
@@ -88,7 +91,7 @@ public class Paddle implements Drawable {
                 length += FRAME_HEIGHT / 10;
                 break;
             case 2:
-                if (length > FRAME_HEIGHT / 10 + FRAME_HEIGHT/50) {
+                if (length > FRAME_HEIGHT / 10 + FRAME_HEIGHT / 50) {
                     length -= FRAME_HEIGHT / 10;
                 }
                 break;
@@ -124,7 +127,7 @@ public class Paddle implements Drawable {
     public void reset() {
         length = FRAME_HEIGHT / 5;
         duration = 0;
-        y = FRAME_HEIGHT/2 - length;
+        y = FRAME_HEIGHT / 2 - length;
     }
 
 }

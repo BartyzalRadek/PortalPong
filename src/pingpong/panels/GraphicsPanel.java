@@ -70,7 +70,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
     protected boolean sPressed = false; ///<Whether key S is pressed - moving left paddle down
     protected boolean upPressed = false; ///<Whether key UP is pressed - moving right paddle up
     protected boolean downPressed = false; ///<Whether key DOWN is pressed - moving right paddle down
-    private int cnt = 0; ///< To slow down the movement of paddles
+    private int cnt = 0; ///< To slow down the movement of paddles - causes laggy movement
 
     protected void setKeyBindings() {
         im.put(KeyStroke.getKeyStroke(KeyEvent.VK_SPACE, 0), KeyEvent.VK_SPACE);
@@ -105,7 +105,7 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
         }
     });
     //Creating new power ups + increasing ball speed
-    protected Timer powerUpTimer = new Timer(8000, new ActionListener() {
+    protected Timer powerUpTimer = new Timer(4000, new ActionListener() {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -146,13 +146,13 @@ public class GraphicsPanel extends JPanel implements AbleToGetOptions, AbleToRes
     }
 
     protected void powerUpTimer() {
-        int type = (int) (Math.round(Math.random() * 2));
+        int type = (int) (Math.round(Math.random() * 5));
         powerUpList.add(new PowerUp(type));
         if (fixedSpeed == false) {
             ball.increaseSpeed();
         }
 
-        //A chance to create a black hole is 1/3 
+        //A chance to create a black hole is 1/6 
         if (type == 0) {
             isBlackHole = true;
         }

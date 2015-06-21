@@ -258,6 +258,10 @@ public class Ball implements Drawable {
     public int getY() {
         return y;
     }
+    
+    public int getRadius() {
+        return r;
+    }
 
     public void resize() {
         r = FRAME_HEIGHT / 100 + 1;
